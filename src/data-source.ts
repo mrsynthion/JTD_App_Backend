@@ -1,6 +1,7 @@
 import "reflect-metadata"
 import {DataSource} from "typeorm"
-import {User} from "./entity/User"
+import {User} from "./api/entity/User"
+import {User1697618152174} from "./migration";
 
 export const AppDataSource = new DataSource({
     type: "mariadb",
@@ -9,9 +10,9 @@ export const AppDataSource = new DataSource({
     username: "root",
     password: "pass",
     database: "to-do-next",
-    synchronize: true,
+    synchronize: false,
     logging: false,
     entities: [User],
-    migrations: [],
+    migrations: [User1697618152174],
     subscribers: [],
 })
