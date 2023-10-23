@@ -19,10 +19,10 @@ export class User {
     @Column({nullable: true})
     age: number
 
-    @Column({nullable: false, unique: true, primary: false})
+    @Column({nullable: false, unique: true})
     username: string
 
-    @Column({nullable: false, primary: false})
+    @Column({nullable: false})
     password: string
 
     @OneToMany(() => Task, (task) => task.user)

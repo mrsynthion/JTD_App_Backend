@@ -11,7 +11,17 @@ import {validateEmail, validatePassword, validateUsername} from "../../utils/aut
 
 const userRepository = AppDataSource.getRepository(User)
 
-async function getUserPage({page, size, sort, id, email, age, firstName, lastName, username}: Filters<User>, res: Response<Page<User>>): Promise<void> {
+async function getUserPage({
+                               page,
+                               size,
+                               sort,
+                               id,
+                               email,
+                               age,
+                               firstName,
+                               lastName,
+                               username
+                           }: Filters<User>, res: Response<Page<User>>): Promise<void> {
     try {
         const data = await AppDataSource.transaction(async (appDataSource) => {
                 const totalElements = await appDataSource

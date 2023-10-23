@@ -10,7 +10,7 @@ export const AppDataSource = new DataSource({
     database: "to-do-next",
     synchronize: false,
     logging: false,
-    entities: ['src/**/**.{.ts,.js}'],
-    migrations: ['src/migration/**/*{.ts,.js}'],
-    subscribers: ['src/subscribe/**/*{.ts,.js}'],
+    entities: ['src/api/entity/*{.ts,.js}'],
+    migrations: ['src/migration/*{.ts,.js}'],
+    subscribers: ['src/subscribe/*{.ts,.js}'],
 })

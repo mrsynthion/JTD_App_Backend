@@ -84,10 +84,10 @@ async function addTask(task: Task, res: Response<Task>): Promise<void> {
         console.log(task)
         if (task.title) validateTitle(task.title)
         const id = '59287d03-fc6e-4df8-acf9-9343933e5d25'
-        const user: User = await userRepository.findOneBy({id})
-        //  const newTask: Task = await taskRepository.save(task);
+        task = {...task, user: {id} as User}
+        const newTask: Task = await taskRepository.save(task);
         res.statusCode = 200;
-        res.json(task)
+        res.json(newTask)
     } catch ({message}) {
         let newMessage: ErrorCode = message;
         sendError(400, newMessage, res)
