@@ -12,7 +12,7 @@ const options: SignOptions = {
 function generateToken(user: User): string {
     const privateKey: string = config().parsed['PRIVATE_KEY'];
     if (!privateKey) {
-        throw new Error(ErrorCode.NPK)
+        throw new Error(ErrorCode.TNPK)
     }
     return sign(
         {username: user.username, email: user.email},
@@ -24,7 +24,7 @@ function verifyToken(token: string) {
     verify(token, config().parsed['PRIVATE_KEY'], (error, decoded) => {
         if (error) {
             console.log(error)
-            throw new Error(ErrorCode.TE)
+            throw new Error(ErrorCode.TTE)
         }
 
 
