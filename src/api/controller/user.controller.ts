@@ -73,9 +73,17 @@ async function getUserPage({
 async function getCertainUser(id: string, res: Response): Promise<void> {
     try {
         const user: User = await userRepository.findOne({
+            select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+                age: true,
+                username: true
+            },
             where: {
                 id
-            }
+            },
         })
         res.statusCode = 200;
         res.json(user);

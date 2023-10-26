@@ -1,11 +1,11 @@
-import {sign, SignOptions, verify} from 'jsonwebtoken'
+import {decode, sign, SignOptions, verify} from 'jsonwebtoken'
 import {ErrorCode} from "../global-types/error.types";
 import {User} from "../api/entity/User";
 import {config} from 'dotenv'
 
 const options: SignOptions = {
     mutatePayload: false,
-    expiresIn: '30s',
+    expiresIn: '30m',
 
 }
 
@@ -15,7 +15,7 @@ function generateToken(user: User): string {
         throw new Error(ErrorCode.TNPK)
     }
     return sign(
-        {username: user.username, email: user.email},
+        {userId: user.id, email: user.email},
         privateKey,
         options);
 }
@@ -26,11 +26,13 @@ function verifyToken(token: string) {
             console.log(error)
             throw new Error(ErrorCode.TTE)
         }
-
-
     })
 
 }
 
+function getDataFromToken(token: string) {
+    return decode(token)
+}
 
-export {generateToken, verifyToken}
+
+export {generateToken, verifyToken, getDataFromToken}

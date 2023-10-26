@@ -5,6 +5,7 @@ import {Routes} from "./api/routes";
 import {serve, setup} from "swagger-ui-express";
 import {load} from 'js-yaml';
 import {readFileSync} from "fs";
+import * as cookieParser from 'cookie-parser';
 
 
 AppDataSource.initialize().then(async () => {
@@ -12,6 +13,7 @@ AppDataSource.initialize().then(async () => {
     // create express app
     const app = express()
     app.use(bodyParser.json())
+    app.use(cookieParser())
 
     const spec = readFileSync('./src/swagger.yaml', {encoding: 'utf8', flag: 'r'});
     const swaggerDocument = load(spec);

@@ -29,6 +29,9 @@ export class Task {
     @Column('datetime')
     expirationDate: Date
 
+    @Column({type: 'boolean', default: false, nullable: false})
+    completed: boolean
+
     @ManyToOne(() => User, (user) => user.tasks, {onDelete: 'CASCADE'})
     user: User
 }
