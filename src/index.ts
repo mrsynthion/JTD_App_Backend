@@ -2,7 +2,7 @@ import * as express from "express"
 import * as bodyParser from "body-parser"
 import {AppDataSource} from "./data-source"
 import {Routes} from "./api/routes";
-import {serve, setup} from "swagger-ui-express";
+import {serveFiles, setup} from "swagger-ui-express";
 import {load} from 'js-yaml';
 import {readFileSync} from "fs";
 import * as cookieParser from 'cookie-parser';
@@ -15,10 +15,16 @@ AppDataSource.initialize().then(async () => {
     app.use(bodyParser.json())
     app.use(cookieParser())
 
-    const spec = readFileSync('./src/swagger.yaml', {encoding: 'utf8', flag: 'r'});
+    const spec = readFileSync('./src/swagger.json', {encoding: 'utf8', flag: 'r'});
     const swaggerDocument = load(spec);
 
-    app.use('/api-docs', serve, setup(swaggerDocument));
+    const options = {
+        swaggerOptions: {
+            url: "/api-docs/swagger.json",
+        },
+    }
+    app.get("/api-docs/swagger.json", (req, res) => res.json(swaggerDocument));
+    app.use('/api-docs', serveFiles(null, options), setup(null, options));
 
     // register express routes from defined application routes
     Routes(app);

@@ -1,0 +1,197 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "To do next app",
+    "version": "1.0.0"
+  },
+  "host": "localhost:4500",
+  "servers": [
+    {
+      "url": "http://localhost:4500"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization"
+    }
+  ],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Sign up",
+        "description": "Sign up",
+        "operationId": "signUp",
+        "requestBody": {
+          "description": "User data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Login",
+        "description": "Login to the app",
+        "operationId": "login",
+        "requestBody": {
+          "description": "User login data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Logout",
+        "description": "Logout from the app",
+        "operationId": "logout",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "example": "firstName"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "lastName"
+          },
+          "email": {
+            "type": "string",
+            "example": "email"
+          },
+          "age": {
+            "type": "string",
+            "example": "age"
+          },
+          "username": {
+            "type": "string",
+            "example": "username"
+          },
+          "password": {
+            "type": "string",
+            "example": "password"
+          }
+        }
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "username"
+          },
+          "password": {
+            "type": "string",
+            "example": "password"
+          }
+        }
+      },
+      "ErrorCode": {
+        "type": "string",
+        "enum": [
+          "NO PRIVATE KEY",
+          "UNABLE TO GENERATE TOKEN",
+          "TOKEN EXPIRED",
+          "ALL LOGIN DATA MISSING",
+          "CAN NOT FIND USER",
+          "PASSWORDS DO NOT MATCH",
+          "PASSWORD IS REQUIRED",
+          "PASSWORD SHOULD HAVE MINIMUM TEN CHARACTERS,AT LEAST ONE SMALL CHARACTER, ONE BIG CHARACTER, ONE NUMBER, ONE SPECIAL CHARACTER",
+          "EMAIL IS REQUIRED",
+          "THIS EMAIL IS ALREADY IN USE",
+          "USERNAME IS REQUIRED",
+          "THIS USERNAME IS ALREADY IN USE",
+          "NO VALID ID INCLUDED",
+          "TITLE IS REQUIRED",
+          "TITLE MUST BE MINIMUM FIVE CHARACTERS"
+        ]
+      }
+    }
+  }
+}

@@ -49,10 +49,7 @@ async function login(username: string, password: string, res: Response): Promise
 
         res.statusCode = 200;
         res.cookie(TokenName, token);
-        res.json({
-            message: "LOGGED IN",
-            user,
-        })
+        res.json(user)
     } catch ({message}) {
         sendError(400, message, res)
     }
@@ -60,7 +57,6 @@ async function login(username: string, password: string, res: Response): Promise
 
 async function logout(res: Response): Promise<void> {
     try {
-
         res.clearCookie(TokenName)
         res.statusCode = 200;
         res.send('Succesfully logout')

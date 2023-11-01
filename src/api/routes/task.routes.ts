@@ -43,10 +43,18 @@ router.post('', async (req: Request<Task>, res: Response<Task>): Promise<void> =
 })
 
 router.patch('/:id/:completed', async (req: Request<Task>, res: Response<Task>): Promise<void> => {
-    const id: string = req.params['id'] as string;
-    const completed: boolean = stringToBool(req.params['completed'].toString());
+    const token: string = req.cookies['token']
+    try {
+        verifyToken(token)
+        const userId: string = getDataFromToken(token)['userId']
+        const id: string = req.params['id'] as string;
+        const completed: boolean = stringToBool(req.params['completed'].toString());
 
-    await TaskControllerFunctions.editCertainTaskCompleted(id, completed, res)
+        await TaskControllerFunctions.editCertainTaskCompleted(id, completed, userId, res)
+    } catch ({message}) {
+        sendError(400, message, res)
+    }
+
 })
 
 router.put('/:id', async (req: Request<Task>, res: Response<Task>): Promise<void> => {

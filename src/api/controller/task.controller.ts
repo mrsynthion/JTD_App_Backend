@@ -97,16 +97,16 @@ async function addTask(userId: string, task: Task, res: Response<Task>): Promise
     }
 }
 
-async function editCertainTaskCompleted(id: string, completed: boolean, res: Response<Task>): Promise<void> {
-    try {
-        await taskRepository.update(id, {completed});
-        const newTask: Task = await taskRepository.findOneBy({id});
-        res.statusCode = 200;
-        res.json(newTask)
-    } catch ({message}) {
-        let newMessage: ErrorCode = message;
-        sendError(400, newMessage, res)
-    }
+async function editCertainTaskCompleted(id: string, completed: boolean, userId: string, res: Response<Task>): Promise<void> {
+    const task: Task = await taskRepository.findOne({where: {id, user: {id: userId}}})
+    const {affected} = await taskRepository.update({
+        id,
+        user: {id: userId}
+    }, {completed})
+    if (!affected) throw new Error('Edycja zadania nie udała się');
+    const newTask: Task = await taskRepository.findOneBy({id});
+    res.statusCode = 200;
+    res.json(newTask)
 }
 
 async function editCertainTask(id: string, task: Task, res: Response<Task>): Promise<void> {
