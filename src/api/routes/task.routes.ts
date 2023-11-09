@@ -16,9 +16,21 @@ router.get('', async (req: Request, res, next) => {
     const token: string = req.cookies['token']
     try {
         verifyToken(token)
-        const userId: string = getDataFromToken(token)['userId']
+        const userId: string = getDataFromToken(token, 'id')
         const filters = req.query as unknown as Filters<Task>
         await TaskControllerFunctions.getTaskPage(userId, filters, res)
+    } catch ({message}) {
+        sendError(400, message, res)
+    }
+})
+
+router.post('', async (req: Request<Task>, res: Response<Task>): Promise<void> => {
+    const token: string = req.cookies['token']
+    try {
+        verifyToken(token)
+        const userId: string = getDataFromToken(token, 'id')
+        const task: Task = req.body;
+        await TaskControllerFunctions.addTask(userId, task, res)
     } catch ({message}) {
         sendError(400, message, res)
     }
@@ -29,26 +41,14 @@ router.get('/:id', async (req, res, next) => {
     await TaskControllerFunctions.getCertainTask(id, res)
 })
 
-router.post('', async (req: Request<Task>, res: Response<Task>): Promise<void> => {
+
+router.patch('/:id', async (req: Request<Task>, res: Response<Task>): Promise<void> => {
     const token: string = req.cookies['token']
     try {
         verifyToken(token)
-        const userId: string = getDataFromToken(token)['userId']
-        const task: Task = req.body;
-        await TaskControllerFunctions.addTask(userId, task, res)
-    } catch ({message}) {
-        sendError(400, message, res)
-    }
-
-})
-
-router.patch('/:id/:completed', async (req: Request<Task>, res: Response<Task>): Promise<void> => {
-    const token: string = req.cookies['token']
-    try {
-        verifyToken(token)
-        const userId: string = getDataFromToken(token)['userId']
+        const userId: string = getDataFromToken(token, 'id')
         const id: string = req.params['id'] as string;
-        const completed: boolean = stringToBool(req.params['completed'].toString());
+        const completed: boolean = stringToBool(req.query['completed'].toString());
 
         await TaskControllerFunctions.editCertainTaskCompleted(id, completed, userId, res)
     } catch ({message}) {

@@ -7,6 +7,7 @@ import {load} from 'js-yaml';
 import {readFileSync} from "fs";
 import * as cookieParser from 'cookie-parser';
 
+const PORT: number = 4500;
 
 AppDataSource.initialize().then(async () => {
 
@@ -33,10 +34,10 @@ AppDataSource.initialize().then(async () => {
     // ...
 
     // start express server
-    app.listen(4500)
+    app.listen(PORT)
 
     // insert new users for test
 
-    console.log("Express server has started on port 4500.")
+    console.log(`Express server has started on port ${PORT}.`)
 
 }).catch(error => console.log(error))

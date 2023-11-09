@@ -2,7 +2,6 @@ openapi: 3.0.3
 info:
   title: To do next app
   version: 1.0.0
-host: localhost:4500
 servers:
   - url: http://localhost:4500
 tags:
@@ -78,11 +77,228 @@ paths:
             text/plain:
               schema:
                 $ref: '#/components/schemas/ErrorCode'
+  /user:
+    get:
+      tags:
+        - User
+      summary: Get user page
+      description: Get paginated user page
+      operationId: userPage
+      parameters:
+        - in: query
+          name: User filtered query
+          schema:
+            $ref: '#/components/schemas/UserFilteredQuery'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageUserDto'
+        '400':
+          description: Invalid data
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ErrorCode'
+  /user/{id}:
+    get:
+      tags:
+        - User
+      summary: Get certain user
+      description: Get certain user by id
+      operationId: userById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+        '400':
+          description: Invalid data
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ErrorCode'
+    put:
+      tags:
+        - User
+      summary: Edit certain user
+      description: Edit certain user by id
+      operationId: editUserById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+        '400':
+          description: Invalid data
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ErrorCode'
+  /task:
+    get:
+      tags:
+        - Task
+      summary: Get task page
+      description: Get paginated task page
+      operationId: taskPage
+      parameters:
+        - in: query
+          name: Task filtered query
+          schema:
+            $ref: '#/components/schemas/TaskFilteredQuery'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageTaskDto'
+        '400':
+          description: Invalid data
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ErrorCode'
+    post:
+      tags:
+        - Task
+      summary: Create new task
+      description: Create new task
+      operationId: newTask
+      requestBody:
+        name: Task
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskDto'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskDto'
+        '400':
+          description: Invalid data
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ErrorCode'
+  /task/{id}:
+    get:
+      tags:
+        - Task
+      summary: Get certain task
+      description: Get certain task by id
+      operationId: taskById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskDto'
+        '400':
+          description: Invalid data
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ErrorCode'
+    patch:
+      tags:
+        - Task
+      summary: Edit completed field in task
+      description: Edit completed field in task by id
+      operationId: editCompletedFieldInTaskById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: completed
+          required: true
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskDto'
+        '400':
+          description: Invalid data
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ErrorCode'
+    put:
+      tags:
+        - Task
+      summary: Edit certain task
+      description: Edit certain task by id
+      operationId: editTaskById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        name: Task
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskDto'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskDto'
+        '400':
+          description: Invalid data
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ErrorCode'
 components:
   schemas:
     UserDto:
       type: object
       properties:
+        id:
+          type: string
         firstName:
           type: string
           example: firstName
@@ -110,6 +326,109 @@ components:
         password:
           type: string
           example: password
+    TaskDto:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        importanceLevel:
+          $ref: '#/components/schemas/ImportanceLevel'
+        createdAt:
+          type: string
+        expirationDate:
+          type: string
+        completed:
+          type: boolean
+    TaskFilteredQuery:
+      type: object
+      properties:
+        size:
+          type: number
+        page:
+          type: number
+        sort:
+          type: array
+          items:
+            oneOf:
+              - type: string
+              - $ref: '#/components/schemas/SortDirection'
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        importanceLevel:
+          $ref: '#/components/schemas/ImportanceLevel'
+        createdAt:
+          type: string
+        expirationDate:
+          type: string
+        completed:
+          type: boolean
+    UserFilteredQuery:
+      type: object
+      properties:
+        size:
+          type: number
+        page:
+          type: number
+        sort:
+          type: array
+          items:
+            oneOf:
+              - type: string
+              - $ref: '#/components/schemas/SortDirection'
+        id:
+          type: string
+        firstName:
+          type: string
+          example: firstName
+        lastName:
+          type: string
+          example: lastName
+        email:
+          type: string
+          example: email
+        age:
+          type: string
+          example: age
+        username:
+          type: string
+          example: username
+        password:
+          type: string
+          example: password
+    PageUserDto:
+      type: object
+      properties:
+        totalElements:
+          type: number
+        totalPages:
+          type: number
+        numberOfElements:
+          type: number
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserDto'
+    PageTaskDto:
+      type: object
+      properties:
+        totalElements:
+          type: number
+        totalPages:
+          type: number
+        numberOfElements:
+          type: number
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskDto'
     ErrorCode:
       type: string
       enum:
@@ -128,4 +447,16 @@ components:
         - 'NO VALID ID INCLUDED'
         - 'TITLE IS REQUIRED'
         - 'TITLE MUST BE MINIMUM FIVE CHARACTERS'
+    ImportanceLevel:
+      type: string
+      enum:
+        - LOW
+        - MEDIUM
+        - HIGH
+        - VERY_HIGH
+    SortDirection:
+      type: string
+      enum:
+        - ASC
+        - DESC
 

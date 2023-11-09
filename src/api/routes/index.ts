@@ -5,7 +5,7 @@ import TaskRoutes from "./task.routes";
 
 
 export const Routes = (app: Express) => {
-    app.use('/users', UserRoutes);
+    app.use('/user', UserRoutes);
     app.use('/auth', AuthRoutes);
-    app.use('/tasks', TaskRoutes)
+    app.use('/task', TaskRoutes)
 }
