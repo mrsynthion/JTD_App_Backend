@@ -86,7 +86,7 @@ paths:
       operationId: userPage
       parameters:
         - in: query
-          name: User filtered query
+          name: userFilteredQuery
           schema:
             $ref: '#/components/schemas/UserFilteredQuery'
       responses:
@@ -162,7 +162,7 @@ paths:
       operationId: taskPage
       parameters:
         - in: query
-          name: Task filtered query
+          name: taskFilteredQuery
           schema:
             $ref: '#/components/schemas/TaskFilteredQuery'
       responses:

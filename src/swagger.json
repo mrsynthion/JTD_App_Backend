@@ -137,7 +137,7 @@
         "parameters": [
           {
             "in": "query",
-            "name": "User filtered query",
+            "name": "userFilteredQuery",
             "schema": {
               "$ref": "#/components/schemas/UserFilteredQuery"
             }
@@ -260,7 +260,7 @@
         "parameters": [
           {
             "in": "query",
-            "name": "Task filtered query",
+            "name": "taskFilteredQuery",
             "schema": {
               "$ref": "#/components/schemas/TaskFilteredQuery"
             }
@@ -297,6 +297,7 @@
         "description": "Create new task",
         "operationId": "newTask",
         "requestBody": {
+          "name": "Task",
           "required": true,
           "content": {
             "application/json": {
@@ -437,6 +438,7 @@
           }
         ],
         "requestBody": {
+          "name": "Task",
           "required": true,
           "content": {
             "application/json": {

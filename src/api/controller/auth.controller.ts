@@ -29,9 +29,9 @@ async function signup(user: User, res: Response): Promise<void> {
 }
 
 async function login(username: string, password: string, res: Response): Promise<void> {
-
     if (!username || !password) {
         sendError(400, ErrorCode.AALDM, res)
+        return;
     }
     try {
         const user: User = await userRepository.findOne({
@@ -46,9 +46,8 @@ async function login(username: string, password: string, res: Response): Promise
 
         const token = generateToken(user);
         delete user['password']
-
         res.statusCode = 200;
-        res.cookie(TokenName, token);
+        res.cookie(TokenName, token, {httpOnly: true});
         res.json(user)
     } catch ({message}) {
         sendError(400, message, res)

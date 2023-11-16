@@ -11,7 +11,6 @@ export interface TokenPayload {
 const options: SignOptions = {
     mutatePayload: false,
     expiresIn: '30m',
-
 }
 
 function generateToken({id, email}: User): string {
