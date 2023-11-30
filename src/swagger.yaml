@@ -309,8 +309,8 @@ components:
           type: string
           example: email
         age:
-          type: string
-          example: age
+          type: number
+          example: 15
         username:
           type: string
           example: username

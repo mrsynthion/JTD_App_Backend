@@ -11,7 +11,6 @@ import * as cors from 'cors'
 const PORT: number = 4500;
 
 AppDataSource.initialize().then(async () => {
-
     // create express app
     const app = express()
     app.use(bodyParser.json())
