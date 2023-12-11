@@ -4,7 +4,7 @@ import {AppDataSource} from "../../data-source";
 import {Task} from "../entity/Task";
 import {TaskControllerFunctions} from "../controller/task.controller";
 import {Filters} from "../../global-types/pagination.types";
-import {getDataFromToken, verifyToken} from "../../utils/token-managements.utils";
+import {getDataFromTokenByKey, verifyToken} from "../../utils/token-managements.utils";
 import {sendError} from "../../utils/error.utils";
 import {stringToBool} from "../../utils/request.utils";
 
@@ -16,7 +16,7 @@ router.get('', async (req: Request, res, next) => {
     const token: string = req.cookies['token']
     try {
         verifyToken(token)
-        const userId: string = getDataFromToken(token, 'id')
+        const userId: string = getDataFromTokenByKey(token, 'id')
         const filters = req.query as unknown as Filters<Task>
         await TaskControllerFunctions.getTaskPage(userId, filters, res)
     } catch ({message}) {
@@ -28,7 +28,7 @@ router.post('', async (req: Request<Task>, res: Response<Task>): Promise<void> =
     const token: string = req.cookies['token']
     try {
         verifyToken(token)
-        const userId: string = getDataFromToken(token, 'id')
+        const userId: string = getDataFromTokenByKey(token, 'id')
         const task: Task = req.body;
         await TaskControllerFunctions.addTask(userId, task, res)
     } catch ({message}) {
@@ -46,7 +46,7 @@ router.patch('/:id', async (req: Request<Task>, res: Response<Task>): Promise<vo
     const token: string = req.cookies['token']
     try {
         verifyToken(token)
-        const userId: string = getDataFromToken(token, 'id')
+        const userId: string = getDataFromTokenByKey(token, 'id')
         const id: string = req.params['id'] as string;
         const completed: boolean = stringToBool(req.query['completed'].toString());
 

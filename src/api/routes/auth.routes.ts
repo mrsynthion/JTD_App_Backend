@@ -21,4 +21,9 @@ router.post('/logout', async (req, res, next) => {
     await AuthControllerFunctions.logout(res)
 })
 
+router.post('/verifyToken', async (req, res, next) => {
+    const token: string = req.cookies['token'];
+    await AuthControllerFunctions.verifyUserToken(token, res);
+})
+
 export default router;

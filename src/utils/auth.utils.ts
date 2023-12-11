@@ -5,11 +5,11 @@ function validatePassword(password: string): void {
     if (!password) throw new Error(ErrorCode.PIR)
     const isMinTenChars: boolean = password.length >= 10;
     const isMinOneBigChars: boolean = /[A-Z]/.test(password);
-    const isMinOneSmalChars: boolean = /[a-z]/.test(password);
+    const isMinOneSmallChars: boolean = /[a-z]/.test(password);
     const isMinOneNumber: boolean = /[0-9]/.test(password);
     const isMinOneSymbol: boolean = /[^A-Za-z0-9]/.test(password);
 
-    const isPasswordCorrect: boolean = isMinTenChars && isMinOneBigChars && isMinOneSmalChars && isMinOneNumber && isMinOneSymbol;
+    const isPasswordCorrect: boolean = isMinTenChars && isMinOneBigChars && isMinOneSmallChars && isMinOneNumber && isMinOneSymbol;
 
     if (!isPasswordCorrect) throw new Error(ErrorCode.PSHMTCALOSCOBCONOSC)
 }

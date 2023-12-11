@@ -5,7 +5,7 @@ import {sendError} from "../../utils/error.utils";
 import {User} from "../entity/User";
 import {Response} from "express";
 import {AppDataSource} from "../../data-source";
-import {generateToken} from "../../utils/token-managements.utils";
+import {generateToken, verifyToken} from "../../utils/token-managements.utils";
 import {saltRounds, TokenName} from "../../global-types/auth.types";
 
 const userRepository = AppDataSource.getRepository(User)
@@ -62,11 +62,20 @@ async function logout(res: Response): Promise<void> {
     } catch ({message}) {
         sendError(400, message, res)
     }
+}
 
+async function verifyUserToken(token: string, res: Response): Promise<void> {
+    try {
+        verifyToken(token)
+        res.json({isValidToken: true})
+    } catch ({message}) {
+        res.json({isValidToken: false})
+    }
 }
 
 export const AuthControllerFunctions = {
     login,
     signup,
-    logout
+    logout,
+    verifyUserToken
 }

@@ -1,9 +1,9 @@
-import {decode, sign, SignOptions, verify} from 'jsonwebtoken'
+import {decode, JwtPayload, sign, SignOptions, verify} from 'jsonwebtoken'
 import {ErrorCode} from "../global-types/error.types";
 import {User} from "../api/entity/User";
 import {config} from 'dotenv'
 
-export interface TokenPayload {
+export interface TokenPayload extends JwtPayload {
     id: string,
     email: string
 }
@@ -27,16 +27,19 @@ function generateToken({id, email}: User): string {
 function verifyToken(token: string) {
     verify(token, config().parsed['PRIVATE_KEY'], (error, decoded) => {
         if (error) {
-            console.log(error)
             throw new Error(ErrorCode.TTE)
         }
     })
 
 }
 
-function getDataFromToken(token: string, key?: keyof TokenPayload) {
-    return key ? decode(token) : decode(token)[key]
+function getDataFromToken(token: string): TokenPayload {
+    return decode(token) as TokenPayload;
+}
+
+function getDataFromTokenByKey(token: string, key: keyof TokenPayload): TokenPayload[keyof TokenPayload] {
+    return getDataFromToken(token)[key]
 }
 
 
-export {generateToken, verifyToken, getDataFromToken}
+export {generateToken, verifyToken, getDataFromToken, getDataFromTokenByKey}

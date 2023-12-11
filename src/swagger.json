@@ -126,6 +126,38 @@
         }
       }
     },
+    "/auth/verifyToken": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Verify token",
+        "description": "Verify token",
+        "operationId": "verifyToken",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifyTokenDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/user": {
       "get": {
         "tags": [
@@ -495,7 +527,7 @@
           },
           "age": {
             "type": "number",
-            "example": "age"
+            "example": 15
           },
           "username": {
             "type": "string",
@@ -679,6 +711,15 @@
             "items": {
               "$ref": "#/components/schemas/TaskDto"
             }
+          }
+        }
+      },
+      "VerifyTokenDto": {
+        "type": "object",
+        "properties": {
+          "isMyTokenValid": {
+            "type": "boolean",
+            "example": true
           }
         }
       },
