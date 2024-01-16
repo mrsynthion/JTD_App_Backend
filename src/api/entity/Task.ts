@@ -7,8 +7,8 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { UserInProject } from "./UserInProject";
-import { Dict03_Task_Types } from "./dictionaries/Dict03_Task_Types";
-import { Dict04_Task_Statuses } from "./dictionaries/Dict04_Task_Statuses";
+import { Dict03_TaskTypes } from "./dictionaries/Dict03_TaskTypes";
+import { Dict04_TaskStatuses } from "./dictionaries/Dict04_TaskStatuses";
 
 @Entity({ name: "Tasks" })
 export class Task {
@@ -27,13 +27,13 @@ export class Task {
   @Column("text", { nullable: true })
   label: string;
 
-  @ManyToOne(() => Dict03_Task_Types, { nullable: false })
+  @ManyToOne(() => Dict03_TaskTypes, { nullable: false })
   @JoinColumn()
-  type: Dict03_Task_Types;
+  type: Dict03_TaskTypes;
 
-  @ManyToOne(() => Dict04_Task_Statuses, { nullable: false })
+  @ManyToOne(() => Dict04_TaskStatuses, { nullable: false })
   @JoinColumn()
-  status: Dict04_Task_Statuses;
+  status: Dict04_TaskStatuses;
 
   @ManyToOne(() => UserInProject, (userInProject) => userInProject.tasks, {
     onDelete: "CASCADE",

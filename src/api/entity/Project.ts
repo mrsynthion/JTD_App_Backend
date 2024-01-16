@@ -7,9 +7,9 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Dict02_Project_Types } from "./dictionaries/Dict02_Project_Types";
+import { Dict02_ProjectTypes } from "./dictionaries/Dict02_ProjectTypes";
 import { UserInProject } from "./UserInProject";
-import { Dict05_Project_Management_Types } from "./dictionaries/Dict05_Project_Management_Types";
+import { Dict05_ProjectManagementTypes } from "./dictionaries/Dict05_ProjectManagementTypes";
 
 @Entity({ name: "Projects" })
 export class Project {
@@ -22,9 +22,9 @@ export class Project {
   @Column({ nullable: false })
   key: string;
 
-  @ManyToOne(() => Dict02_Project_Types, { nullable: false })
+  @ManyToOne(() => Dict02_ProjectTypes, { nullable: false })
   @JoinColumn()
-  type: Dict02_Project_Types;
+  type: Dict02_ProjectTypes;
 
   @OneToOne(() => UserInProject, { nullable: false })
   @JoinColumn()
@@ -33,7 +33,7 @@ export class Project {
   @OneToMany(() => UserInProject, (userInProject) => userInProject.project)
   users: UserInProject[];
 
-  @ManyToOne(() => Dict05_Project_Management_Types, { nullable: false })
+  @ManyToOne(() => Dict05_ProjectManagementTypes, { nullable: false })
   @JoinColumn()
-  projectManagementType: Dict05_Project_Management_Types;
+  projectManagementType: Dict05_ProjectManagementTypes;
 }

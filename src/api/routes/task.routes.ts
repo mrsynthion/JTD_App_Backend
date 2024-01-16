@@ -11,41 +11,47 @@ import {
 import { sendError } from "../../utils/error.utils";
 
 const userRepository = AppDataSource.getRepository(Task);
-const router = express.Router()
+const router = express.Router();
 
-router.get('', async (req: Request, res, next) => {
-    const token: string = req.cookies['token']
+router.get("", async (req: Request, res, next) => {
+  const token: string = req.cookies["token"];
+  try {
+    verifyToken(token);
+    const userId: string = getDataFromTokenByKey(token, "id");
+    const filters = req.query as unknown as Filters<Task>;
+    await TaskControllerFunctions.getTaskPage(userId, filters, res);
+  } catch ({ message }) {
+    sendError(400, message, res);
+  }
+});
+
+router.post(
+  "",
+  async (req: Request<Task>, res: Response<Task>): Promise<void> => {
+    const token: string = req.cookies["token"];
     try {
-        verifyToken(token)
-        const userId: string = getDataFromTokenByKey(token, 'id')
-        const filters = req.query as unknown as Filters<Task>
-        await TaskControllerFunctions.getTaskPage(userId, filters, res)
-    } catch ({message}) {
-        sendError(400, message, res)
+      verifyToken(token);
+      const userId: string = getDataFromTokenByKey(token, "id");
+      const task: Task = req.body;
+      await TaskControllerFunctions.addTask(userId, task, res);
+    } catch ({ message }) {
+      sendError(400, message, res);
     }
-})
+  },
+);
 
-router.post('', async (req: Request<Task>, res: Response<Task>): Promise<void> => {
-    const token: string = req.cookies['token']
-    try {
-        verifyToken(token)
-        const userId: string = getDataFromTokenByKey(token, 'id')
-        const task: Task = req.body;
-        await TaskControllerFunctions.addTask(userId, task, res)
-    } catch ({message}) {
-        sendError(400, message, res)
-    }
-})
+router.get("/:id", async (req, res, next) => {
+  const id = req.params["id"] as string;
+  await TaskControllerFunctions.getCertainTask(id, res);
+});
 
-router.get('/:id', async (req, res, next) => {
-    const id = req.params['id'] as string
-    await TaskControllerFunctions.getCertainTask(id, res)
-})
-
-router.put('/:id', async (req: Request<Task>, res: Response<Task>): Promise<void> => {
+router.put(
+  "/:id",
+  async (req: Request<Task>, res: Response<Task>): Promise<void> => {
     const task: Task = req.body;
-    const id: string = req.params['id'] as string
-    await TaskControllerFunctions.editCertainTask(id, task, res)
-})
+    const id: string = req.params["id"] as string;
+    await TaskControllerFunctions.editCertainTask(id, task, res);
+  },
+);
 
-export default router
+export default router;
