@@ -1,15 +1,16 @@
 import * as express from "express";
-import {Request, Response} from "express";
-import {AppDataSource} from "../../data-source";
-import {Task} from "../entity/Task";
-import {TaskControllerFunctions} from "../controller/task.controller";
-import {Filters} from "../../global-types/pagination.types";
-import {getDataFromTokenByKey, verifyToken} from "../../utils/token-managements.utils";
-import {sendError} from "../../utils/error.utils";
-import {stringToBool} from "../../utils/request.utils";
+import { Request, Response } from "express";
+import { AppDataSource } from "../../data-source";
+import { Task } from "../entity/Task";
+import { TaskControllerFunctions } from "../controller/task.controller";
+import { Filters } from "../../global-types/pagination.types";
+import {
+  getDataFromTokenByKey,
+  verifyToken,
+} from "../../utils/token-managements.utils";
+import { sendError } from "../../utils/error.utils";
 
-
-const userRepository = AppDataSource.getRepository(Task)
+const userRepository = AppDataSource.getRepository(Task);
 const router = express.Router()
 
 router.get('', async (req: Request, res, next) => {
@@ -39,22 +40,6 @@ router.post('', async (req: Request<Task>, res: Response<Task>): Promise<void> =
 router.get('/:id', async (req, res, next) => {
     const id = req.params['id'] as string
     await TaskControllerFunctions.getCertainTask(id, res)
-})
-
-
-router.patch('/:id', async (req: Request<Task>, res: Response<Task>): Promise<void> => {
-    const token: string = req.cookies['token']
-    try {
-        verifyToken(token)
-        const userId: string = getDataFromTokenByKey(token, 'id')
-        const id: string = req.params['id'] as string;
-        const completed: boolean = stringToBool(req.query['completed'].toString());
-
-        await TaskControllerFunctions.editCertainTaskCompleted(id, completed, userId, res)
-    } catch ({message}) {
-        sendError(400, message, res)
-    }
-
 })
 
 router.put('/:id', async (req: Request<Task>, res: Response<Task>): Promise<void> => {

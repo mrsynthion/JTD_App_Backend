@@ -328,21 +328,15 @@ components:
         email:
           type: string
           example: email
-        age:
-          type: number
-          example: 15
-        username:
-          type: string
-          example: username
         password:
           type: string
           example: password
     LoginDto:
       type: object
       properties:
-        username:
+        email:
           type: string
-          example: username
+          example: email
         password:
           type: string
           example: password
@@ -355,8 +349,6 @@ components:
           type: string
         description:
           type: string
-        importanceLevel:
-          $ref: '#/components/schemas/ImportanceLevel'
         createdAt:
           type: string
         expirationDate:
@@ -382,8 +374,6 @@ components:
           type: string
         description:
           type: string
-        importanceLevel:
-          $ref: '#/components/schemas/ImportanceLevel'
         createdAt:
           type: string
         expirationDate:
@@ -414,12 +404,6 @@ components:
         email:
           type: string
           example: email
-        age:
-          type: string
-          example: age
-        username:
-          type: string
-          example: username
         password:
           type: string
           example: password
@@ -468,18 +452,9 @@ components:
         - "PASSWORD SHOULD HAVE MINIMUM TEN CHARACTERS,AT LEAST ONE SMALL CHARACTER, ONE BIG CHARACTER, ONE NUMBER, ONE SPECIAL CHARACTER"
         - 'EMAIL IS REQUIRED'
         - 'THIS EMAIL IS ALREADY IN USE'
-        - 'USERNAME IS REQUIRED'
-        - 'THIS USERNAME IS ALREADY IN USE'
         - 'NO VALID ID INCLUDED'
         - 'TITLE IS REQUIRED'
         - 'TITLE MUST BE MINIMUM FIVE CHARACTERS'
-    ImportanceLevel:
-      type: string
-      enum:
-        - LOW
-        - MEDIUM
-        - HIGH
-        - VERY_HIGH
     SortDirection:
       type: string
       enum:

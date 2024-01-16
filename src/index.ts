@@ -1,53 +1,66 @@
-import * as express from "express"
-import * as bodyParser from "body-parser"
-import {AppDataSource} from "./data-source"
-import {Routes} from "./api/routes";
-import {serveFiles, setup} from "swagger-ui-express";
-import {load} from 'js-yaml';
-import {readFileSync} from "fs";
-import * as cookieParser from 'cookie-parser';
-import * as cors from 'cors'
+import * as express from "express";
+import * as bodyParser from "body-parser";
+import { AppDataSource } from "./data-source";
+import { serveFiles, setup } from "swagger-ui-express";
+import { load } from "js-yaml";
+import { readFileSync } from "fs";
+import * as cookieParser from "cookie-parser";
+import * as cors from "cors";
+import { Routes } from "./api/routes";
 
 const PORT: number = 4500;
 
 AppDataSource.initialize().then(async () => {
-    // create express app
-    const app = express()
-    app.use(bodyParser.json())
-    app.use(cookieParser())
-    app.use(cors({
-                origin: 'http://localhost:3000',
-                credentials: true
-            }
-        )
-    )
+  //
+  // await AppDataSource.synchronize(true)
 
-    const spec = readFileSync('./src/swagger.json', {encoding: 'utf8', flag: 'r'});
-    const swaggerDocument = load(spec);
+  // create express app
+  const app = express();
+  app.use(bodyParser.json());
+  app.use(cookieParser());
+  app.use(
+    cors({
+      origin: "http://localhost:3000",
+      credentials: true,
+    }),
+  );
 
-    const options = {
-        swaggerOptions: {
-            url: "/api-docs/swagger.json",
-        },
-    }
+  const doc = {
+    info: {
+      title: "My API",
+      description: "Description",
+    },
+    host: "localhost:4000",
+  };
 
-    app.get('/', (req, res) => {
-        res.redirect('/api-docs')
-    })
-    app.get("/api-docs/swagger.json", (req, res) => res.json(swaggerDocument));
-    app.use('/api-docs', serveFiles(null, options), setup(null, options));
+  const spec = readFileSync("./src/swagger.json", {
+    encoding: "utf8",
+    flag: "r",
+  });
+  const swaggerDocument = load(spec);
 
-    // register express routes from defined application routes
-    Routes(app);
+  const options = {
+    swaggerOptions: {
+      url: "/api-docs/swagger.json",
+    },
+  };
 
-    // setup express app here
-    // ...
+  app.get("/", (req, res) => {
+    res.redirect("/api-docs");
+  });
+  app.get("/api-docs/swagger.json", (req, res) => res.json(swaggerDocument));
+  app.use("/api-docs", serveFiles(null, options), setup(null, options));
 
-    // start express server
-    app.listen(PORT)
+  // register express routes from defined application routes
+  Routes(app);
 
-    // insert new users for test
+  // setup express app here
+  // ...
 
-    console.log(`Express server has started on port ${PORT}.`)
+  // start express server
+  app.listen(PORT);
 
+  // insert new users for test
+
+  console.log(`Express server has started on port ${PORT}.`);
 }).catch(error => console.log(error))
