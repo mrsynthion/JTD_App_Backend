@@ -1,6 +1,5 @@
 import {
   AddUserInProjectType,
-  Dict01_Project_User_Types_Code,
   EditUserInProjectType,
   UserInProjectType,
 } from "../../../global-types/dictionaries/Dict01_UserTypes.types";
@@ -70,7 +69,7 @@ async function getUserInProjectTypeById(
 }
 
 async function getUserInProjectTypeByCode(
-  code: Dict01_Project_User_Types_Code,
+  code: number,
 ): Promise<UserInProjectType> {
   try {
     const userInProjectType: UserInProjectType =
@@ -157,7 +156,7 @@ async function getUserInProjectPage({
   }
 }
 
-export const Dict01_UserTyPesControllerFunctions = {
+export const Dict01_UserInProjectTypesControllerFunctions = {
   addUserInProjectType,
   editUserInProjectType,
   getUserInProjectTypeById,
