@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Generated, PrimaryGeneratedColumn } from "typeorm";
 
 export enum Dict04_Task_Statuses_Code {
   TO_DO = "01",
@@ -12,13 +12,14 @@ export enum Dict04_Task_Statuses_Code {
 }
 
 @Entity({ name: "Dict04_Task_Statuses" })
-export class Dict04_Task_Statuses {
+export class Dict04_TaskStatuses {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ nullable: false })
-  value: string;
-
-  @Column("text", { nullable: false })
+  @Column({ type: "int", nullable: false, unique: true })
+  @Generated("increment")
   code: Dict04_Task_Statuses_Code;
+
+  @Column("text", { nullable: false, unique: true })
+  value: string;
 }

@@ -8,8 +8,8 @@ import {
 } from "typeorm";
 import { Project } from "./Project";
 import { User } from "./User";
-import { Dict01_Project_User_Types } from "./dictionaries/Dict01_User_Types";
 import { Task } from "./Task";
+import { Dict01_UserInProjectTypes } from "./dictionaries/Dict01_UserInProjectTypes";
 
 @Entity({
   name: "UsersInProjects",
@@ -30,9 +30,9 @@ export class UserInProject {
   @ManyToOne(() => User, (user) => user.projects, { nullable: false })
   user: User;
 
-  @ManyToOne(() => Dict01_Project_User_Types, { nullable: false })
+  @ManyToOne(() => Dict01_UserInProjectTypes, { nullable: false })
   @JoinColumn()
-  type: Dict01_Project_User_Types;
+  type: Dict01_UserInProjectTypes;
 
   @OneToMany(() => Task, (task) => task.assignedUser)
   tasks: Task[];
