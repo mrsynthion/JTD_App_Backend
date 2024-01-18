@@ -1,6 +1,6 @@
 _type: export
 __export_format: 4
-__export_date: 2024-01-17T20:46:14.785Z
+__export_date: 2024-01-18T18:39:13.813Z
 __export_source: insomnia.desktop.app:v2022.2.1
 resources:
   - _id: req_e623d0519efc4019835f749deeea8f65
@@ -257,6 +257,268 @@ resources:
       text: |-
         {
         	"value":"Scurm"
+        }
+    parameters: [ ]
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_3e0f10b5ee3c43999ddd3006d2084da4
+    authentication: { }
+    metaSortKey: -1705434260217
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_dcaba3af03bb4b7e8f1f7e269ff27506
+    parentId: fld_30500f47fdf74bd19479da1672941fba
+    modified: 1705600194909
+    created: 1705600147745
+    url: http://localhost:4500/task-type
+    name: Get task type page (optional pagination)
+    description: ""
+    method: GET
+    body: { }
+    parameters: [ ]
+    headers: [ ]
+    authentication: { }
+    metaSortKey: -1705437662241
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_30500f47fdf74bd19479da1672941fba
+    parentId: wrk_14836f92b9e948a4a784477c98072ba9
+    modified: 1705600147740
+    created: 1705600147740
+    name: Dict03 Task Types
+    description: ""
+    environment: { }
+    environmentPropertyOrder: null
+    metaSortKey: -1699581881700.25
+    _type: request_group
+  - _id: req_0dd66fc263b54ca3a5cc9799847aa41d
+    parentId: fld_30500f47fdf74bd19479da1672941fba
+    modified: 1705600249847
+    created: 1705600147744
+    url: http://localhost:4500/task-type/code/3
+    name: Get task type by code
+    description: ""
+    method: GET
+    body: { }
+    parameters: [ ]
+    headers: [ ]
+    authentication: { }
+    metaSortKey: -1705437297466
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_e0c065a2f2bc4fb4a2340dcb4ff2f15b
+    parentId: fld_30500f47fdf74bd19479da1672941fba
+    modified: 1705600246678
+    created: 1705600147743
+    url: http://localhost:4500/task-type/2a4f1eff-9cfa-41f6-936d-0b26108041d8
+    name: Get task type by id
+    description: ""
+    method: GET
+    body: { }
+    parameters: [ ]
+    headers: [ ]
+    authentication: { }
+    metaSortKey: -1705437292429
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_619159b2f1cf46509e3810dc8dc1340d
+    parentId: fld_30500f47fdf74bd19479da1672941fba
+    modified: 1705600340895
+    created: 1705600147742
+    url: http://localhost:4500/task-type/2a4f1eff-9cfa-41f6-936d-0b26108041d8
+    name: Edit task type
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"value":"Error"
+        }
+    parameters: [ ]
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_b9354d1e1ea647e5a4228c387d86e1e8
+    authentication: { }
+    metaSortKey: -1705436093156
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_92197961d4c1492ab3d0937ebe9b20e1
+    parentId: fld_30500f47fdf74bd19479da1672941fba
+    modified: 1705600223312
+    created: 1705600147741
+    url: http://localhost:4500/task-type/
+    name: Add task type
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"value":"Eror"
+        }
+    parameters: [ ]
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_3e0f10b5ee3c43999ddd3006d2084da4
+    authentication: { }
+    metaSortKey: -1705434260217
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_69c691599fcc44f6a0da328144c74ce3
+    parentId: fld_0552a0dc4225413f966d6bf336e1c15f
+    modified: 1705603017821
+    created: 1705602984445
+    url: http://localhost:4500/task-status
+    name: Get task status page (optional pagination)
+    description: ""
+    method: GET
+    body: { }
+    parameters: [ ]
+    headers: [ ]
+    authentication: { }
+    metaSortKey: -1705437662241
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_0552a0dc4225413f966d6bf336e1c15f
+    parentId: wrk_14836f92b9e948a4a784477c98072ba9
+    modified: 1705602994718
+    created: 1705602984440
+    name: Dict04 Task Statuses
+    description: ""
+    environment: { }
+    environmentPropertyOrder: null
+    metaSortKey: -1698606489120.625
+    _type: request_group
+  - _id: req_d848b73068634cdc86f6caa02d7c424f
+    parentId: fld_0552a0dc4225413f966d6bf336e1c15f
+    modified: 1705603058070
+    created: 1705602984445
+    url: http://localhost:4500/task-status/code/2
+    name: Get task status by code
+    description: ""
+    method: GET
+    body: { }
+    parameters: [ ]
+    headers: [ ]
+    authentication: { }
+    metaSortKey: -1705437297466
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_cd265245c2044abba6741db88881192e
+    parentId: fld_0552a0dc4225413f966d6bf336e1c15f
+    modified: 1705603068303
+    created: 1705602984443
+    url: http://localhost:4500/task-status/d2986783-f36c-40bd-a5be-08d1a9574266
+    name: Get task status by id
+    description: ""
+    method: GET
+    body: { }
+    parameters: [ ]
+    headers: [ ]
+    authentication: { }
+    metaSortKey: -1705437292429
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_8cd1d660a2c449d7aa1a0b31a5e81346
+    parentId: fld_0552a0dc4225413f966d6bf336e1c15f
+    modified: 1705603097310
+    created: 1705602984442
+    url: http://localhost:4500/task-status/2f71a886-a8a3-484f-8e3e-5951c0440104
+    name: Edit task status
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"value":"Code review"
+        }
+    parameters: [ ]
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_b9354d1e1ea647e5a4228c387d86e1e8
+    authentication: { }
+    metaSortKey: -1705436093156
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_db5fd8094ced42359baac7b7409775d7
+    parentId: fld_0552a0dc4225413f966d6bf336e1c15f
+    modified: 1705603077979
+    created: 1705602984441
+    url: http://localhost:4500/task-status/
+    name: Add task status
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"value":"Code rev"
         }
     parameters: [ ]
     headers:

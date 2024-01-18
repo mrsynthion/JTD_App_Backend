@@ -16,10 +16,10 @@ router.post(
   async (req: Request<unknown, TaskType, AddTaskType>, res, next) => {
     try {
       const addTaskType: AddTaskType = req.body;
-      const projectType =
-        await Dict03_TaskTypesControllerFunctions.addTaskType(addTaskType);
+        const taskType =
+          await Dict03_TaskTypesControllerFunctions.addTaskType(addTaskType);
       res.statusCode = 201;
-      res.json(projectType);
+      res.json(taskType);
     } catch ({ message }) {
       let newMessage: ErrorCode = message;
       if (message.toLowerCase().includes("duplicate"))
@@ -37,13 +37,12 @@ router.put(
       const editTaskType: EditTaskType = req.body;
       const id: string = req.params["id"] as string;
 
-      const projectType =
-        await Dict03_TaskTypesControllerFunctions.editTaskType(
-          editTaskType,
-          id,
-        );
+      const taskType = await Dict03_TaskTypesControllerFunctions.editTaskType(
+        editTaskType,
+        id,
+      );
       res.statusCode = 200;
-      res.json(projectType);
+      res.json(taskType);
     } catch ({ message }) {
       let newMessage: ErrorCode = message;
       if (message.toLowerCase().includes("duplicate"))
