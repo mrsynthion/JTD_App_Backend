@@ -1,15 +1,16 @@
-import router from "../auth.routes";
+import * as express from "express";
 import { Request } from "express";
 import {
   AddUserInProjectType,
-  Dict01_Project_User_Types_Code,
   EditUserInProjectType,
   UserInProjectType,
 } from "../../../global-types/dictionaries/Dict01_UserTypes.types";
-import { Dict01_UserTyPesControllerFunctions } from "../../controller/dictionaries/Dict01_UserTypes.controller";
+import { Dict01_UserInProjectTypesControllerFunctions } from "../../controller/dictionaries/Dict01_UserInProjectTypes.controller";
 import { ErrorCode } from "../../../global-types/error.types";
 import { sendError } from "../../../utils/error.utils";
 import { Filters, Page } from "../../../global-types/pagination.types";
+
+const router = express.Router();
 
 router.post(
   "/",
@@ -21,7 +22,7 @@ router.post(
     try {
       const addUserInProjectType: AddUserInProjectType = req.body;
       const userInProjectType =
-        await Dict01_UserTyPesControllerFunctions.addUserInProjectType(
+        await Dict01_UserInProjectTypesControllerFunctions.addUserInProjectType(
           addUserInProjectType,
         );
       res.statusCode = 201;
@@ -48,7 +49,7 @@ router.put(
       const id: string = req.params["id"] as string;
 
       const userInProjectType =
-        await Dict01_UserTyPesControllerFunctions.editUserInProjectType(
+        await Dict01_UserInProjectTypesControllerFunctions.editUserInProjectType(
           editUserInProjectType,
           id,
         );
@@ -79,7 +80,9 @@ router.get(
     try {
       const filters: Filters<UserInProjectType> = req.query;
       const userInProjectTypeList =
-        await Dict01_UserTyPesControllerFunctions.getUserInProjectPage(filters);
+        await Dict01_UserInProjectTypesControllerFunctions.getUserInProjectPage(
+          filters,
+        );
       res.statusCode = 200;
       res.json(userInProjectTypeList);
     } catch ({ message }) {
@@ -94,7 +97,9 @@ router.get(
     try {
       const id: string = req.params["id"];
       const userInProjectType =
-        await Dict01_UserTyPesControllerFunctions.getUserInProjectTypeById(id);
+        await Dict01_UserInProjectTypesControllerFunctions.getUserInProjectTypeById(
+          id,
+        );
       res.statusCode = 200;
       res.json(userInProjectType);
     } catch ({ message }) {
@@ -105,15 +110,11 @@ router.get(
 
 router.get(
   "/code/:code",
-  async (
-    req: Request<{ code: Dict01_Project_User_Types_Code }, UserInProjectType>,
-    res,
-    next,
-  ) => {
+  async (req: Request<{ code: number }, UserInProjectType>, res, next) => {
     try {
-      const code: Dict01_Project_User_Types_Code = req.params["code"];
+      const code: number = req.params["code"];
       const userInProjectType =
-        await Dict01_UserTyPesControllerFunctions.getUserInProjectTypeByCode(
+        await Dict01_UserInProjectTypesControllerFunctions.getUserInProjectTypeByCode(
           code,
         );
       res.statusCode = 200;
