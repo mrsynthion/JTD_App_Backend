@@ -14,14 +14,14 @@ import {
   SortDirection,
 } from "../../../global-types/pagination.types";
 
-const dict04_TastStatusesRepository: Repository<Dict04_TaskStatuses> =
+const dict04_TaskStatusesRepository: Repository<Dict04_TaskStatuses> =
   AppDataSource.getRepository(Dict04_TaskStatuses);
 
 async function addTaskStatus(
   addTaskStatus: AddTaskStatus,
 ): Promise<TaskStatus> {
   try {
-    return await dict04_TastStatusesRepository.save(addTaskStatus);
+    return await dict04_TaskStatusesRepository.save(addTaskStatus);
   } catch ({ message }) {
     throw new Error(message);
   }
@@ -32,19 +32,19 @@ async function editTaskStatus(
   id: string,
 ): Promise<TaskStatus> {
   try {
-    const taskStatusExist: boolean = await dict04_TastStatusesRepository.exist({
+    const taskStatusExist: boolean = await dict04_TaskStatusesRepository.exist({
       where: {
         id,
       },
     });
     if (!taskStatusExist) throw new Error(ErrorCode.DVDNE);
-    await dict04_TastStatusesRepository.update(
+    await dict04_TaskStatusesRepository.update(
       {
         id,
       },
       editTaskType,
     );
-    return await dict04_TastStatusesRepository.findOneBy({ id });
+    return await dict04_TaskStatusesRepository.findOneBy({ id });
   } catch ({ message }) {
     throw new Error(message);
   }
@@ -53,7 +53,7 @@ async function editTaskStatus(
 async function getTaskStatusById(id: string): Promise<TaskStatus> {
   try {
     const taskStatus: TaskStatus =
-      await dict04_TastStatusesRepository.findOneBy({
+      await dict04_TaskStatusesRepository.findOneBy({
         id,
       });
     if (!(taskStatus && taskStatus.id)) throw new Error(ErrorCode.DVDNE);
@@ -67,7 +67,7 @@ async function getTaskStatusById(id: string): Promise<TaskStatus> {
 async function getTaskStatusByCode(code: number): Promise<TaskStatus> {
   try {
     const taskStatus: TaskStatus =
-      await dict04_TastStatusesRepository.findOneBy({
+      await dict04_TaskStatusesRepository.findOneBy({
         code,
       });
     if (!(taskStatus && taskStatus.id)) {

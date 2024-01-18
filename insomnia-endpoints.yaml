@@ -1,6 +1,6 @@
 _type: export
 __export_format: 4
-__export_date: 2024-01-18T18:39:13.813Z
+__export_date: 2024-01-18T19:38:18.298Z
 __export_source: insomnia.desktop.app:v2022.2.1
 resources:
   - _id: req_e623d0519efc4019835f749deeea8f65
@@ -519,6 +519,137 @@ resources:
       text: |-
         {
         	"value":"Code rev"
+        }
+    parameters: [ ]
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_3e0f10b5ee3c43999ddd3006d2084da4
+    authentication: { }
+    metaSortKey: -1705434260217
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_3c299c205b464967985b0dc5a918550f
+    parentId: fld_beb709adbda343e9b7936f53786d573d
+    modified: 1705605749316
+    created: 1705605662503
+    url: http://localhost:4500/project-management-type
+    name: Get project management type page (optional pagination)
+    description: ""
+    method: GET
+    body: { }
+    parameters: [ ]
+    headers: [ ]
+    authentication: { }
+    metaSortKey: -1705437662241
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_beb709adbda343e9b7936f53786d573d
+    parentId: wrk_14836f92b9e948a4a784477c98072ba9
+    modified: 1705605662499
+    created: 1705605662499
+    name: Dict05 Project Management Types
+    description: ""
+    environment: { }
+    environmentPropertyOrder: null
+    metaSortKey: -1698118792830.8125
+    _type: request_group
+  - _id: req_371926e0cf294a8889f01a977846c687
+    parentId: fld_beb709adbda343e9b7936f53786d573d
+    modified: 1705605743466
+    created: 1705605662504
+    url: http://localhost:4500/project-management-type/code/2
+    name: Get project management type by code
+    description: ""
+    method: GET
+    body: { }
+    parameters: [ ]
+    headers: [ ]
+    authentication: { }
+    metaSortKey: -1705437297466
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_bf651f4a408341e0819ac1f28083dd8c
+    parentId: fld_beb709adbda343e9b7936f53786d573d
+    modified: 1705605798291
+    created: 1705605662502
+    url: http://localhost:4500/project-management-type/8286741b-552a-47d2-ae9a-633804b1c897
+    name: Get project management type  by id
+    description: ""
+    method: GET
+    body: { }
+    parameters: [ ]
+    headers: [ ]
+    authentication: { }
+    metaSortKey: -1705437292429
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_70f4edcf8b144ec597d24de80a018646
+    parentId: fld_beb709adbda343e9b7936f53786d573d
+    modified: 1705605792061
+    created: 1705605662501
+    url: http://localhost:4500/project-management-type/8286741b-552a-47d2-ae9a-633804b1c897
+    name: Edit project management type
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"value":"Scrum"
+        }
+    parameters: [ ]
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_b9354d1e1ea647e5a4228c387d86e1e8
+    authentication: { }
+    metaSortKey: -1705436093156
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_8a2935b9788543f1bf3613a62a8c762b
+    parentId: fld_beb709adbda343e9b7936f53786d573d
+    modified: 1705605779643
+    created: 1705605662500
+    url: http://localhost:4500/project-management-type
+    name: Add project management type
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"value":"Scurm"
         }
     parameters: [ ]
     headers:
