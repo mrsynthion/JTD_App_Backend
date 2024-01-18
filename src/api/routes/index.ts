@@ -4,6 +4,7 @@ import AuthRoutes from "./auth.routes";
 import TaskRoutes from "./task.routes";
 import UserInProjectTypeRoutes from "./dictionaries/Dict01_UserInProjectTypes.routes";
 import ProjectTypeRoutes from "./dictionaries/Dict02_ProjectTypes.routes";
+import TaskTypesRoutes from "./dictionaries/Dict03_TaskTypes.routes";
 
 export const Routes = (app: Express) => {
   app.use("/user", UserRoutes);
@@ -11,4 +12,5 @@ export const Routes = (app: Express) => {
   app.use("/task", TaskRoutes);
   app.use("/user-in-project-type", UserInProjectTypeRoutes);
   app.use("/project-type", ProjectTypeRoutes);
+  app.use("/task-type", TaskTypesRoutes);
 };

@@ -108,7 +108,7 @@ async function getProjectTypePage({
 
       const skip: number = size * (page - 1) || 0;
       size = size === undefined || size === null ? totalElements : size;
-      const sortBy: SortBy<ProjectType> = sort?.[0] ? sort[0] : "id";
+      const sortBy: SortBy<ProjectType> = sort?.[0] ? sort[0] : "code";
       const sortDirection: SortDirection = sort?.[1] ? sort[1] : "ASC";
 
       const content = await appDataSource
