@@ -329,7 +329,6 @@
         "description": "Create new task",
         "operationId": "newTask",
         "requestBody": {
-          "name": "Task",
           "required": true,
           "content": {
             "application/json": {
@@ -470,7 +469,6 @@
           }
         ],
         "requestBody": {
-          "name": "Task",
           "required": true,
           "content": {
             "application/json": {
@@ -487,6 +485,1081 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/TaskDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user-in-project-type": {
+      "post": {
+        "tags": [
+          "User In Project Type"
+        ],
+        "summary": "Add new value",
+        "description": "Add new value to dict01 user in project type",
+        "operationId": "addUserInProjectType",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddDictValue"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "User In Project Type"
+        ],
+        "summary": "Get user in project type page",
+        "description": "Get dict01 user in project type page",
+        "operationId": "getUserInProjectTypePage",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "dictValueFilteredQuery",
+            "schema": {
+              "$ref": "#/components/schemas/DictValueFilteredQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageDictValue"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user-in-project-type/:id": {
+      "get": {
+        "tags": [
+          "User In Project Type"
+        ],
+        "summary": "Get user in project type by id",
+        "description": "Get dict01 user in project type by id",
+        "operationId": "getUserInProjectTypeById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User In Project Type"
+        ],
+        "summary": "Edit dict value",
+        "description": "Edit dict value in dict01 user in project type",
+        "operationId": "editUserInProjectType",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditDictValue"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user-in-project-type/:code": {
+      "get": {
+        "tags": [
+          "User In Project Type"
+        ],
+        "summary": "Get user in project type by code",
+        "description": "Get dict01 user in project type by code",
+        "operationId": "getUserInProjectTypeByCode",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "code",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/project-type": {
+      "post": {
+        "tags": [
+          "Project Type"
+        ],
+        "summary": "Add new value",
+        "description": "Add new value to dict02 project type",
+        "operationId": "addProjectType",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddDictValue"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Project Type"
+        ],
+        "summary": "Get project types page",
+        "description": "Get dict02 project type page",
+        "operationId": "getProjectTypePage",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "dictValueFilteredQuery",
+            "schema": {
+              "$ref": "#/components/schemas/DictValueFilteredQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageDictValue"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/project-type/:id": {
+      "get": {
+        "tags": [
+          "Project Type"
+        ],
+        "summary": "Get project type by id",
+        "description": "Get dict02 project type by id",
+        "operationId": "getProjectTypeById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Project Type"
+        ],
+        "summary": "Edit dict value",
+        "description": "Edit dict value in dict02 project type",
+        "operationId": "editProjectType",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditDictValue"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/project-type/:code": {
+      "get": {
+        "tags": [
+          "Project Type"
+        ],
+        "summary": "Get project type by code",
+        "description": "Get dict02 project type by code",
+        "operationId": "getProjectTypeByCode",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "code",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/task-type": {
+      "post": {
+        "tags": [
+          "Task Type"
+        ],
+        "summary": "Add new value",
+        "description": "Add new value to dict03 task type",
+        "operationId": "addTaskType",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddDictValue"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Task Type"
+        ],
+        "summary": "Get task type page",
+        "description": "Get dict03 task type page",
+        "operationId": "getTaskTypePage",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "dictValueFilteredQuery",
+            "schema": {
+              "$ref": "#/components/schemas/DictValueFilteredQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageDictValue"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/task-type/:id": {
+      "get": {
+        "tags": [
+          "Task Type"
+        ],
+        "summary": "Get task type by id",
+        "description": "Get dict03 task type by id",
+        "operationId": "getTaskTypeById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Task Type"
+        ],
+        "summary": "Edit dict value",
+        "description": "Edit dict value in dict03 task type",
+        "operationId": "editTaskType",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditDictValue"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/task-type/:code": {
+      "get": {
+        "tags": [
+          "Task Type"
+        ],
+        "summary": "Get task type by code",
+        "description": "Get dict03 task type by code",
+        "operationId": "getTaskTypeByCode",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "code",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/task-status": {
+      "post": {
+        "tags": [
+          "Task Status"
+        ],
+        "summary": "Add new value",
+        "description": "Add new value to dict04 task status",
+        "operationId": "addTaskStatus",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddDictValue"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Task Status"
+        ],
+        "summary": "Get task status page",
+        "description": "Get dict04 task status page",
+        "operationId": "getTaskStatusPage",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "dictValueFilteredQuery",
+            "schema": {
+              "$ref": "#/components/schemas/DictValueFilteredQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageDictValue"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/task-status/:id": {
+      "get": {
+        "tags": [
+          "Task Status"
+        ],
+        "summary": "Get task status by id",
+        "description": "Get dict04 task status by id",
+        "operationId": "getTaskStatusById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Task Status"
+        ],
+        "summary": "Edit dict value",
+        "description": "Edit dict value in dict04 task status",
+        "operationId": "editTaskStatus",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditDictValue"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/task-status/:code": {
+      "get": {
+        "tags": [
+          "Task Status"
+        ],
+        "summary": "Get task status by code",
+        "description": "Get dict04 task status by code",
+        "operationId": "getTaskStatusByCode",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "code",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/project-management-type": {
+      "post": {
+        "tags": [
+          "Project Management Type"
+        ],
+        "summary": "Add new value",
+        "description": "Add new value to dict05 project management type",
+        "operationId": "addProjectManagementType",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddDictValue"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Project Management Type"
+        ],
+        "summary": "Get project management type page",
+        "description": "Get dict05 project management type page",
+        "operationId": "getProjectManagementTypePage",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "dictValueFilteredQuery",
+            "schema": {
+              "$ref": "#/components/schemas/DictValueFilteredQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageDictValue"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/project-management-type/:id": {
+      "get": {
+        "tags": [
+          "Project Management Type"
+        ],
+        "summary": "Get project management type by id",
+        "description": "Get dict05 project management type by id",
+        "operationId": "getProjectManagementTypeById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User In Project Type"
+        ],
+        "summary": "Edit dict value",
+        "description": "Edit dict value in dict05 project management type",
+        "operationId": "editProjectManagementType",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditDictValue"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorCode"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/project-management-type/:code": {
+      "get": {
+        "tags": [
+          "Project Management Type"
+        ],
+        "summary": "Get project management type by code",
+        "description": "Get dict05 project management type by code",
+        "operationId": "getProjectManagementTypeByCode",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "code",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictType"
                 }
               }
             }
@@ -728,19 +1801,19 @@
         "enum": [
           "NO PRIVATE KEY",
           "UNABLE TO GENERATE TOKEN",
-          "TOKEN EXPIRED",
-          "ALL LOGIN DATA MISSING",
           "CAN NOT FIND USER",
           "PASSWORDS DO NOT MATCH",
           "PASSWORD IS REQUIRED",
           "PASSWORD SHOULD HAVE MINIMUM TEN CHARACTERS,AT LEAST ONE SMALL CHARACTER, ONE BIG CHARACTER, ONE NUMBER, ONE SPECIAL CHARACTER",
           "EMAIL IS REQUIRED",
           "THIS EMAIL IS ALREADY IN USE",
-          "USERNAME IS REQUIRED",
-          "THIS USERNAME IS ALREADY IN USE",
+          "FIRST NAME IS REQUIRED",
+          "LAST NAME IS REQUIRED",
           "NO VALID ID INCLUDED",
           "TITLE IS REQUIRED",
-          "TITLE MUST BE MINIMUM FIVE CHARACTERS"
+          "TITLE MUST BE MINIMUM FIVE CHARACTERS",
+          "DICT VALUES CAN NOT BE DUPLICATED",
+          "DICT VALUE DOES NOT EXIST"
         ]
       },
       "ImportanceLevel": {
@@ -758,6 +1831,89 @@
           "ASC",
           "DESC"
         ]
+      },
+      "DictType": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "AddDictValue": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "EditDictValue": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "DictValueFilteredQuery": {
+        "type": "object",
+        "properties": {
+          "size": {
+            "type": "number"
+          },
+          "page": {
+            "type": "number"
+          },
+          "sort": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/components/schemas/SortDirection"
+                }
+              ]
+            }
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "PageDictValue": {
+        "type": "object",
+        "properties": {
+          "totalElements": {
+            "type": "number"
+          },
+          "totalPages": {
+            "type": "number"
+          },
+          "numberOfElements": {
+            "type": "number"
+          },
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DictType"
+            }
+          }
+        }
       }
     }
   }

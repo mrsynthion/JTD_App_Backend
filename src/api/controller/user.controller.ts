@@ -100,7 +100,7 @@ async function editCertainUser(
     const userFromBase: User | undefined = await userRepository.findOneBy({
       id,
     });
-    if (!id || !userFromBase) throw new Error(ErrorCode.NVII);
+    if (!id || !userFromBase) throw new Error(ErrorCode.UNVII);
     if (user.email) validateEmail(user.email);
     if (user.password) {
       validateNewPassword(user.password);
@@ -115,7 +115,7 @@ async function editCertainUser(
     res.json(newUser);
   } catch ({ message }) {
     let newMessage: ErrorCode = message;
-    if (message.includes("uq1")) newMessage = ErrorCode.TEIAIU;
+    if (message.includes("uq1")) newMessage = ErrorCode.SUTEIAIU;
 
     sendError(400, newMessage, res);
   }

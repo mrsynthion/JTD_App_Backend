@@ -20,7 +20,7 @@ router.post("/signup", async (req: Request<RegisterDto>, res, next) => {
   } catch ({ message }) {
     let newMessage: ErrorCode = message;
     if (message.toLowerCase().includes("duplicate"))
-      newMessage = ErrorCode.TEIAIU;
+      newMessage = ErrorCode.SUTEIAIU;
 
     sendError(400, newMessage, res);
   }
@@ -35,7 +35,7 @@ router.post("/login", async (req: Request<LoginDto>, res, next) => {
     res.json(user);
   } catch ({ message }) {
     let newMessage: ErrorCode = message;
-    if (message.includes("uq1")) newMessage = ErrorCode.TEIAIU;
+    if (message.includes("uq1")) newMessage = ErrorCode.SUTEIAIU;
     sendError(400, newMessage, res);
   }
 });

@@ -3,7 +3,7 @@ import { RegisterDto } from "../global-types/auth.types";
 import { compare } from "bcrypt";
 
 function validatePassword(password: string): void {
-  if (!password) throw new Error(ErrorCode.PIR);
+  if (!password) throw new Error(ErrorCode.SUPIR);
 }
 
 function validateNewPassword(password: string): void {
@@ -21,19 +21,19 @@ function validateNewPassword(password: string): void {
     isMinOneNumber &&
     isMinOneSymbol;
 
-  if (!isPasswordCorrect) throw new Error(ErrorCode.PSHMTCALOSCOBCONOSC);
+  if (!isPasswordCorrect) throw new Error(ErrorCode.SUPSHMTCALOSCOBCONOSC);
 }
 
 function validateEmail(email: string): void {
-  if (!email) throw new Error(ErrorCode.EIR);
+  if (!email) throw new Error(ErrorCode.SUEIR);
 }
 
 function validateFirstName(firstName: string): void {
-  if (!firstName) throw new Error(ErrorCode.FNIR);
+  if (!firstName) throw new Error(ErrorCode.SUFNIR);
 }
 
 function validateLastName(lastName: string): void {
-  if (!lastName) throw new Error(ErrorCode.LNIR);
+  if (!lastName) throw new Error(ErrorCode.SULNIR);
 }
 
 function validateSignUpData({
