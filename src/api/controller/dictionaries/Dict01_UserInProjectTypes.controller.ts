@@ -1,7 +1,7 @@
 import {
-  AddUserInProjectType,
-  EditUserInProjectType,
-  UserInProjectType,
+  AddUserInProjectTypeDto,
+  EditUserInProjectTypeDto,
+  UserInProjectTypeDto,
 } from "../../../global-types/dictionaries/Dict01_UserTypes.types";
 import { Repository } from "typeorm";
 import { AppDataSource } from "../../../data-source";
@@ -18,8 +18,8 @@ const dict01_UserTypesRepository: Repository<Dict01_UserInProjectTypes> =
   AppDataSource.getRepository(Dict01_UserInProjectTypes);
 
 async function addUserInProjectType(
-  addUserInProjectType: AddUserInProjectType,
-): Promise<UserInProjectType> {
+  addUserInProjectType: AddUserInProjectTypeDto,
+): Promise<UserInProjectTypeDto> {
   try {
     return await dict01_UserTypesRepository.save(addUserInProjectType);
   } catch ({ message }) {
@@ -28,9 +28,9 @@ async function addUserInProjectType(
 }
 
 async function editUserInProjectType(
-  editUserInProjectType: EditUserInProjectType,
+  editUserInProjectType: EditUserInProjectTypeDto,
   id: string,
-): Promise<UserInProjectType> {
+): Promise<UserInProjectTypeDto> {
   try {
     const userInProjectTypeExist: boolean =
       await dict01_UserTypesRepository.exist({
@@ -53,9 +53,9 @@ async function editUserInProjectType(
 
 async function getUserInProjectTypeById(
   id: string,
-): Promise<UserInProjectType> {
+): Promise<UserInProjectTypeDto> {
   try {
-    const userInProjectType: UserInProjectType =
+    const userInProjectType: UserInProjectTypeDto =
       await dict01_UserTypesRepository.findOneBy({
         id,
       });
@@ -70,9 +70,9 @@ async function getUserInProjectTypeById(
 
 async function getUserInProjectTypeByCode(
   code: number,
-): Promise<UserInProjectType> {
+): Promise<UserInProjectTypeDto> {
   try {
-    const userInProjectType: UserInProjectType =
+    const userInProjectType: UserInProjectTypeDto =
       await dict01_UserTypesRepository.findOneBy({
         code,
       });
@@ -93,7 +93,7 @@ async function getUserInProjectPage({
   id,
   code,
   value,
-}: Filters<UserInProjectType>): Promise<Page<UserInProjectType>> {
+}: Filters<UserInProjectTypeDto>): Promise<Page<UserInProjectTypeDto>> {
   try {
     return await AppDataSource.transaction(async (appDataSource) => {
       const totalElements = await appDataSource
@@ -115,7 +115,7 @@ async function getUserInProjectPage({
 
       const skip: number = size * (page - 1) || 0;
       size = size === undefined || size === null ? totalElements : size;
-      const sortBy: SortBy<UserInProjectType> = sort?.[0] ? sort[0] : "code";
+      const sortBy: SortBy<UserInProjectTypeDto> = sort?.[0] ? sort[0] : "code";
       const sortDirection: SortDirection = sort?.[1] ? sort[1] : "ASC";
 
       const content = await appDataSource
@@ -149,7 +149,7 @@ async function getUserInProjectPage({
         totalElements,
         totalPages: Math.floor(totalElements / size || 0) || 1,
         numberOfElements: content.length,
-      } as Page<UserInProjectType>;
+      } as Page<UserInProjectTypeDto>;
     });
   } catch ({ message }) {
     throw new Error(message);

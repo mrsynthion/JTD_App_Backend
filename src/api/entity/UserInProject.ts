@@ -24,7 +24,7 @@ export class UserInProject {
   @Column({ nullable: false })
   isLeader: boolean;
 
-  @ManyToOne(() => Project, (project) => project.users)
+  @ManyToOne(() => Project, (project) => project.users, { nullable: false })
   project: Project;
 
   @ManyToOne(() => User, (user) => user.projects, { nullable: false })

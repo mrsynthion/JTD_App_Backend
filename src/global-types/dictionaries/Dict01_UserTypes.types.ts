@@ -1,13 +1,13 @@
-export interface UserInProjectType {
+export interface UserInProjectTypeDto {
   id: string;
   value: string;
   code: number;
 }
 
-export interface AddUserInProjectType {
+export interface AddUserInProjectTypeDto {
   value: string;
 }
 
-export interface EditUserInProjectType {
+export interface EditUserInProjectTypeDto {
   value: string;
 }

@@ -1,13 +1,13 @@
-export interface ProjectManagementType {
+export interface ProjectManagementTypeDto {
   id: string;
   code: number;
   value: string;
 }
 
-export interface AddProjectManagementType {
+export interface AddProjectManagementTypeDto {
   value: string;
 }
 
-export interface EditProjectManagementType {
+export interface EditProjectManagementTypeDto {
   value: string;
 }

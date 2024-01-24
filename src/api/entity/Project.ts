@@ -26,7 +26,7 @@ export class Project {
   @JoinColumn()
   type: Dict02_ProjectTypes;
 
-  @OneToOne(() => UserInProject, { nullable: false })
+  @OneToOne(() => UserInProject)
   @JoinColumn()
   leader: UserInProject;
 

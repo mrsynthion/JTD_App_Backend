@@ -1,11 +1,10 @@
 import { decode, JwtPayload, sign, SignOptions, verify } from "jsonwebtoken";
 import { ErrorCode } from "../global-types/error.types";
-import { User } from "../api/entity/User";
 import { config } from "dotenv";
+import { UserDto } from "../global-types/user.types";
 
 export interface TokenPayload extends JwtPayload {
-  id: string;
-  email: string;
+  user: UserDto;
 }
 
 const options: SignOptions = {
@@ -13,12 +12,12 @@ const options: SignOptions = {
   expiresIn: "30m",
 };
 
-function generateToken({ id, email }: User): string {
+function generateToken(user: UserDto): string {
   const privateKey: string = config().parsed["PRIVATE_KEY"];
   if (!privateKey) {
     throw new Error(ErrorCode.TNPK);
   }
-  return sign({ id, email } as TokenPayload, privateKey, options);
+  return sign({ user } as TokenPayload, privateKey, options);
 }
 
 function verifyToken(token: string): boolean {

@@ -1,9 +1,9 @@
 import * as express from "express";
 import { Request } from "express";
 import {
-  AddProjectManagementType,
-  EditProjectManagementType,
-  ProjectManagementType,
+  AddProjectManagementTypeDto,
+  EditProjectManagementTypeDto,
+  ProjectManagementTypeDto,
 } from "../../../global-types/dictionaries/Dict05_ProjectManagementTypes.types";
 import { Dict05_ProjectManagementTypeControllerFunctions } from "../../controller/dictionaries/Dict05_ProjectManagementTypes.controller";
 import { ErrorCode } from "../../../global-types/error.types";
@@ -14,12 +14,16 @@ const router = express.Router();
 router.post(
   "/",
   async (
-    req: Request<unknown, ProjectManagementType, AddProjectManagementType>,
+    req: Request<
+      unknown,
+      ProjectManagementTypeDto,
+      AddProjectManagementTypeDto
+    >,
     res,
     next,
   ) => {
     try {
-      const addProjectManagementType: AddProjectManagementType = req.body;
+      const addProjectManagementType: AddProjectManagementTypeDto = req.body;
       const projectManagementType =
         await Dict05_ProjectManagementTypeControllerFunctions.addProjectManagementType(
           addProjectManagementType,
@@ -41,14 +45,14 @@ router.put(
   async (
     req: Request<
       { id: string },
-      ProjectManagementType,
-      EditProjectManagementType
+      ProjectManagementTypeDto,
+      EditProjectManagementTypeDto
     >,
     res,
     next,
   ) => {
     try {
-      const editProjectManagementType: EditProjectManagementType = req.body;
+      const editProjectManagementType: EditProjectManagementTypeDto = req.body;
       const id: string = req.params["id"] as string;
 
       const projectManagementType =
@@ -73,15 +77,15 @@ router.get(
   async (
     req: Request<
       unknown,
-      Page<ProjectManagementType>,
+      Page<ProjectManagementTypeDto>,
       unknown,
-      Filters<ProjectManagementType>
+      Filters<ProjectManagementTypeDto>
     >,
     res,
     next,
   ) => {
     try {
-      const filters: Filters<ProjectManagementType> = req.query;
+      const filters: Filters<ProjectManagementTypeDto> = req.query;
       const projectManagementTypePage =
         await Dict05_ProjectManagementTypeControllerFunctions.getProjectManagementTypePage(
           filters,
@@ -96,7 +100,7 @@ router.get(
 
 router.get(
   "/:id",
-  async (req: Request<{ id: string }, ProjectManagementType>, res, next) => {
+  async (req: Request<{ id: string }, ProjectManagementTypeDto>, res, next) => {
     try {
       const id: string = req.params["id"];
       const projectManagementType =
@@ -113,7 +117,11 @@ router.get(
 
 router.get(
   "/code/:code",
-  async (req: Request<{ code: number }, ProjectManagementType>, res, next) => {
+  async (
+    req: Request<{ code: number }, ProjectManagementTypeDto>,
+    res,
+    next,
+  ) => {
     try {
       const code: number = req.params["code"];
       const projectManagementType =
