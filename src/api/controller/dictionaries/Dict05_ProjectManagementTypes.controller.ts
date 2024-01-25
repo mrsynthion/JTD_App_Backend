@@ -2,9 +2,9 @@ import { Repository } from "typeorm";
 import { AppDataSource } from "../../../data-source";
 import { Dict05_ProjectManagementTypes } from "../../entity/dictionaries/Dict05_ProjectManagementTypes";
 import {
-  AddProjectManagementType,
-  EditProjectManagementType,
-  ProjectManagementType,
+  AddProjectManagementTypeDto,
+  EditProjectManagementTypeDto,
+  ProjectManagementTypeDto,
 } from "../../../global-types/dictionaries/Dict05_ProjectManagementTypes.types";
 import { ErrorCode } from "../../../global-types/error.types";
 import {
@@ -18,8 +18,8 @@ const dict05_ProjectManagementTypesRepository: Repository<Dict05_ProjectManageme
   AppDataSource.getRepository(Dict05_ProjectManagementTypes);
 
 async function addProjectManagementType(
-  addProjectManagementType: AddProjectManagementType,
-): Promise<ProjectManagementType> {
+  addProjectManagementType: AddProjectManagementTypeDto,
+): Promise<ProjectManagementTypeDto> {
   try {
     return await dict05_ProjectManagementTypesRepository.save(
       addProjectManagementType,
@@ -30,9 +30,9 @@ async function addProjectManagementType(
 }
 
 async function editProjectManagementType(
-  editProjectManagementType: EditProjectManagementType,
+  editProjectManagementType: EditProjectManagementTypeDto,
   id: string,
-): Promise<ProjectManagementType> {
+): Promise<ProjectManagementTypeDto> {
   try {
     const projectManagementTypeExist: boolean =
       await dict05_ProjectManagementTypesRepository.exist({
@@ -55,9 +55,9 @@ async function editProjectManagementType(
 
 async function getProjectManagementTypeById(
   id: string,
-): Promise<ProjectManagementType> {
+): Promise<ProjectManagementTypeDto> {
   try {
-    const projectManagementType: ProjectManagementType =
+    const projectManagementType: ProjectManagementTypeDto =
       await dict05_ProjectManagementTypesRepository.findOneBy({
         id,
       });
@@ -72,9 +72,9 @@ async function getProjectManagementTypeById(
 
 async function getProjectManagementTypeByCode(
   code: number,
-): Promise<ProjectManagementType> {
+): Promise<ProjectManagementTypeDto> {
   try {
-    const projectManagementType: ProjectManagementType =
+    const projectManagementType: ProjectManagementTypeDto =
       await dict05_ProjectManagementTypesRepository.findOneBy({
         code,
       });
@@ -95,7 +95,7 @@ async function getProjectManagementTypePage({
   id,
   code,
   value,
-}: Filters<ProjectManagementType>): Promise<Page<ProjectManagementType>> {
+}: Filters<ProjectManagementTypeDto>): Promise<Page<ProjectManagementTypeDto>> {
   try {
     return await AppDataSource.transaction(async (appDataSource) => {
       const totalElements = await appDataSource
@@ -120,7 +120,7 @@ async function getProjectManagementTypePage({
 
       const skip: number = size * (page - 1) || 0;
       size = size === undefined || size === null ? totalElements : size;
-      const sortBy: SortBy<ProjectManagementType> = sort?.[0]
+      const sortBy: SortBy<ProjectManagementTypeDto> = sort?.[0]
         ? sort[0]
         : "code";
       const sortDirection: SortDirection = sort?.[1] ? sort[1] : "ASC";
@@ -159,7 +159,7 @@ async function getProjectManagementTypePage({
         totalElements,
         totalPages: Math.floor(totalElements / size || 0) || 1,
         numberOfElements: content.length,
-      } as Page<ProjectManagementType>;
+      } as Page<ProjectManagementTypeDto>;
     });
   } catch ({ message }) {
     throw new Error(message);

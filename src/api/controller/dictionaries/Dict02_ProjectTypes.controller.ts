@@ -9,17 +9,17 @@ import {
 } from "../../../global-types/pagination.types";
 import { Dict02_ProjectTypes } from "../../entity/dictionaries/Dict02_ProjectTypes";
 import {
-  AddProjectType,
-  EditProjectType,
-  ProjectType,
+  AddProjectTypeDto,
+  EditProjectTypeDto,
+  ProjectTypeDto,
 } from "../../../global-types/dictionaries/Dict02_ProjectTypes.types";
 
 const dict02_ProjectTypesRepository: Repository<Dict02_ProjectTypes> =
   AppDataSource.getRepository(Dict02_ProjectTypes);
 
 async function addProjectType(
-  addProjectType: AddProjectType,
-): Promise<ProjectType> {
+  addProjectType: AddProjectTypeDto,
+): Promise<ProjectTypeDto> {
   try {
     return await dict02_ProjectTypesRepository.save(addProjectType);
   } catch ({ message }) {
@@ -28,9 +28,9 @@ async function addProjectType(
 }
 
 async function editProjectType(
-  editProjectType: EditProjectType,
+  editProjectType: EditProjectTypeDto,
   id: string,
-): Promise<ProjectType> {
+): Promise<ProjectTypeDto> {
   try {
     const projectTypeExist: boolean = await dict02_ProjectTypesRepository.exist(
       {
@@ -52,9 +52,9 @@ async function editProjectType(
   }
 }
 
-async function getProjectTypeById(id: string): Promise<ProjectType> {
+async function getProjectTypeById(id: string): Promise<ProjectTypeDto> {
   try {
-    const projectType: ProjectType =
+    const projectType: ProjectTypeDto =
       await dict02_ProjectTypesRepository.findOneBy({
         id,
       });
@@ -66,9 +66,9 @@ async function getProjectTypeById(id: string): Promise<ProjectType> {
   }
 }
 
-async function getProjectTypeByCode(code: number): Promise<ProjectType> {
+async function getProjectTypeByCode(code: number): Promise<ProjectTypeDto> {
   try {
-    const projectType: ProjectType =
+    const projectType: ProjectTypeDto =
       await dict02_ProjectTypesRepository.findOneBy({
         code,
       });
@@ -89,7 +89,7 @@ async function getProjectTypePage({
   id,
   code,
   value,
-}: Filters<ProjectType>): Promise<Page<ProjectType>> {
+}: Filters<ProjectTypeDto>): Promise<Page<ProjectTypeDto>> {
   try {
     return await AppDataSource.transaction(async (appDataSource) => {
       const totalElements = await appDataSource
@@ -108,7 +108,7 @@ async function getProjectTypePage({
 
       const skip: number = size * (page - 1) || 0;
       size = size === undefined || size === null ? totalElements : size;
-      const sortBy: SortBy<ProjectType> = sort?.[0] ? sort[0] : "code";
+      const sortBy: SortBy<ProjectTypeDto> = sort?.[0] ? sort[0] : "code";
       const sortDirection: SortDirection = sort?.[1] ? sort[1] : "ASC";
 
       const content = await appDataSource
@@ -139,7 +139,7 @@ async function getProjectTypePage({
         totalElements,
         totalPages: Math.floor(totalElements / size || 0) || 1,
         numberOfElements: content.length,
-      } as Page<ProjectType>;
+      } as Page<ProjectTypeDto>;
     });
   } catch ({ message }) {
     throw new Error(message);

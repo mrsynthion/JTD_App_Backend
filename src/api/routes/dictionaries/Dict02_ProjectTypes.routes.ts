@@ -1,9 +1,9 @@
 import * as express from "express";
 import { Request } from "express";
 import {
-  AddProjectType,
-  EditProjectType,
-  ProjectType,
+  AddProjectTypeDto,
+  EditProjectTypeDto,
+  ProjectTypeDto,
 } from "../../../global-types/dictionaries/Dict02_ProjectTypes.types";
 import { ErrorCode } from "../../../global-types/error.types";
 import { sendError } from "../../../utils/error.utils";
@@ -13,9 +13,13 @@ import { Filters, Page } from "../../../global-types/pagination.types";
 const router = express.Router();
 router.post(
   "/",
-  async (req: Request<unknown, ProjectType, AddProjectType>, res, next) => {
+  async (
+    req: Request<unknown, ProjectTypeDto, AddProjectTypeDto>,
+    res,
+    next,
+  ) => {
     try {
-      const addProjectType: AddProjectType = req.body;
+      const addProjectType: AddProjectTypeDto = req.body;
       const projectType =
         await Dict02_ProjectTypesControllerFunctions.addProjectType(
           addProjectType,
@@ -35,12 +39,12 @@ router.post(
 router.put(
   "/:id",
   async (
-    req: Request<{ id: string }, ProjectType, EditProjectType>,
+    req: Request<{ id: string }, ProjectTypeDto, EditProjectTypeDto>,
     res,
     next,
   ) => {
     try {
-      const editProjectType: EditProjectType = req.body;
+      const editProjectType: EditProjectTypeDto = req.body;
       const id: string = req.params["id"] as string;
 
       const projectType =
@@ -63,12 +67,17 @@ router.put(
 router.get(
   "/",
   async (
-    req: Request<unknown, Page<ProjectType>, unknown, Filters<ProjectType>>,
+    req: Request<
+      unknown,
+      Page<ProjectTypeDto>,
+      unknown,
+      Filters<ProjectTypeDto>
+    >,
     res,
     next,
   ) => {
     try {
-      const filters: Filters<ProjectType> = req.query;
+      const filters: Filters<ProjectTypeDto> = req.query;
       const projectTypePage =
         await Dict02_ProjectTypesControllerFunctions.getProjectTypePage(
           filters,
@@ -83,7 +92,7 @@ router.get(
 
 router.get(
   "/:id",
-  async (req: Request<{ id: string }, ProjectType>, res, next) => {
+  async (req: Request<{ id: string }, ProjectTypeDto>, res, next) => {
     try {
       const id: string = req.params["id"];
       const projectType =
@@ -98,7 +107,7 @@ router.get(
 
 router.get(
   "/code/:code",
-  async (req: Request<{ code: number }, ProjectType>, res, next) => {
+  async (req: Request<{ code: number }, ProjectTypeDto>, res, next) => {
     try {
       const code: number = req.params["code"];
       const projectType =

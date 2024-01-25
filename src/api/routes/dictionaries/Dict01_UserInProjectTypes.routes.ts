@@ -1,9 +1,9 @@
 import * as express from "express";
 import { Request } from "express";
 import {
-  AddUserInProjectType,
-  EditUserInProjectType,
-  UserInProjectType,
+  AddUserInProjectTypeDto,
+  EditUserInProjectTypeDto,
+  UserInProjectTypeDto,
 } from "../../../global-types/dictionaries/Dict01_UserTypes.types";
 import { Dict01_UserInProjectTypesControllerFunctions } from "../../controller/dictionaries/Dict01_UserInProjectTypes.controller";
 import { ErrorCode } from "../../../global-types/error.types";
@@ -15,12 +15,12 @@ const router = express.Router();
 router.post(
   "/",
   async (
-    req: Request<unknown, UserInProjectType, AddUserInProjectType>,
+    req: Request<unknown, UserInProjectTypeDto, AddUserInProjectTypeDto>,
     res,
     next,
   ) => {
     try {
-      const addUserInProjectType: AddUserInProjectType = req.body;
+      const addUserInProjectType: AddUserInProjectTypeDto = req.body;
       const userInProjectType =
         await Dict01_UserInProjectTypesControllerFunctions.addUserInProjectType(
           addUserInProjectType,
@@ -40,12 +40,16 @@ router.post(
 router.put(
   "/:id",
   async (
-    req: Request<{ id: string }, UserInProjectType, EditUserInProjectType>,
+    req: Request<
+      { id: string },
+      UserInProjectTypeDto,
+      EditUserInProjectTypeDto
+    >,
     res,
     next,
   ) => {
     try {
-      const editUserInProjectType: EditUserInProjectType = req.body;
+      const editUserInProjectType: EditUserInProjectTypeDto = req.body;
       const id: string = req.params["id"] as string;
 
       const userInProjectType =
@@ -70,15 +74,15 @@ router.get(
   async (
     req: Request<
       unknown,
-      Page<UserInProjectType>,
+      Page<UserInProjectTypeDto>,
       unknown,
-      Filters<UserInProjectType>
+      Filters<UserInProjectTypeDto>
     >,
     res,
     next,
   ) => {
     try {
-      const filters: Filters<UserInProjectType> = req.query;
+      const filters: Filters<UserInProjectTypeDto> = req.query;
       const userInProjectTypeList =
         await Dict01_UserInProjectTypesControllerFunctions.getUserInProjectPage(
           filters,
@@ -93,7 +97,7 @@ router.get(
 
 router.get(
   "/:id",
-  async (req: Request<{ id: string }, UserInProjectType>, res, next) => {
+  async (req: Request<{ id: string }, UserInProjectTypeDto>, res, next) => {
     try {
       const id: string = req.params["id"];
       const userInProjectType =
@@ -110,7 +114,7 @@ router.get(
 
 router.get(
   "/code/:code",
-  async (req: Request<{ code: number }, UserInProjectType>, res, next) => {
+  async (req: Request<{ code: number }, UserInProjectTypeDto>, res, next) => {
     try {
       const code: number = req.params["code"];
       const userInProjectType =

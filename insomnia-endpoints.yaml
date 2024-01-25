@@ -1,6 +1,6 @@
 _type: export
 __export_format: 4
-__export_date: 2024-01-18T19:38:18.298Z
+__export_date: 2024-01-24T20:48:26.690Z
 __export_source: insomnia.desktop.app:v2022.2.1
 resources:
   - _id: req_e623d0519efc4019835f749deeea8f65
@@ -115,7 +115,7 @@ resources:
     _type: request
   - _id: req_6024f2d87f5f4d11bfe1d4909ea04b8f
     parentId: fld_d14323c007c1483ead056de2d07d0533
-    modified: 1705516324709
+    modified: 1706123550194
     created: 1705434260217
     url: http://localhost:4500/user-in-project-type/
     name: Add new user in project type
@@ -246,7 +246,7 @@ resources:
     _type: request
   - _id: req_99308ab768974e5cbc5381a5a805aac2
     parentId: fld_ab501dc75a2e464caa1f0dd080869c46
-    modified: 1705520753343
+    modified: 1706125987002
     created: 1705516150950
     url: http://localhost:4500/project-type/
     name: Add project type
@@ -377,7 +377,7 @@ resources:
     _type: request
   - _id: req_92197961d4c1492ab3d0937ebe9b20e1
     parentId: fld_30500f47fdf74bd19479da1672941fba
-    modified: 1705600223312
+    modified: 1706123579516
     created: 1705600147741
     url: http://localhost:4500/task-type/
     name: Add task type
@@ -508,7 +508,7 @@ resources:
     _type: request
   - _id: req_db5fd8094ced42359baac7b7409775d7
     parentId: fld_0552a0dc4225413f966d6bf336e1c15f
-    modified: 1705603077979
+    modified: 1706123577316
     created: 1705602984441
     url: http://localhost:4500/task-status/
     name: Add task status
@@ -639,7 +639,7 @@ resources:
     _type: request
   - _id: req_8a2935b9788543f1bf3613a62a8c762b
     parentId: fld_beb709adbda343e9b7936f53786d573d
-    modified: 1705605779643
+    modified: 1706123620746
     created: 1705605662500
     url: http://localhost:4500/project-management-type
     name: Add project management type
@@ -658,6 +658,73 @@ resources:
         id: pair_3e0f10b5ee3c43999ddd3006d2084da4
     authentication: { }
     metaSortKey: -1705434260217
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_78fa5537131947d6a932bfc97786a96e
+    parentId: fld_b79734ced4414cacaf9cd2ad07351712
+    modified: 1706043513385
+    created: 1706043501756
+    url: http://localhost:4500/project/733f6cb5-6801-402e-8710-b7baa687f9a8
+    name: Get project. by id
+    description: ""
+    method: GET
+    body: { }
+    parameters: [ ]
+    headers: [ ]
+    authentication: { }
+    metaSortKey: -1706043501756
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_b79734ced4414cacaf9cd2ad07351712
+    parentId: wrk_14836f92b9e948a4a784477c98072ba9
+    modified: 1706126004025
+    created: 1706041707105
+    name: "Project "
+    description: ""
+    environment: { }
+    environmentPropertyOrder: null
+    metaSortKey: -1697874944685.9062
+    _type: request_group
+  - _id: req_a6df81289913460fb534fa45979e3899
+    parentId: fld_b79734ced4414cacaf9cd2ad07351712
+    modified: 1706128995314
+    created: 1706041723070
+    url: http://localhost:4500/project
+    name: Add project
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "project1",
+          "key": "P123456789",
+          "type": {
+        		"id":"5563ad65-9fab-41e8-868c-72122b723310"
+        	},
+          "projectManagementType": {
+        		"id":"b88cc188-40eb-40fd-b270-8aec8f7706a3"
+        	}
+        }
+    parameters: [ ]
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_f47178f5ddc14eaabbf65e1ec4c34b66
+    authentication: { }
+    metaSortKey: -1706041723070
     isPrivate: false
     settingStoreCookies: true
     settingSendCookies: true
@@ -854,7 +921,7 @@ resources:
     _type: request
   - _id: req_03451ffcc82a4f8a97bbb596ef92f252
     parentId: fld_52f73d94fbb34d56882f892db0142441
-    modified: 1705428892019
+    modified: 1706125964297
     created: 1697638619256
     url: http://localhost:4500/auth/signup
     name: Sign up
@@ -886,7 +953,7 @@ resources:
     _type: request
   - _id: req_be10bfbed4bd4f61bb005a37480a3d21
     parentId: fld_52f73d94fbb34d56882f892db0142441
-    modified: 1705428895602
+    modified: 1706125982837
     created: 1697631112284
     url: http://localhost:4500/auth/login
     name: Login
@@ -896,7 +963,7 @@ resources:
       mimeType: application/json
       text: |-
         {
-        	"email":"mail@mail.com",
+        	"email":"mail1@mail.com",
         	"password":"Zxcvbbvcxz2121!"			
         }
     parameters: [ ]
@@ -1011,18 +1078,19 @@ resources:
     _type: environment
   - _id: jar_9774d76eabd94f968c8c358d1d4ad38b3c131453
     parentId: wrk_14836f92b9e948a4a784477c98072ba9
-    modified: 1705429026165
+    modified: 1706125983978
     created: 1690646191985
     name: Default Jar
     cookies:
       - key: token
-        expires: 1970-01-01T00:00:00.000Z
+        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiMjlmYjk5MGUtYmM1Zi00MDY5LTliNGMtZDk2YTliZTRlNjNmIiwiZmlyc3ROYW1lIjoiRm9yc3VrIiwibGFzdE5hbWUiOiJJZ29yZXciLCJlbWFpbCI6Im1haWwxQG1haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkMFUvMFBLQWI1N1g3TFFFMzYzdVBwT0xMOEVvQmRKQkhVdmR6ZlIvVzNhT3ZSbjluVXFEZUcifSwiaWF0IjoxNzA2MTI1OTgzLCJleHAiOjE3MDYxMjc3ODN9.sFLTfZtodjlPOMgIrI2oddaTszEv1cD1DVuhLfKO-Vo
         domain: localhost
         path: /
+        httpOnly: true
         hostOnly: true
         creation: 2023-10-18T14:08:13.829Z
-        lastAccessed: 2024-01-16T18:17:06.164Z
-        id: "6229770284221035"
+        lastAccessed: 2024-01-24T19:53:03.978Z
+        id: "6016115847785157"
     _type: cookie_jar
   - _id: spc_f7b35248b8934c349a4f5f4512d7a2ac
     parentId: wrk_14836f92b9e948a4a784477c98072ba9
