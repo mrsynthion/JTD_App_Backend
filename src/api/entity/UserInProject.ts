@@ -1,7 +1,6 @@
 import {
   Column,
   Entity,
-  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -9,31 +8,30 @@ import {
 import { Project } from "./Project";
 import { User } from "./User";
 import { Task } from "./Task";
-import { Dict01_UserInProjectTypes } from "./dictionaries/Dict01_UserInProjectTypes";
+import { UserInProjectType } from "../../types/user.types";
 
 @Entity({
   name: "UsersInProjects",
 })
 export class UserInProject {
   @PrimaryGeneratedColumn("uuid")
-  id: string;
+  id?: string;
 
   @Column({ nullable: false })
-  name: string;
+  name?: string;
 
   @Column({ nullable: false })
-  isLeader: boolean;
+  isLeader?: boolean;
 
   @ManyToOne(() => Project, (project) => project.users, { nullable: false })
-  project: Project;
+  project?: Project;
 
   @ManyToOne(() => User, (user) => user.projects, { nullable: false })
-  user: User;
+  user?: User;
 
-  @ManyToOne(() => Dict01_UserInProjectTypes, { nullable: false })
-  @JoinColumn()
-  type: Dict01_UserInProjectTypes;
+  @Column({ nullable: false })
+  type?: UserInProjectType;
 
   @OneToMany(() => Task, (task) => task.assignedUser)
-  tasks: Task[];
+  tasks?: Task[];
 }

@@ -1,7 +1,6 @@
 import { AppDataSource } from "../../data-source";
-import { sendError } from "../../utils/error.utils";
 import { Response } from "express";
-import { ErrorCode } from "../../global-types/error.types";
+import { ErrorCode } from "../../types/error.types";
 import { Task } from "../entity/Task";
 import { validateTitle } from "../../utils/task.utils";
 import {
@@ -9,7 +8,7 @@ import {
   Page,
   SortBy,
   SortDirection,
-} from "../../global-types/pagination.types";
+} from "../../types/pagination.types";
 import { UserInProject } from "../entity/UserInProject";
 
 const taskRepository = AppDataSource.getRepository(Task);
@@ -73,21 +72,21 @@ async function getTaskPage(
     res.statusCode = 200;
     res.json(data);
   } catch ({ message }) {
-    sendError(400, message, res);
+    throw new Error(message as ErrorCode);
   }
 }
 
 async function getCertainTask(id: string, res: Response): Promise<void> {
   try {
-    const task: Task = await taskRepository.findOne({
+    const task: Task = (await taskRepository.findOne({
       where: {
         id,
       },
-    });
+    })) as Task;
     res.statusCode = 200;
     res.json(task);
   } catch ({ message }) {
-    sendError(400, message, res);
+    throw new Error(message as ErrorCode);
   }
 }
 
@@ -99,12 +98,12 @@ async function addTask(
   try {
     if (task.title) validateTitle(task.title);
     task = { ...task, assignedUser: { id: userId } as UserInProject };
-    const newTask: Task = await taskRepository.save(task);
+    const newTask: Task = (await taskRepository.save(task)) as Task;
     res.statusCode = 200;
     res.json(newTask);
   } catch ({ message }) {
-    let newMessage: ErrorCode = message;
-    sendError(400, newMessage, res);
+    let newMessage: ErrorCode = message as ErrorCode;
+    throw new Error(newMessage);
   }
 }
 
@@ -117,12 +116,12 @@ async function editCertainTask(
     delete task["id"];
     if (task.title) validateTitle(task.title);
     await taskRepository.save(task);
-    const newTask: Task = await taskRepository.findOneBy({ id });
+    const newTask: Task = (await taskRepository.findOneBy({ id })) as Task;
     res.statusCode = 200;
     res.json(newTask);
   } catch ({ message }) {
-    let newMessage: ErrorCode = message;
-    sendError(400, newMessage, res);
+    let newMessage: ErrorCode = message as ErrorCode;
+    throw new Error(newMessage);
   }
 }
 

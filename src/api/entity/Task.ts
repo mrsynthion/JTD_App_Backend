@@ -1,48 +1,44 @@
 import {
   Column,
   Entity,
-  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { UserInProject } from "./UserInProject";
-import { Dict03_TaskTypes } from "./dictionaries/Dict03_TaskTypes";
-import { Dict04_TaskStatuses } from "./dictionaries/Dict04_TaskStatuses";
+import { TaskStatus, TaskType } from "../../types/task.types";
 
 @Entity({ name: "Tasks" })
 export class Task {
   @PrimaryGeneratedColumn("uuid")
-  id: string;
+  id?: string;
 
   @Column({ nullable: false })
-  title: string;
+  title?: string;
 
   @Column({ nullable: true })
-  description: string;
+  description?: string;
 
   @Column("datetime", { nullable: false })
-  createdAt: Date;
+  createdAt?: Date;
 
   @Column("text", { nullable: true })
-  label: string;
+  label?: string;
 
-  @ManyToOne(() => Dict03_TaskTypes, { nullable: false })
-  @JoinColumn()
-  type: Dict03_TaskTypes;
+  @Column({ nullable: false })
+  type?: TaskType;
 
-  @ManyToOne(() => Dict04_TaskStatuses, { nullable: false })
-  @JoinColumn()
-  status: Dict04_TaskStatuses;
+  @Column({ nullable: false })
+  status?: TaskStatus;
 
   @ManyToOne(() => UserInProject, (userInProject) => userInProject.tasks, {
     onDelete: "CASCADE",
   })
-  assignedUser: UserInProject;
+  assignedUser?: UserInProject;
 
   @OneToMany(() => Task, (task) => task.parentTask)
-  childrenTasks: Task[];
+  childrenTasks?: Task[];
 
   @ManyToOne(() => Task, (task) => task.childrenTasks)
-  parentTask: Task;
+  parentTask?: Task;
 }

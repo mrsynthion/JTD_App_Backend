@@ -1,7 +1,11 @@
 import { decode, JwtPayload, sign, SignOptions, verify } from "jsonwebtoken";
-import { ErrorCode } from "../global-types/error.types";
-import { config } from "dotenv";
-import { UserDto } from "../global-types/user.types";
+import { ErrorCode } from "../types/error.types";
+import * as dotenv from "dotenv";
+import { User } from "../api/entity/User";
+import { UserDto } from "../dto/user.dto";
+
+dotenv.config();
+export const PRIVATE_KEY = "PRIVATE_KEY";
 
 export interface TokenPayload extends JwtPayload {
   user: UserDto;
@@ -12,8 +16,8 @@ const options: SignOptions = {
   expiresIn: "30m",
 };
 
-function generateToken(user: UserDto): string {
-  const privateKey: string = config().parsed["PRIVATE_KEY"];
+function generateToken(user: User | UserDto): string {
+  const privateKey: string = process.env[PRIVATE_KEY]!;
   if (!privateKey) {
     throw new Error(ErrorCode.TNPK);
   }
@@ -21,7 +25,7 @@ function generateToken(user: UserDto): string {
 }
 
 function verifyToken(token: string): boolean {
-  return !!verify(token, config().parsed["PRIVATE_KEY"]);
+  return !!verify(token, process.env[PRIVATE_KEY]!);
 }
 
 function getDataFromToken(token: string): TokenPayload {

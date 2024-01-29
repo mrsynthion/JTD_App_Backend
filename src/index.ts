@@ -1,14 +1,15 @@
 import * as express from "express";
+import { Request, Response } from "express";
 import * as bodyParser from "body-parser";
 import { AppDataSource } from "./data-source";
-import { serveFiles, setup } from "swagger-ui-express";
-import { load } from "js-yaml";
-import { readFileSync } from "fs";
 import * as cookieParser from "cookie-parser";
 import * as cors from "cors";
-import { Routes } from "./api/routes";
+import { rootRoutes } from "./api/routes";
+import * as dotenv from "dotenv";
+import { unknownErrorHandler } from "./middlewares/error.middleware";
 
-const PORT: number = 4500;
+dotenv.config();
+const { PORT } = process.env;
 
 AppDataSource.initialize()
   .then(async () => {
@@ -24,38 +25,12 @@ AppDataSource.initialize()
         credentials: true,
       }),
     );
-
-    const doc = {
-      info: {
-        title: "My API",
-        description: "Description",
-      },
-      host: "localhost:4000",
-    };
-
-    const spec = readFileSync("./src/swagger.json", {
-      encoding: "utf8",
-      flag: "r",
-    });
-    const swaggerDocument = load(spec);
-
-    const options = {
-      swaggerOptions: {
-        url: "/api-docs/swagger.json",
-      },
-    };
-
-    app.get("/", (req, res) => {
-      res.redirect("/api-docs");
-    });
-    app.get("/api-docs/swagger.json", (req, res) => res.json(swaggerDocument));
-    app.use("/api-docs", serveFiles(null, options), setup(null, options));
-
+    app.use(unknownErrorHandler);
     // register express routes from defined application routes
-    Routes(app);
-
-    // setup express app here
-    // ...
+    app.use("", rootRoutes);
+    app.get("*", (req: Request, res: Response) => {
+      res.status(505).json({ message: "Bad Request" });
+    });
 
     // start express server
     app.listen(PORT);

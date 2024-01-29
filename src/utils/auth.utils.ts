@@ -1,5 +1,5 @@
-import { ErrorCode } from "../global-types/error.types";
-import { RegisterDto } from "../global-types/auth.types";
+import { ErrorCode } from "../types/error.types";
+import { RegisterDto } from "../dto/auth.dto";
 import { compare } from "bcrypt";
 
 function validatePassword(password: string): void {

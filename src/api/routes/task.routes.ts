@@ -1,14 +1,11 @@
 import * as express from "express";
 import { Request, Response } from "express";
 import { AppDataSource } from "../../data-source";
+import { getDataFromTokenByKey } from "../../utils/token-managements.utils";
 import { Task } from "../entity/Task";
+import { Filters } from "../../types/pagination.types";
 import { TaskControllerFunctions } from "../controller/task.controller";
-import { Filters } from "../../global-types/pagination.types";
-import {
-  getDataFromTokenByKey,
-  verifyToken,
-} from "../../utils/token-managements.utils";
-import { sendError } from "../../utils/error.utils";
+import { ErrorCode } from "../../types/error.types";
 
 const userRepository = AppDataSource.getRepository(Task);
 const router = express.Router();
@@ -16,12 +13,11 @@ const router = express.Router();
 router.get("", async (req: Request, res, next) => {
   const token: string = req.cookies["token"];
   try {
-    verifyToken(token);
     const userId: string = getDataFromTokenByKey(token, "id");
     const filters = req.query as unknown as Filters<Task>;
     await TaskControllerFunctions.getTaskPage(userId, filters, res);
   } catch ({ message }) {
-    sendError(400, message, res);
+    throw new Error(message as ErrorCode);
   }
 });
 
@@ -30,12 +26,11 @@ router.post(
   async (req: Request<Task>, res: Response<Task>): Promise<void> => {
     const token: string = req.cookies["token"];
     try {
-      verifyToken(token);
       const userId: string = getDataFromTokenByKey(token, "id");
       const task: Task = req.body;
       await TaskControllerFunctions.addTask(userId, task, res);
     } catch ({ message }) {
-      sendError(400, message, res);
+      throw new Error(message as ErrorCode);
     }
   },
 );
@@ -54,4 +49,4 @@ router.put(
   },
 );
 
-export default router;
+export { router as TaskRoutes };

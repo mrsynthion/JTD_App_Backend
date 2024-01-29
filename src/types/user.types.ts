@@ -1,0 +1,5 @@
+export enum UserInProjectType {
+  ADMINISTRATOR = "ADMINISTRATOR",
+  MEMBER = "MEMBER",
+  OBSERVER = "OBSERVER",
+}
