@@ -19,5 +19,5 @@ export class User {
   password?: string;
 
   @OneToMany(() => UserInProject, (userInProject) => userInProject.user)
-  projects?: UserInProject[];
+  userInProjects?: UserInProject[];
 }

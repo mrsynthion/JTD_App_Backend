@@ -110,15 +110,14 @@ async function addTask(
 async function editCertainTask(
   id: string,
   task: Task,
-  res: Response<Task>,
+  res: Response,
 ): Promise<void> {
   try {
     delete task["id"];
     if (task.title) validateTitle(task.title);
     await taskRepository.save(task);
-    const newTask: Task = (await taskRepository.findOneBy({ id })) as Task;
     res.statusCode = 200;
-    res.json(newTask);
+    res.json({ message: "ok" });
   } catch ({ message }) {
     let newMessage: ErrorCode = message as ErrorCode;
     throw new Error(newMessage);

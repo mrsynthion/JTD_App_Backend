@@ -8,8 +8,10 @@ import {
   validateEditProjectData,
 } from "../../utils/project.utils";
 import { ErrorCode } from "../../types/error.types";
-import { TokenName } from "../../types/auth.types";
-import { getDataFromTokenByKey } from "../../utils/token-managements.utils";
+import {
+  getDataFromTokenByKey,
+  getTokenFromRequest,
+} from "../../utils/token-managements.utils";
 import { NextFunction, Request, Response } from "express";
 import {
   AddProjectDto,
@@ -32,7 +34,7 @@ export class ProjectController {
   ): Promise<void> {
     try {
       let addProject: AddProjectDto = req.body;
-      const token = req.cookies[TokenName];
+      const token = getTokenFromRequest(req);
       const currentUser: UserDto = getDataFromTokenByKey(token, "user");
       await validateAddProjectData(addProject);
 
@@ -52,7 +54,7 @@ export class ProjectController {
       await projectRepository.update(
         { id: newProject.id },
         {
-          leader: newUserInProject,
+          leaderInProject: newUserInProject,
         },
       );
       const project: ProjectDto = (await projectRepository.findOne({
@@ -60,7 +62,7 @@ export class ProjectController {
           id: newProject.id,
         },
         relations: {
-          leader: true,
+          leaderInProject: true,
         },
       })) as ProjectDto;
       res.status(201).json(project);
@@ -96,15 +98,7 @@ export class ProjectController {
         editProjectData,
       );
 
-      const project: ProjectDto = (await projectRepository.findOne({
-        where: {
-          id,
-        },
-        relations: {
-          leader: true,
-        },
-      })) as ProjectDto;
-      res.status(200).json(project);
+      res.status(200).json({ message: "ok" });
     } catch ({ message }) {
       next(message);
     }
@@ -117,33 +111,34 @@ export class ProjectController {
   ): Promise<void> {
     try {
       const id: string = req.params["id"];
+      if (!id) throw new Error("Id is required");
       const projectFromBase: Required<Project> = (await projectRepository
-        .createQueryBuilder("p")
+        .createQueryBuilder("project")
         .select([
-          "p.id",
-          "p.name",
-          "p.key",
-          "p.type",
-          "p.projectManagementType",
-          "uip.name",
-          "uip.isLeader",
-          "uip.type",
-          "uipu.id",
-          "uipu.firstName",
-          "uipu.lastName",
-          "uipu.email",
-          "l.name",
-          "l.type",
-          "lu.id",
-          "lu.firstName",
-          "lu.lastName",
-          "lu.email",
+          "project.id",
+          "project.name",
+          "project.key",
+          "project.type",
+          "project.projectManagementType",
+          "userInProject.name",
+          "userInProject.isLeader",
+          "userInProject.type",
+          "user.id",
+          "user.firstName",
+          "user.lastName",
+          "user.email",
+          "leader.name",
+          "leader.type",
+          "leaderUser.id",
+          "leaderUser.firstName",
+          "leaderUser.lastName",
+          "leaderUser.email",
         ])
-        .leftJoin("p.users", "uip")
-        .leftJoin("uip.user", "uipu")
-        .leftJoin("p.leader", "l")
-        .leftJoin("l.user", "lu")
-        .where("p.id = :id", { id })
+        .leftJoin("project.usersInProject", "userInProject")
+        .leftJoin("userInProject.user", "user")
+        .leftJoin("project.leaderInProject", "leader")
+        .leftJoin("leader.user", "leaderUser")
+        .where("project.id = :id", { id })
         .getOne()) as Required<Project>;
 
       const project: ProjectDto = {
@@ -152,15 +147,15 @@ export class ProjectController {
         key: projectFromBase.key,
         type: projectFromBase.type,
         leader: {
-          id: projectFromBase.leader.user!.id!,
-          firstName: projectFromBase.leader.user!.firstName!,
-          lastName: projectFromBase.leader.user!.lastName!,
-          email: projectFromBase.leader.user!.email!,
-          name: projectFromBase.leader.name!,
-          isLeader: projectFromBase.leader.isLeader!,
-          memberType: projectFromBase.leader.type!,
+          id: projectFromBase.leaderInProject.user!.id!,
+          firstName: projectFromBase.leaderInProject.user!.firstName!,
+          lastName: projectFromBase.leaderInProject.user!.lastName!,
+          email: projectFromBase.leaderInProject.user!.email!,
+          name: projectFromBase.leaderInProject.name!,
+          isLeader: projectFromBase.leaderInProject.isLeader!,
+          memberType: projectFromBase.leaderInProject.type!,
         },
-        users: projectFromBase.users.map((user) => ({
+        users: projectFromBase.usersInProject.map((user) => ({
           id: user.user!.id!,
           firstName: user.user!.firstName!,
           lastName: user.user!.lastName!,

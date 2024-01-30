@@ -20,13 +20,15 @@ export class UserInProject {
   @Column({ nullable: false })
   name?: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, default: false })
   isLeader?: boolean;
 
-  @ManyToOne(() => Project, (project) => project.users, { nullable: false })
+  @ManyToOne(() => Project, (project) => project.usersInProject, {
+    nullable: false,
+  })
   project?: Project;
 
-  @ManyToOne(() => User, (user) => user.projects, { nullable: false })
+  @ManyToOne(() => User, (user) => user.userInProjects, { nullable: false })
   user?: User;
 
   @Column({ nullable: false })

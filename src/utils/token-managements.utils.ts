@@ -3,9 +3,11 @@ import { ErrorCode } from "../types/error.types";
 import * as dotenv from "dotenv";
 import { User } from "../api/entity/User";
 import { UserDto } from "../dto/user.dto";
+import { Request } from "express";
 
 dotenv.config();
 export const PRIVATE_KEY = "PRIVATE_KEY";
+export const TokenName = "token";
 
 export interface TokenPayload extends JwtPayload {
   user: UserDto;
@@ -16,7 +18,7 @@ const options: SignOptions = {
   expiresIn: "30m",
 };
 
-function generateToken(user: User | UserDto): string {
+export function generateToken(user: User | UserDto): string {
   const privateKey: string = process.env[PRIVATE_KEY]!;
   if (!privateKey) {
     throw new Error(ErrorCode.TNPK);
@@ -24,19 +26,21 @@ function generateToken(user: User | UserDto): string {
   return sign({ user } as TokenPayload, privateKey, options);
 }
 
-function verifyToken(token: string): boolean {
+export function verifyToken(token: string): boolean {
   return !!verify(token, process.env[PRIVATE_KEY]!);
 }
 
-function getDataFromToken(token: string): TokenPayload {
+export function getDataFromToken(token: string): TokenPayload {
   return decode(token) as TokenPayload;
 }
 
-function getDataFromTokenByKey(
+export function getDataFromTokenByKey(
   token: string,
   key: keyof TokenPayload,
 ): TokenPayload[keyof TokenPayload] {
   return getDataFromToken(token)[key];
 }
 
-export { generateToken, verifyToken, getDataFromToken, getDataFromTokenByKey };
+export function getTokenFromRequest(req: Request<any>): string {
+  return req.cookies[TokenName];
+}

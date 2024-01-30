@@ -7,13 +7,15 @@ import {
 import { hash } from "bcrypt";
 import { LoginDto, RegisterDto } from "../../dto/auth.dto";
 import { NextFunction, Request, Response } from "express";
-import { logoutMessage, saltRounds, TokenName } from "../../types/auth.types";
+import { logoutMessage, saltRounds } from "../../types/auth.types";
 import { Repository } from "typeorm";
 import { User } from "../entity/User";
 import { AppDataSource } from "../../data-source";
 import { ErrorCode } from "../../types/error.types";
 import {
   generateToken,
+  getTokenFromRequest,
+  TokenName,
   verifyToken,
 } from "../../utils/token-managements.utils";
 import { UserDto } from "../../dto/user.dto";
@@ -95,7 +97,7 @@ export class AuthController {
     next: NextFunction,
   ): void {
     try {
-      const token: string = req.cookies["token"];
+      const token: string = getTokenFromRequest(req);
       const isValidToken: boolean = !!token && verifyToken(token);
       res.json({ isValidToken });
     } catch ({ message }) {

@@ -7,30 +7,39 @@ import { validateEmail, validateNewPassword } from "../../utils/auth.utils";
 import { hash } from "bcrypt";
 import { saltRounds } from "../../types/auth.types";
 import { EditUserDto, UserDto } from "../../dto/user.dto";
+import {
+  getDataFromTokenByKey,
+  getTokenFromRequest,
+} from "../../utils/token-managements.utils";
 
 export class UserController {
-  static async getCertainUser(
+  static async getCurrentUserData(
     req: Request<{ id: string }>,
     res: Response,
     next: NextFunction,
   ): Promise<void> {
     try {
-      const id = req.params["id"] as string;
-      if (!id) throw new Error(ErrorCode.UNVII);
+      const token = getTokenFromRequest(req);
+      const { id } = getDataFromTokenByKey(token, "user");
       const userRepository: Repository<User> =
         AppDataSource.getRepository(User);
       const user: User = (await userRepository
         .createQueryBuilder("user")
-        .select(["user.id", "user.firstName", "user.lastName", "user.email"])
-        .leftJoin("user.projects", "uip")
-        .addSelect(["uip.name", "uip.isLeader", "uip.type"])
-        .leftJoin("uip.project", "project")
-        .addSelect([
+        .select([
+          "user.id",
+          "user.firstName",
+          "user.lastName",
+          "user.email",
+          "userInProject.name",
+          "userInProject.isLeader",
+          "userInProject.type",
           "project.name",
           "project.key",
           "project.type",
           "project.projectManagementType",
         ])
+        .leftJoin("user.userInProjects", "userInProject")
+        .leftJoin("userInProject.project", "project")
         .where({
           id,
         })
@@ -49,7 +58,8 @@ export class UserController {
   ): Promise<void> {
     try {
       let user: EditUserDto = req.body;
-      const id: string = req.params["id"];
+      const token = getTokenFromRequest(req);
+      const { id } = getDataFromTokenByKey(token, "user");
       const userRepository: Repository<User> =
         AppDataSource.getRepository(User);
       const isUserExist: boolean = await userRepository.exist({
@@ -69,7 +79,7 @@ export class UserController {
         id,
       })) as UserDto;
       delete (newUser as { password?: string })["password"];
-      res.status(200).json(newUser);
+      res.status(200).json({ message: "ok" });
     } catch ({ message }) {
       if ((message as string).includes("uq1")) message = ErrorCode.SUTEIAIU;
       next(message);

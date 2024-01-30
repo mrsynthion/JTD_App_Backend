@@ -3,6 +3,7 @@ import { UserInProjectController } from "../controller/user-in-project.controlle
 
 const router = express.Router();
 
-router.get("/:id", UserInProjectController.getUserPage);
+router.get("/:id", UserInProjectController.getUserPageByProjectId);
+router.post("/", UserInProjectController.addUserInProject);
 
 export { router as UserInProjectRoutes };

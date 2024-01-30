@@ -25,10 +25,10 @@ export class Project {
 
   @OneToOne(() => UserInProject)
   @JoinColumn()
-  leader?: UserInProject;
+  leaderInProject?: UserInProject;
 
   @OneToMany(() => UserInProject, (userInProject) => userInProject.project)
-  users?: UserInProject[];
+  usersInProject?: UserInProject[];
 
   @Column({ nullable: false })
   projectManagementType?: ProjectManagementType;

@@ -2,10 +2,14 @@ import { NextFunction, Request, Response } from "express";
 import { Filters, Page, SortDirection } from "../../types/pagination.types";
 import { AppDataSource } from "../../data-source";
 import { User } from "../entity/User";
-import { UserInProjectMinimumDto } from "../../dto/user.dto";
+import { UserDto, UserInProjectMinimumDto } from "../../dto/user.dto";
+import { AddUserInProjectDto } from "../../dto/user-in-project.dto";
+import { Repository } from "typeorm";
+import { UserInProject } from "../entity/UserInProject";
+import { UserInProjectType } from "../../types/user.types";
 
 export class UserInProjectController {
-  static async getUserPage(
+  static async getUserPageByProjectId(
     req: Request<
       { id: string },
       Page<UserInProjectMinimumDto>,
@@ -30,7 +34,7 @@ export class UserInProjectController {
         const query = appDataSource
           .getRepository(User)
           .createQueryBuilder("user")
-          .leftJoin("user.projects", "uip")
+          .leftJoin("user.userInProjects", "uip")
           .leftJoin("uip.project", "project")
           .select([
             "user.id",
@@ -72,9 +76,9 @@ export class UserInProjectController {
               firstName: user.firstName,
               lastName: user.lastName,
               email: user.email,
-              name: user.projects![0].name,
-              isLeader: user.projects![0].isLeader,
-              memberType: user.projects![0].type,
+              name: user.userInProjects![0].name,
+              isLeader: user.userInProjects![0].isLeader,
+              memberType: user.userInProjects![0].type,
             }) as UserInProjectMinimumDto,
         );
 
@@ -87,6 +91,45 @@ export class UserInProjectController {
       });
       res.status(200).json(data);
     } catch ({ message }) {
+      next(message);
+    }
+  }
+
+  static async addUserInProject(
+    req: Request<unknown, unknown, AddUserInProjectDto>,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    try {
+      const { email, projectId } = req.body;
+      await AppDataSource.transaction(async (appDataSource) => {
+        const userRepository: Repository<User> =
+          appDataSource.getRepository(User);
+        const { id, firstName }: UserDto = (await userRepository.findOne({
+          where: { email },
+        })) as UserDto;
+
+        if (!id) throw new Error("User doesnt exist");
+        console.log(id, firstName);
+        const userInProjectRepository: Repository<UserInProject> =
+          appDataSource.getRepository(UserInProject);
+        await userInProjectRepository.save({
+          name: firstName,
+          isLeader: false,
+          project: {
+            id: projectId,
+          },
+          user: {
+            id,
+          },
+          type: UserInProjectType.MEMBER,
+        });
+      });
+      res.status(200).json({ message: "ok" });
+    } catch ({ message }) {
+      if ((message as string).includes("Cannot read")) {
+        message = "User does not exist";
+      }
       next(message);
     }
   }

@@ -1,6 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import * as dotenv from "dotenv";
-import { verifyToken } from "../utils/token-managements.utils";
+import {
+  getTokenFromRequest,
+  verifyToken,
+} from "../utils/token-managements.utils";
 
 dotenv.config();
 
@@ -10,10 +13,10 @@ export const authenticate = (
   next: NextFunction,
 ) => {
   try {
-    const token = req.cookies["token"];
-    if (!token) {
-      return res.status(401).json({ error: "Unauthorized" });
-    }
+      const token = getTokenFromRequest(req);
+      if (!token) {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
 
     verifyToken(token);
     next();
