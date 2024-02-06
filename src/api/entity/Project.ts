@@ -8,28 +8,32 @@ import {
 } from "typeorm";
 import { UserInProject } from "./UserInProject";
 import { ProjectManagementType, ProjectType } from "../../types/projectType";
+import { Task } from "./Task";
 
 @Entity({ name: "Projects" })
 export class Project {
   @PrimaryGeneratedColumn("uuid")
-  id?: string;
+  id: string;
 
   @Column({ nullable: false })
-  name?: string;
+  name: string;
 
   @Column({ nullable: false })
-  key?: string;
+  key: string;
 
   @Column({ nullable: false })
-  type?: ProjectType;
+  type: ProjectType;
 
   @OneToOne(() => UserInProject)
   @JoinColumn()
-  leaderInProject?: UserInProject;
+  leaderInProject: UserInProject | null;
 
   @OneToMany(() => UserInProject, (userInProject) => userInProject.project)
-  usersInProject?: UserInProject[];
+  usersInProject: UserInProject[];
 
   @Column({ nullable: false })
-  projectManagementType?: ProjectManagementType;
+  projectManagementType: ProjectManagementType;
+
+  @OneToMany(() => Task, (task) => task.project)
+  tasks: Task[];
 }

@@ -1,8 +1,10 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Project } from "./Project";
@@ -15,25 +17,26 @@ import { UserInProjectType } from "../../types/user.types";
 })
 export class UserInProject {
   @PrimaryGeneratedColumn("uuid")
-  id?: string;
+  id: string;
 
   @Column({ nullable: false })
-  name?: string;
-
-  @Column({ nullable: false, default: false })
-  isLeader?: boolean;
+  name: string;
 
   @ManyToOne(() => Project, (project) => project.usersInProject, {
     nullable: false,
   })
-  project?: Project;
+  project: Project;
 
   @ManyToOne(() => User, (user) => user.userInProjects, { nullable: false })
-  user?: User;
+  user: User;
 
   @Column({ nullable: false })
-  type?: UserInProjectType;
+  type: UserInProjectType;
+
+  @OneToOne((type) => Project, (project) => project.leaderInProject)
+  leader: UserInProject | null;
 
   @OneToMany(() => Task, (task) => task.assignedUser)
-  tasks?: Task[];
+  @JoinColumn()
+  tasks: Task[];
 }

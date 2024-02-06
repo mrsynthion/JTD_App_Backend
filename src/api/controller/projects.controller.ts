@@ -16,56 +16,144 @@ import { NextFunction, Request, Response } from "express";
 import {
   AddProjectDto,
   EditProjectDto,
+  EditProjectLeaderDto,
   ProjectDto,
+  ProjectMinimumDto,
 } from "../../dto/project.dto";
-import { UserDto } from "../../dto/user.dto";
-
-const projectRepository: Repository<Project> =
-  AppDataSource.getRepository(Project);
-
-const userInProjectRepository: Repository<UserInProject> =
-  AppDataSource.getRepository(UserInProject);
+import { UserMinimumDto } from "../../dto/user.dto";
+import { mapUserInProjectToUserInProjectMinimumDto } from "../../utils/user-in-project.utils";
 
 export class ProjectController {
   static async addProject(
-    req: Request<AddProjectDto>,
+    req: Request<unknown, unknown, AddProjectDto>,
     res: Response,
     next: NextFunction,
   ): Promise<void> {
     try {
       let addProject: AddProjectDto = req.body;
       const token = getTokenFromRequest(req);
-      const currentUser: UserDto = getDataFromTokenByKey(token, "user");
+      const currentUser: UserMinimumDto = getDataFromTokenByKey(token, "user");
       await validateAddProjectData(addProject);
 
-      const newProject: ProjectDto = (await projectRepository.save(
-        addProject,
-      )) as ProjectDto;
-      const addUserInProject: UserInProject = {
-        name: currentUser.firstName,
-        isLeader: true,
-        user: currentUser,
-        project: newProject,
-        type: UserInProjectType.ADMINISTRATOR,
-      } as UserInProject;
-      const newUserInProject: UserInProject =
-        await userInProjectRepository.save(addUserInProject);
+      await AppDataSource.transaction(async (appDataSource) => {
+        const projectRepository: Repository<Project> =
+          appDataSource.getRepository(Project);
 
-      await projectRepository.update(
-        { id: newProject.id },
-        {
-          leaderInProject: newUserInProject,
-        },
+        const userInProjectRepository: Repository<UserInProject> =
+          appDataSource.getRepository(UserInProject);
+
+        const newProject: Project = (await projectRepository.save(
+          addProject,
+        )) as Project;
+
+        const addUserInProject: UserInProject = {
+          name: currentUser.firstName,
+          user: currentUser,
+          project: newProject,
+          type: UserInProjectType.ADMINISTRATOR,
+        } as UserInProject;
+
+        const newUserInProject: UserInProject =
+          await userInProjectRepository.save(addUserInProject);
+
+        await projectRepository.update(
+          { id: newProject.id },
+          {
+            leaderInProject: newUserInProject,
+          },
+        );
+
+        const {
+          id,
+          name,
+          key,
+          type,
+          leaderInProject,
+          usersInProject,
+          projectManagementType,
+        }: Project = (await projectRepository
+          .createQueryBuilder("project")
+          .select([
+            "project.id",
+            "project.name",
+            "project.key",
+            "project.type",
+            "projectManagementType",
+            "usersInProject.name",
+            "usersInProject.type",
+            "user.id",
+            "user.firstName",
+            "user.lastName",
+            "user.email",
+            "leader.name",
+            "leader.type",
+            "leaderUser.id",
+            "leaderUser.firstName",
+            "leaderUser.lastName",
+            "leaderUser.email",
+          ])
+          .leftJoin("project.usersInProject", "usersInProject")
+          .leftJoin("usersInProject.user", "user")
+          .leftJoin("project.leaderInProject", "leader")
+          .leftJoin("leader.user", "leaderUser")
+          .where("project.id = :id", { id: newProject.id })
+          .getOne()) as Project;
+        const project: ProjectDto = {
+          id,
+          name,
+          key,
+          type,
+          projectManagementType,
+          users: usersInProject.map((user) =>
+            mapUserInProjectToUserInProjectMinimumDto(user),
+          ),
+          leader: leaderInProject
+            ? mapUserInProjectToUserInProjectMinimumDto(leaderInProject)
+            : null,
+        };
+        res.status(201).json(project);
+      });
+    } catch ({ message }) {
+      let newMessage: ErrorCode = message as ErrorCode;
+      next(newMessage);
+    }
+  }
+
+  static async getCurrentUserProjectsList(
+    req: Request,
+    res: Response<ProjectMinimumDto[]>,
+    next: NextFunction,
+  ): Promise<void> {
+    try {
+      const token = getTokenFromRequest(req);
+      const { id } = getDataFromTokenByKey(token, "user");
+      const projectRepository: Repository<Project> =
+        AppDataSource.getRepository(Project);
+
+      const projectListFromBase: Project[] = (await projectRepository
+        .createQueryBuilder("project")
+        .select([
+          "project.id",
+          "project.name",
+          "project.key",
+          "project.type",
+          "project.projectManagementType",
+        ])
+        .leftJoin("project.usersInProject", "userInProject")
+        .leftJoin("userInProject.user", "user")
+        .where("user.id = :id", { id })
+        .getMany()) as Project[];
+
+      const projectsList: ProjectMinimumDto[] = projectListFromBase.map(
+        (projectFromBase) => ({
+          id: projectFromBase.id,
+          name: projectFromBase.name,
+          key: projectFromBase.key,
+          type: projectFromBase.type,
+          projectManagementType: projectFromBase.projectManagementType,
+        }),
       );
-      const project: ProjectDto = (await projectRepository.findOne({
-        where: {
-          id: newProject.id,
-        },
-        relations: {
-          leaderInProject: true,
-        },
-      })) as ProjectDto;
-      res.status(201).json(project);
+      res.status(200).json(projectsList);
     } catch ({ message }) {
       let newMessage: ErrorCode = message as ErrorCode;
       next(newMessage);
@@ -78,7 +166,7 @@ export class ProjectController {
     next: NextFunction,
   ): Promise<void> {
     try {
-      const id: string = req.params["id"];
+      const { id } = req.params;
       const editProject: EditProjectDto = req.body;
       let editProjectData = {};
       const setOfKeys: Set<keyof EditProjectDto> =
@@ -90,6 +178,9 @@ export class ProjectController {
           [key]: editProject[key],
         };
       });
+
+      const projectRepository: Repository<Project> =
+        AppDataSource.getRepository(Project);
 
       await projectRepository.update(
         {
@@ -110,9 +201,12 @@ export class ProjectController {
     next: NextFunction,
   ): Promise<void> {
     try {
-      const id: string = req.params["id"];
+      const { id } = req.params;
       if (!id) throw new Error("Id is required");
-      const projectFromBase: Required<Project> = (await projectRepository
+      const projectRepository: Repository<Project> =
+        AppDataSource.getRepository(Project);
+
+      const projectFromBase: Project = (await projectRepository
         .createQueryBuilder("project")
         .select([
           "project.id",
@@ -121,7 +215,6 @@ export class ProjectController {
           "project.type",
           "project.projectManagementType",
           "userInProject.name",
-          "userInProject.isLeader",
           "userInProject.type",
           "user.id",
           "user.firstName",
@@ -138,35 +231,73 @@ export class ProjectController {
         .leftJoin("userInProject.user", "user")
         .leftJoin("project.leaderInProject", "leader")
         .leftJoin("leader.user", "leaderUser")
+        .leftJoinAndSelect("userInProject.leader", "isLeader")
         .where("project.id = :id", { id })
-        .getOne()) as Required<Project>;
+        .getOne()) as Project;
 
       const project: ProjectDto = {
         id: projectFromBase.id,
         name: projectFromBase.name,
         key: projectFromBase.key,
         type: projectFromBase.type,
-        leader: {
-          id: projectFromBase.leaderInProject.user!.id!,
-          firstName: projectFromBase.leaderInProject.user!.firstName!,
-          lastName: projectFromBase.leaderInProject.user!.lastName!,
-          email: projectFromBase.leaderInProject.user!.email!,
-          name: projectFromBase.leaderInProject.name!,
-          isLeader: projectFromBase.leaderInProject.isLeader!,
-          memberType: projectFromBase.leaderInProject.type!,
-        },
-        users: projectFromBase.usersInProject.map((user) => ({
-          id: user.user!.id!,
-          firstName: user.user!.firstName!,
-          lastName: user.user!.lastName!,
-          email: user.user!.email!,
-          name: user.name!,
-          isLeader: user.isLeader!,
-          memberType: user.type!,
-        })),
+        leader: projectFromBase.leaderInProject
+          ? mapUserInProjectToUserInProjectMinimumDto(
+              projectFromBase.leaderInProject,
+            )
+          : null,
+        users: projectFromBase.usersInProject.map((user) =>
+          mapUserInProjectToUserInProjectMinimumDto(user),
+        ),
         projectManagementType: projectFromBase.projectManagementType,
       };
       res.status(200).json(project);
+    } catch ({ message }) {
+      next(message);
+    }
+  }
+
+  static async editProjectLeaderById(
+    req: Request<{ id: string }, unknown, EditProjectLeaderDto>,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    try {
+      const { id } = req.params;
+      const { leaderId } = req.body;
+      if (!id) throw new Error("Id is required");
+      if (!leaderId) throw new Error("Leader id is required");
+      const projectRepository: Repository<Project> =
+        AppDataSource.getRepository(Project);
+      const userInProjectRepository: Repository<UserInProject> =
+        AppDataSource.getRepository(UserInProject);
+
+      const isProjectExist: boolean = await projectRepository.exist({
+        where: { id },
+      });
+      if (!isProjectExist) throw new Error("Project doesnt exist");
+
+      const isUserInProjectExist: boolean = await userInProjectRepository.exist(
+        {
+          where: {
+            user: {
+              id: leaderId,
+            },
+            project: { id },
+          },
+        },
+      );
+      if (!isUserInProjectExist) {
+        throw new Error("User is not member of this project");
+      }
+
+      const leaderInProject: UserInProject =
+        (await userInProjectRepository.findOneBy({
+          user: { id: leaderId },
+          project: { id },
+        })) as UserInProject;
+      await projectRepository.update({ id }, { leaderInProject });
+
+      res.status(200).json({ message: "ok" });
     } catch ({ message }) {
       next(message);
     }

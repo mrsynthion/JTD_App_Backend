@@ -13,14 +13,14 @@ export const authenticate = (
   next: NextFunction,
 ) => {
   try {
-      const token = getTokenFromRequest(req);
-      if (!token) {
-        return res.status(401).json({ error: "Unauthorized" });
-      }
+    const token = getTokenFromRequest(req);
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
 
     verifyToken(token);
     next();
   } catch (error) {
-    return res.status(401).json({ error: "Unauthorized" });
+    return res.status(401).json({ message: "Unauthorized" });
   }
 };

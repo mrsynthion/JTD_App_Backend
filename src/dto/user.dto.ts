@@ -1,28 +1,23 @@
 import { ProjectMinimumDto } from "./project.dto";
-import { UserInProjectType } from "../types/user.types";
-import { Task } from "../api/entity/Task";
 
-export interface UserDto {
+export interface UserMinimumDto {
   id: string;
   firstName: string;
   lastName: string;
   email: string;
 }
 
-export type EditUserDto = UserDto & {
-  password: string;
-};
-
-export type UserWithProjectsDto = UserDto & {
+export type UserDto = UserMinimumDto & {
   projects: ProjectMinimumDto[];
 };
 
-export type UserInProjectMinimumDto = UserDto & {
-  name: string;
-  isLeader: boolean;
-  memberType: UserInProjectType;
-};
+export const userDtoKeys: (keyof UserDto)[] = [
+  "id",
+  "firstName",
+  "lastName",
+  "email",
+];
 
-export type UserInProjectDto = UserInProjectMinimumDto & {
-  tasks: Task[];
+export type EditUserDto = UserDto & {
+  password: string;
 };

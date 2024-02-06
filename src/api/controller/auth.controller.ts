@@ -18,7 +18,7 @@ import {
   TokenName,
   verifyToken,
 } from "../../utils/token-managements.utils";
-import { UserDto } from "../../dto/user.dto";
+import { UserMinimumDto } from "../../dto/user.dto";
 
 export class AuthController {
   static async signup(
@@ -36,9 +36,9 @@ export class AuthController {
       registerUserData = { ...registerUserData, password: hashedPass };
       const userRepository: Repository<User> =
         AppDataSource.getRepository(User);
-      const newUser: UserDto = (await userRepository.save(
+      const newUser: UserMinimumDto = (await userRepository.save(
         registerUserData,
-      )) as UserDto;
+      )) as UserMinimumDto;
       delete (newUser as { password?: string })["password"];
       res.status(201).json(newUser);
     } catch ({ message }) {
@@ -68,9 +68,8 @@ export class AuthController {
       if (!user) throw new Error(ErrorCode.UCNFU);
       await comparePasswords(password, user.password!);
 
-      const token = generateToken(user);
-
       delete user["password"];
+      const token = generateToken(user);
       res.status(200).cookie(TokenName, token, { httpOnly: true }).json(user);
     } catch ({ message }) {
       let newMessage: ErrorCode = message as ErrorCode;
@@ -85,7 +84,7 @@ export class AuthController {
     next: NextFunction,
   ): Promise<void> {
     try {
-      res.clearCookie(TokenName).status(200).send(logoutMessage);
+      res.clearCookie(TokenName).status(200).json({ message: logoutMessage });
     } catch ({ message }) {
       next(message);
     }

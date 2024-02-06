@@ -1,3 +1,5 @@
+import { AddTaskDto, TaskMinimumDto } from "../dto/task.dto";
+
 export enum TaskType {
   EPIC = "EPIC",
   STORY = "STORY",
@@ -17,3 +19,21 @@ export enum TaskStatus {
   WONT_DO = "WONT_DO",
   BLOCKED = "BLOCKED",
 }
+
+export const taskDtoKeys: (keyof TaskMinimumDto)[] = [
+  "id",
+  "title",
+  "description",
+  "createdAt",
+  "type",
+  "status",
+  "label",
+];
+
+export type AddTaskType = AddTaskDto & {
+  status: TaskStatus;
+  createdAt: Date;
+  project: {
+    id: string;
+  };
+};

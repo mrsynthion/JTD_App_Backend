@@ -3,7 +3,26 @@ import { UserInProjectController } from "../controller/user-in-project.controlle
 
 const router = express.Router();
 
-router.get("/:id", UserInProjectController.getUserPageByProjectId);
-router.post("/", UserInProjectController.addUserInProject);
+router.post("/project/:projectId", UserInProjectController.addUserInProject);
+
+router.get(
+  "/project/:projectId",
+  UserInProjectController.getUserPageByProjectId,
+);
+
+router.put(
+  "/project/:projectId",
+  UserInProjectController.editCurrentUserDataByProjectId,
+);
+
+router.get(
+  "/user/:userId/project/:projectId",
+  UserInProjectController.getUserByUserIdAndProjectId,
+);
+
+router.patch(
+  "/user/:userId/project/:projectId",
+  UserInProjectController.editMemberTypeByUserIdAndProjectId,
+);
 
 export { router as UserInProjectRoutes };

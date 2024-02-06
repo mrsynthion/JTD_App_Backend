@@ -5,7 +5,12 @@ import { AppDataSource } from "../data-source";
 import { UserInProject } from "../api/entity/UserInProject";
 import { Project } from "../api/entity/Project";
 import { UserInProjectType } from "../types/user.types";
-import { AddProjectDto, EditProjectDto } from "../dto/project.dto";
+import {
+  AddProjectDto,
+  EditProjectDto,
+  ProjectMinimumDto,
+} from "../dto/project.dto";
+import { UserInProjectMinimumDto } from "../dto/user-in-project.dto";
 
 const userInProjectRepository: Repository<UserInProject> =
   AppDataSource.getRepository(UserInProject);
@@ -73,11 +78,15 @@ function validateEditProjectName(name: string | undefined): boolean {
 }
 
 async function validateEditProjectLeader(
-  leader: UserInProject | undefined,
+  leader: UserInProjectMinimumDto | null | undefined,
 ): Promise<boolean> {
   if (!leader?.id) return false;
   const isLeaderExist: boolean = await userInProjectRepository.exist({
-    where: { id: leader.id },
+    where: {
+      user: {
+        id: leader.id,
+      },
+    },
   });
   if (!isLeaderExist) throw new Error(ErrorCode.PNLME);
   return true;
@@ -87,7 +96,11 @@ async function validateIfProjectExistById(
   id: string | undefined,
 ): Promise<boolean> {
   try {
-    return projectRepository.exist({ where: { id } });
+    const isProjectExist: boolean = await projectRepository.exist({
+      where: { id },
+    });
+    if (!isProjectExist) throw new Error();
+    return true;
   } catch (e) {
     throw new Error(ErrorCode.PPME);
   }
@@ -105,7 +118,18 @@ export async function validateEditProjectData(
   if (!!editProject.projectManagementType) {
     set.add("projectManagementType");
   }
-  if (await validateEditProjectLeader(editProject.leader)) set.add("leader");
   if (!set.size) throw new Error(ErrorCode.PYMPMOVTC);
   return set;
+}
+
+export function mapProjectToProjectMinimumDto(
+  project: Project,
+): ProjectMinimumDto {
+  return {
+    id: project.id,
+    name: project.name,
+    key: project.key,
+    type: project.type,
+    projectManagementType: project.projectManagementType,
+  };
 }

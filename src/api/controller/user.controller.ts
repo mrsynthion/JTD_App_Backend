@@ -6,11 +6,12 @@ import { Repository } from "typeorm";
 import { validateEmail, validateNewPassword } from "../../utils/auth.utils";
 import { hash } from "bcrypt";
 import { saltRounds } from "../../types/auth.types";
-import { EditUserDto, UserDto } from "../../dto/user.dto";
+import { EditUserDto } from "../../dto/user.dto";
 import {
   getDataFromTokenByKey,
   getTokenFromRequest,
 } from "../../utils/token-managements.utils";
+import { mapUserToUserDto } from "../../utils/user.utils";
 
 export class UserController {
   static async getCurrentUserData(
@@ -30,22 +31,21 @@ export class UserController {
           "user.firstName",
           "user.lastName",
           "user.email",
-          "userInProject.name",
-          "userInProject.isLeader",
-          "userInProject.type",
           "project.name",
           "project.key",
           "project.type",
           "project.projectManagementType",
         ])
-        .leftJoin("user.userInProjects", "userInProject")
+        .leftJoinAndSelect("user.userInProjects", "userInProject")
         .leftJoin("userInProject.project", "project")
         .where({
           id,
         })
         .getOne()) as User;
       if (!user) throw Error(ErrorCode.UCNFU);
-      res.status(200).json(user);
+
+      const userDto = mapUserToUserDto(user);
+      res.status(200).json(userDto);
     } catch ({ message }) {
       next(message);
     }
@@ -75,10 +75,6 @@ export class UserController {
       }
       user = { ...user, id };
       await userRepository.save(user);
-      const newUser: UserDto = (await userRepository.findOneBy({
-        id,
-      })) as UserDto;
-      delete (newUser as { password?: string })["password"];
       res.status(200).json({ message: "ok" });
     } catch ({ message }) {
       if ((message as string).includes("uq1")) message = ErrorCode.SUTEIAIU;

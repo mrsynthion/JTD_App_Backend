@@ -13,7 +13,7 @@ const { PORT } = process.env;
 
 AppDataSource.initialize()
   .then(async () => {
-    // await AppDataSource.synchronize(true);
+    //await AppDataSource.synchronize(true);
 
     // create express app
     const app = express();

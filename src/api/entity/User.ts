@@ -4,20 +4,20 @@ import { UserInProject } from "./UserInProject";
 @Entity({ name: "Users" })
 export class User {
   @PrimaryGeneratedColumn("uuid")
-  id?: string;
+  id: string;
 
   @Column({ nullable: false })
-  firstName?: string;
+  firstName: string;
 
   @Column({ nullable: false })
-  lastName?: string;
+  lastName: string;
 
   @Column({ nullable: false, unique: true })
-  email?: string;
+  email: string;
 
   @Column({ nullable: false })
   password?: string;
 
   @OneToMany(() => UserInProject, (userInProject) => userInProject.user)
-  userInProjects?: UserInProject[];
+  userInProjects: UserInProject[];
 }

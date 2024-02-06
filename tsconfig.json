@@ -12,6 +12,7 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "strict": true,
+    "strictPropertyInitialization": false,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true
   }
