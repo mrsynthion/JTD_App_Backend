@@ -1,4 +1,4 @@
-export enum ProjectType {
+export enum ProjectTypes {
   SOFTWARE = "SOFTWARE",
 }
 

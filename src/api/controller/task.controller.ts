@@ -1,16 +1,25 @@
 import { AppDataSource } from "../../data-source";
 import { NextFunction, Request, Response } from "express";
-import { ErrorCode } from "../../types/error.types";
 import { Task } from "../entity/Task";
 import { Filters, Page, SortDirection } from "../../types/pagination.types";
-import { AddTaskDto, TaskDto, TaskMinimumDto } from "../../dto/task.dto";
+import {
+  AddTaskDto,
+  EditTaskDto,
+  TaskBasicDto,
+  TaskDto,
+} from "../../dto/task.dto";
 import { AddTaskType, taskDtoKeys, TaskStatus } from "../../types/task.types";
 import { Repository } from "typeorm";
 import {
+  mapTaskToTaskBasicDto,
   mapTaskToTaskDto,
-  mapTaskToTaskMinimumDto,
   validateAddTaskDto,
+  validateDeleteTaskDto,
+  validateEditTaskDto,
+  validateTaskStatus,
 } from "../../utils/task.utils";
+import { UserInProjectBasicDto } from "../../dto/user-in-project.dto";
+import { UserInProject } from "../entity/UserInProject";
 
 export class TaskController {
   static async getCertainTask(
@@ -18,7 +27,6 @@ export class TaskController {
     res: Response<TaskDto>,
     next: NextFunction,
   ): Promise<void> {
-    console.log(1);
     try {
       const { id } = req.params;
       const taskRepository: Repository<Task> =
@@ -33,12 +41,34 @@ export class TaskController {
           "task.label",
           "task.type",
           "task.status",
+          "userInProject.name",
+          "userInProject.type",
+          "user.id",
+          "user.firstName",
+          "user.lastName",
+          "user.email",
+          "leader.id",
+          "parentTask.id",
+          "parentTask.title",
+          "parentTask.description",
+          "parentTask.createdAt",
+          "parentTask.label",
+          "parentTask.type",
+          "parentTask.status",
+          "childrenTask.id",
+          "childrenTask.title",
+          "childrenTask.description",
+          "childrenTask.createdAt",
+          "childrenTask.label",
+          "childrenTask.type",
+          "childrenTask.status",
         ])
-        .leftJoinAndSelect("task.assignedUser", "userInProject")
-        .leftJoinAndSelect("userInProject.user", "user")
-        .leftJoinAndSelect("task.worklogs", "worklog")
-        .leftJoinAndSelect("task.parentTask", "parentTask")
-        .leftJoinAndSelect("task.childrenTasks", "childrenTask")
+        .leftJoin("task.assignedUser", "userInProject")
+        .leftJoin("userInProject.user", "user")
+        .leftJoin("userInProject.leader", "leader")
+        .leftJoinAndSelect("task.workLogs", "workLog")
+        .leftJoin("task.parentTask", "parentTask")
+        .leftJoin("task.childrenTasks", "childrenTask")
         .where("task.id = :id", { id })
         .getOne()) as Task;
 
@@ -46,7 +76,96 @@ export class TaskController {
 
       res.status(200).json(taskDto);
     } catch ({ message }) {
-      throw new Error(message as ErrorCode);
+      next(message);
+    }
+  }
+
+  static async editCertainTask(
+    req: Request<{ id: string }, unknown, EditTaskDto>,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    const { id } = req.params;
+    const editTask = req.body;
+    try {
+      validateEditTaskDto(editTask);
+      const taskRepository: Repository<Task> =
+        AppDataSource.getRepository(Task);
+      await taskRepository.update({ id }, editTask);
+      res.status(200).json({ message: "ok" });
+    } catch ({ message }) {
+      next(message);
+    }
+  }
+
+  static async changeTaskAssignedUser(
+    req: Request<{ id: string }, unknown, UserInProjectBasicDto>,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    try {
+      const { id } = req.params;
+      const assignedUser: UserInProjectBasicDto = req.body;
+
+      const userInProjectRepository: Repository<UserInProject> =
+        AppDataSource.getRepository(UserInProject);
+      const userInProject: UserInProject = (await userInProjectRepository
+        .createQueryBuilder("userInProject")
+        .select(["userInProject.id"])
+        .leftJoin("userInProject.user", "user")
+        .where({ user: { id: assignedUser.id } })
+        .getOne()) as UserInProject;
+
+      const taskRepository: Repository<Task> =
+        AppDataSource.getRepository(Task);
+      await taskRepository.update({ id }, { assignedUser: userInProject });
+      res.status(200).json({ message: "ok" });
+    } catch ({ message }) {
+      next(message);
+    }
+  }
+
+  static async deleteCertainTask(
+    req: Request<{ id: string }>,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    const { id } = req.params;
+    try {
+      const taskRepository: Repository<Task> =
+        AppDataSource.getRepository(Task);
+
+      const task: Task | null = await taskRepository
+        .createQueryBuilder("task")
+        .select(["task.id", "childrenTask.id"])
+        .leftJoin("task.parentTask", "parentTask")
+        .leftJoin("task.childrenTasks", "childrenTask")
+        .where("task.id = :id", { id })
+        .getOne();
+
+      validateDeleteTaskDto(task);
+
+      await taskRepository.delete({ id });
+      res.status(200).json({ message: "ok" });
+    } catch ({ message }) {
+      next(message);
+    }
+  }
+
+  static async changeTaskStatus(
+    req: Request<{ id: string; status: TaskStatus }>,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    try {
+      const { id, status } = req.params;
+      validateTaskStatus(status);
+      const taskRepository: Repository<Task> =
+        AppDataSource.getRepository(Task);
+      await taskRepository.update({ id }, { status });
+      res.status(200).json({ message: "ok" });
+    } catch ({ message }) {
+      next(message);
     }
   }
 
@@ -70,22 +189,21 @@ export class TaskController {
       const taskRepository: Repository<Task> =
         AppDataSource.getRepository(Task);
       const savedTask = (await taskRepository.save(addTaskType)) as Task;
-      const task: TaskMinimumDto = mapTaskToTaskMinimumDto(savedTask);
+      const task: TaskBasicDto = mapTaskToTaskBasicDto(savedTask);
       res.status(200).json(task);
     } catch ({ message }) {
-      let newMessage: ErrorCode = message as ErrorCode;
-      throw new Error(newMessage);
+      next(message);
     }
   }
 
   static async getTaskPageByProjectId(
     req: Request<
       { projectId: string },
-      Page<TaskMinimumDto>,
+      Page<TaskBasicDto>,
       unknown,
-      Filters<TaskMinimumDto>
+      Filters<TaskBasicDto>
     >,
-    res: Response<Page<TaskMinimumDto>>,
+    res: Response<Page<TaskBasicDto>>,
     next: NextFunction,
   ): Promise<void> {
     try {
@@ -114,9 +232,8 @@ export class TaskController {
             "task.type",
             "task.status",
             "task.createdAt",
-            "assignedUser.id",
+            "user.id",
             "assignedUser.name",
-            "assignedUser.type",
           ])
           .where("project.id = :projectId", { projectId })
           .andWhere("task.title like :title", { title: `%${title || ""}%` })
@@ -142,6 +259,7 @@ export class TaskController {
           )
           .leftJoin("task.project", "project")
           .leftJoin("task.assignedUser", "assignedUser")
+          .leftJoin("assignedUser.user", "user")
           .cache(true);
         const totalElements = await query.getCount();
 
@@ -155,39 +273,26 @@ export class TaskController {
         }
         const sortDirection: SortDirection = sort?.[1] ? sort[1] : "ASC";
 
-        const content = await query
+        const taskList = await query
           .skip(skip)
           .take(size)
           .addOrderBy(sortBy, sortDirection)
           .getMany();
+
+        const content: TaskBasicDto[] = taskList.map((task) =>
+          mapTaskToTaskBasicDto(task),
+        );
 
         const taskPage = {
           content,
           totalElements,
           totalPages: Math.floor(totalElements / size || 0),
           numberOfElements: content.length,
-        } as Page<TaskMinimumDto>;
+        } as Page<TaskBasicDto>;
         res.status(200).json(taskPage);
       });
     } catch ({ message }) {
-      throw new Error(message as ErrorCode);
+      next(message);
     }
   }
 }
-
-//
-// async function editCertainTask(
-//   id: string,
-//   task: Task,
-//   res: Response,
-// ): Promise<void> {
-//   try {
-//     if (task.title) validateTitle(task.title);
-//     await taskRepository.update({ id }, task);
-//     res.statusCode = 200;
-//     res.json({ message: "ok" });
-//   } catch ({ message }) {
-//     let newMessage: ErrorCode = message as ErrorCode;
-//     throw new Error(newMessage);
-//   }
-// }

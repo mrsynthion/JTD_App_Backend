@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { UserInProject } from "./UserInProject";
-import { ProjectManagementType, ProjectType } from "../../types/projectType";
+import { ProjectManagementType, ProjectTypes } from "../../types/project.types";
 import { Task } from "./Task";
 
 @Entity({ name: "Projects" })
@@ -22,7 +22,7 @@ export class Project {
   key: string;
 
   @Column({ nullable: false })
-  type: ProjectType;
+  type: ProjectTypes;
 
   @OneToOne(() => UserInProject)
   @JoinColumn()

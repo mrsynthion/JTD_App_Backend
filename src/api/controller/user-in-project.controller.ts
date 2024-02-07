@@ -2,20 +2,20 @@ import { NextFunction, Request, Response } from "express";
 import { Filters, Page, SortDirection } from "../../types/pagination.types";
 import { AppDataSource } from "../../data-source";
 import { User } from "../entity/User";
-import { userDtoKeys, UserMinimumDto } from "../../dto/user.dto";
+import { UserBasicDto, userDtoKeys } from "../../dto/user.dto";
 import {
   AddUserInProjectDto,
   EditUserInProjectDto,
   EditUserInProjectMemberTypeDto,
+  UserInProjectBasicDto,
   UserInProjectDto,
-  UserInProjectMinimumDto,
 } from "../../dto/user-in-project.dto";
 import { Repository } from "typeorm";
 import { UserInProject } from "../entity/UserInProject";
 import { UserInProjectType } from "../../types/user.types";
 import {
+  mapUserInProjectToUserInProjectBasicDto,
   mapUserInProjectToUserInProjectDto,
-  mapUserInProjectToUserInProjectMinimumDto,
 } from "../../utils/user-in-project.utils";
 import {
   getDataFromTokenByKey,
@@ -36,11 +36,9 @@ export class UserInProjectController {
       await AppDataSource.transaction(async (appDataSource) => {
         const userRepository: Repository<User> =
           appDataSource.getRepository(User);
-        const { id, firstName }: UserMinimumDto = (await userRepository.findOne(
-          {
-            where: { email },
-          },
-        )) as UserMinimumDto;
+        const { id, firstName }: UserBasicDto = (await userRepository.findOne({
+          where: { email },
+        })) as UserBasicDto;
 
         if (!id) throw new Error("User doesnt exist");
         const userInProjectRepository: Repository<UserInProject> =
@@ -68,9 +66,9 @@ export class UserInProjectController {
   static async getUserPageByProjectId(
     req: Request<
       { projectId: string },
-      Page<UserInProjectMinimumDto>,
+      Page<UserInProjectBasicDto>,
       unknown,
-      Filters<UserInProjectMinimumDto>
+      Filters<UserInProjectBasicDto>
     >,
     res: Response,
     next: NextFunction,
@@ -133,8 +131,8 @@ export class UserInProjectController {
           .addOrderBy(sortBy, sortDirection)
           .getMany();
 
-        const content: UserInProjectMinimumDto[] = users.map((user) =>
-          mapUserInProjectToUserInProjectMinimumDto(user),
+        const content: UserInProjectBasicDto[] = users.map((user) =>
+          mapUserInProjectToUserInProjectBasicDto(user),
         );
 
         return {
@@ -142,7 +140,7 @@ export class UserInProjectController {
           totalElements,
           totalPages: Math.floor(totalElements / size || 0),
           numberOfElements: content.length,
-        } as Page<UserInProjectMinimumDto>;
+        } as Page<UserInProjectBasicDto>;
       });
       res.status(200).json(data);
     } catch ({ message }) {

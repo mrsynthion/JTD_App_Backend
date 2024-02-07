@@ -1,4 +1,4 @@
-import { ProjectManagementType, ProjectType } from "../types/projectType";
+import { ProjectManagementType, ProjectTypes } from "../types/project.types";
 import { ErrorCode } from "../types/error.types";
 import { Repository } from "typeorm";
 import { AppDataSource } from "../data-source";
@@ -8,9 +8,9 @@ import { UserInProjectType } from "../types/user.types";
 import {
   AddProjectDto,
   EditProjectDto,
-  ProjectMinimumDto,
+  ProjectBasicDto,
 } from "../dto/project.dto";
-import { UserInProjectMinimumDto } from "../dto/user-in-project.dto";
+import { UserInProjectBasicDto } from "../dto/user-in-project.dto";
 
 const userInProjectRepository: Repository<UserInProject> =
   AppDataSource.getRepository(UserInProject);
@@ -27,8 +27,8 @@ function validateAddProjectName(name: string | undefined): void {
   if (!name) throw new Error(ErrorCode.PNIR);
 }
 
-function validateAddProjectType(type: ProjectType | undefined): void {
-  const isValidType: boolean = !!Object.values(ProjectType).find(
+function validateAddProjectType(type: ProjectTypes | undefined): void {
+  const isValidType: boolean = !!Object.values(ProjectTypes).find(
     (projectType) => projectType === type,
   );
   if (!isValidType) {
@@ -78,7 +78,7 @@ function validateEditProjectName(name: string | undefined): boolean {
 }
 
 async function validateEditProjectLeader(
-  leader: UserInProjectMinimumDto | null | undefined,
+  leader: UserInProjectBasicDto | null | undefined,
 ): Promise<boolean> {
   if (!leader?.id) return false;
   const isLeaderExist: boolean = await userInProjectRepository.exist({
@@ -124,7 +124,7 @@ export async function validateEditProjectData(
 
 export function mapProjectToProjectMinimumDto(
   project: Project,
-): ProjectMinimumDto {
+): ProjectBasicDto {
   return {
     id: project.id,
     name: project.name,

@@ -1,8 +1,8 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Task } from "./Task";
 
-@Entity({ name: "Worklogs" })
-export class Worklog {
+@Entity({ name: "WorkLogs" })
+export class WorkLog {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -15,6 +15,6 @@ export class Worklog {
   @Column("datetime", { nullable: false })
   endDate: Date;
 
-  @ManyToOne(() => Task, (task) => task.worklogs)
+  @ManyToOne(() => Task, (task) => task.workLogs)
   task: Task;
 }

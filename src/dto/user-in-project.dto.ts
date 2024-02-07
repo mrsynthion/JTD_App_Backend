@@ -1,4 +1,4 @@
-import { UserMinimumDto } from "./user.dto";
+import { UserBasicDto } from "./user.dto";
 import { UserInProjectType } from "../types/user.types";
 import { Task } from "../api/entity/Task";
 
@@ -14,12 +14,17 @@ export interface EditUserInProjectMemberTypeDto {
   memberType: UserInProjectType;
 }
 
-export type UserInProjectMinimumDto = UserMinimumDto & {
+export interface UserInProjectMinimumDto {
+  id: string;
+  name: string;
+}
+
+export type UserInProjectBasicDto = UserBasicDto & {
   name: string;
   isLeader: boolean;
   memberType: UserInProjectType;
 };
 
-export type UserInProjectDto = UserInProjectMinimumDto & {
+export type UserInProjectDto = UserInProjectBasicDto & {
   tasks: Task[];
 };

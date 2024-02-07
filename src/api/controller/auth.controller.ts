@@ -18,7 +18,7 @@ import {
   TokenName,
   verifyToken,
 } from "../../utils/token-managements.utils";
-import { UserMinimumDto } from "../../dto/user.dto";
+import { UserBasicDto } from "../../dto/user.dto";
 
 export class AuthController {
   static async signup(
@@ -36,9 +36,9 @@ export class AuthController {
       registerUserData = { ...registerUserData, password: hashedPass };
       const userRepository: Repository<User> =
         AppDataSource.getRepository(User);
-      const newUser: UserMinimumDto = (await userRepository.save(
+      const newUser: UserBasicDto = (await userRepository.save(
         registerUserData,
-      )) as UserMinimumDto;
+      )) as UserBasicDto;
       delete (newUser as { password?: string })["password"];
       res.status(201).json(newUser);
     } catch ({ message }) {

@@ -1,35 +1,35 @@
-import { ProjectManagementType, ProjectType } from "../types/projectType";
-import { UserInProjectMinimumDto } from "./user-in-project.dto";
+import { ProjectManagementType, ProjectTypes } from "../types/project.types";
+import { UserInProjectBasicDto } from "./user-in-project.dto";
 
 export interface ProjectDto {
   id: string;
   name: string;
   key: string;
-  type: ProjectType;
-  leader: UserInProjectMinimumDto | null;
-  users: UserInProjectMinimumDto[];
+  type: ProjectTypes;
+  leader: UserInProjectBasicDto | null;
+  users: UserInProjectBasicDto[];
   projectManagementType: ProjectManagementType;
 }
 
-export interface ProjectMinimumDto {
+export interface ProjectBasicDto {
   id: string;
   name: string;
   key: string;
-  type: ProjectType;
+  type: ProjectTypes;
   projectManagementType: ProjectManagementType;
 }
 
 export interface AddProjectDto {
   name: string;
   key: string;
-  type: ProjectType;
+  type: ProjectTypes;
   projectManagementType: ProjectManagementType;
 }
 
 export interface EditProjectDto {
   name?: string;
   key?: string;
-  type?: ProjectType;
+  type?: ProjectTypes;
   projectManagementType?: ProjectManagementType;
 }
 

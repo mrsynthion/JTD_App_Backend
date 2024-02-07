@@ -1,8 +1,11 @@
 import { TaskStatus, TaskType } from "../types/task.types";
-import { UserInProjectMinimumDto } from "./user-in-project.dto";
-import { WorklogDto } from "./worklog.dto";
+import {
+  UserInProjectBasicDto,
+  UserInProjectMinimumDto,
+} from "./user-in-project.dto";
+import { WorkLogDto } from "./work-log.dto";
 
-export interface TaskMinimumDto {
+export interface TaskBasicDto {
   id: string;
   title: string;
   description: string;
@@ -13,10 +16,10 @@ export interface TaskMinimumDto {
   createdAt: Date;
 }
 
-export type TaskDto = TaskMinimumDto & {
-  childrenTasks: TaskMinimumDto[] | null;
-  parentTask: TaskMinimumDto | null;
-  worklogs: WorklogDto[];
+export type TaskDto = TaskBasicDto & {
+  childrenTasks: TaskBasicDto[] | null;
+  parentTask: TaskBasicDto | null;
+  workLogs: WorkLogDto[];
 };
 
 export interface AddTaskDto {
@@ -24,6 +27,17 @@ export interface AddTaskDto {
   description: string;
   label: string;
   type: TaskType;
-  assignedUser: UserInProjectMinimumDto | null;
-  parentTask: TaskMinimumDto | null;
+  assignedUser: UserInProjectBasicDto | null;
+  parentTask: TaskBasicDto | null;
+}
+
+export interface EditTaskDto {
+  title?: string;
+  description?: string;
+  label?: string;
+  type?: TaskType;
+  status?: TaskStatus;
+  assignedUser?: UserInProjectBasicDto;
+  parentTask?: TaskBasicDto | null;
+  childrenTask?: TaskBasicDto;
 }

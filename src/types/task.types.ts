@@ -1,4 +1,4 @@
-import { AddTaskDto, TaskMinimumDto } from "../dto/task.dto";
+import { AddTaskDto, TaskBasicDto } from "../dto/task.dto";
 
 export enum TaskType {
   EPIC = "EPIC",
@@ -20,7 +20,7 @@ export enum TaskStatus {
   BLOCKED = "BLOCKED",
 }
 
-export const taskDtoKeys: (keyof TaskMinimumDto)[] = [
+export const taskDtoKeys: (keyof TaskBasicDto)[] = [
   "id",
   "title",
   "description",

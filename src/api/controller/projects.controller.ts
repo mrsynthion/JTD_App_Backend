@@ -17,11 +17,11 @@ import {
   AddProjectDto,
   EditProjectDto,
   EditProjectLeaderDto,
+  ProjectBasicDto,
   ProjectDto,
-  ProjectMinimumDto,
 } from "../../dto/project.dto";
-import { UserMinimumDto } from "../../dto/user.dto";
-import { mapUserInProjectToUserInProjectMinimumDto } from "../../utils/user-in-project.utils";
+import { UserBasicDto } from "../../dto/user.dto";
+import { mapUserInProjectToUserInProjectBasicDto } from "../../utils/user-in-project.utils";
 
 export class ProjectController {
   static async addProject(
@@ -32,7 +32,7 @@ export class ProjectController {
     try {
       let addProject: AddProjectDto = req.body;
       const token = getTokenFromRequest(req);
-      const currentUser: UserMinimumDto = getDataFromTokenByKey(token, "user");
+      const currentUser: UserBasicDto = getDataFromTokenByKey(token, "user");
       await validateAddProjectData(addProject);
 
       await AppDataSource.transaction(async (appDataSource) => {
@@ -105,10 +105,10 @@ export class ProjectController {
           type,
           projectManagementType,
           users: usersInProject.map((user) =>
-            mapUserInProjectToUserInProjectMinimumDto(user),
+            mapUserInProjectToUserInProjectBasicDto(user),
           ),
           leader: leaderInProject
-            ? mapUserInProjectToUserInProjectMinimumDto(leaderInProject)
+            ? mapUserInProjectToUserInProjectBasicDto(leaderInProject)
             : null,
         };
         res.status(201).json(project);
@@ -121,7 +121,7 @@ export class ProjectController {
 
   static async getCurrentUserProjectsList(
     req: Request,
-    res: Response<ProjectMinimumDto[]>,
+    res: Response<ProjectBasicDto[]>,
     next: NextFunction,
   ): Promise<void> {
     try {
@@ -144,7 +144,7 @@ export class ProjectController {
         .where("user.id = :id", { id })
         .getMany()) as Project[];
 
-      const projectsList: ProjectMinimumDto[] = projectListFromBase.map(
+      const projectsList: ProjectBasicDto[] = projectListFromBase.map(
         (projectFromBase) => ({
           id: projectFromBase.id,
           name: projectFromBase.name,
@@ -241,12 +241,12 @@ export class ProjectController {
         key: projectFromBase.key,
         type: projectFromBase.type,
         leader: projectFromBase.leaderInProject
-          ? mapUserInProjectToUserInProjectMinimumDto(
+          ? mapUserInProjectToUserInProjectBasicDto(
               projectFromBase.leaderInProject,
             )
           : null,
         users: projectFromBase.usersInProject.map((user) =>
-          mapUserInProjectToUserInProjectMinimumDto(user),
+          mapUserInProjectToUserInProjectBasicDto(user),
         ),
         projectManagementType: projectFromBase.projectManagementType,
       };

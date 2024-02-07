@@ -1,25 +1,50 @@
 import { ErrorCode } from "../types/error.types";
-import { AddTaskDto, TaskDto, TaskMinimumDto } from "../dto/task.dto";
-import { TaskType } from "../types/task.types";
+import {
+  AddTaskDto,
+  EditTaskDto,
+  TaskBasicDto,
+  TaskDto,
+} from "../dto/task.dto";
+import { TaskStatus, TaskType } from "../types/task.types";
 import { Task } from "../api/entity/Task";
-import { mapUserInProjectToUserInProjectMinimumDto } from "./user-in-project.utils";
+import {
+  mapUserInProjectToUserInProjectBasicDto,
+  mapUserInProjectToUserInProjectMinimumDto,
+} from "./user-in-project.utils";
 
-function validateTitle(title: string): void {
-  if (!title) throw new Error(ErrorCode.TTIR);
+function validateTitle(title?: string, edit?: boolean): void {
+  if (!title && !edit) throw new Error(ErrorCode.TTIR);
   if (title && title.length < 5) throw new Error(ErrorCode.TTMBMFC);
 }
 
-function validateType(type: TaskType): void {
+function validateType(type?: TaskType): void {
   if (!type) throw new Error(ErrorCode.TTTIR);
 }
 
 function validateTypeAndParentTask(
-  type: TaskType,
-  parentTask: TaskMinimumDto | null,
+  type?: TaskType,
+  parentTask?: TaskBasicDto | null,
 ): void {
   if (type === TaskType.EPIC && parentTask?.id) {
     throw new Error(ErrorCode.TTECNHPT);
   }
+}
+
+function validateTaskExist(id?: string): void {
+  if (!id) throw new Error("Task must exist");
+}
+
+function validateTaskChildren(children?: Task[]): void {
+  if (children && children.length !== 0)
+    throw new Error("Task can not have children");
+}
+
+export function validateTaskStatus(status?: TaskStatus) {
+  const statusFound: boolean = !!Object.values(TaskStatus).find(
+    (s) => s === status,
+  );
+
+  if (status && !statusFound) throw new Error("Task status must exist");
 }
 
 export function validateAddTaskDto(addTaskDto: AddTaskDto): void {
@@ -28,7 +53,18 @@ export function validateAddTaskDto(addTaskDto: AddTaskDto): void {
   validateTypeAndParentTask(addTaskDto.type, addTaskDto.parentTask);
 }
 
-export function mapTaskToTaskMinimumDto(task: Task): TaskMinimumDto {
+export function validateEditTaskDto(editTaskDto: EditTaskDto): void {
+  validateTitle(editTaskDto.title, true);
+  validateTaskStatus(editTaskDto.status);
+  validateTypeAndParentTask(editTaskDto.type, editTaskDto.parentTask);
+}
+
+export function validateDeleteTaskDto(deleteTaskDto: Task | null): void {
+  validateTaskExist(deleteTaskDto?.id);
+  validateTaskChildren(deleteTaskDto?.childrenTasks);
+}
+
+export function mapTaskToTaskBasicDto(task: Task): TaskBasicDto {
   return {
     id: task.id,
     title: task.title,
@@ -44,7 +80,6 @@ export function mapTaskToTaskMinimumDto(task: Task): TaskMinimumDto {
 }
 
 export function mapTaskToTaskDto(task: Task): TaskDto {
-  console.log(task);
   return {
     id: task.id,
     title: task.title,
@@ -53,15 +88,13 @@ export function mapTaskToTaskDto(task: Task): TaskDto {
     type: task.type,
     status: task.status,
     assignedUser: task.assignedUser
-      ? mapUserInProjectToUserInProjectMinimumDto(task.assignedUser)
+      ? mapUserInProjectToUserInProjectBasicDto(task.assignedUser)
       : null,
     createdAt: task.createdAt,
     childrenTasks: task.childrenTasks
-      ? task.childrenTasks.map((t) => mapTaskToTaskMinimumDto(t))
+      ? task.childrenTasks.map((t) => mapTaskToTaskBasicDto(t))
       : null,
-    parentTask: task.parentTask
-      ? mapTaskToTaskMinimumDto(task.parentTask)
-      : null,
-    worklogs: task.worklogs,
+    parentTask: task.parentTask ? mapTaskToTaskBasicDto(task.parentTask) : null,
+    workLogs: task.workLogs,
   };
 }

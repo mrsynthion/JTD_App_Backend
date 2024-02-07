@@ -8,17 +8,16 @@ const router = express.Router();
 
 router.get("/:id", TaskController.getCertainTask);
 
+router.put("/:id", TaskController.editCertainTask);
+
+router.patch("/:id", TaskController.changeTaskAssignedUser);
+
+router.delete("/:id", TaskController.deleteCertainTask);
+
+router.patch("/:id/status/:status", TaskController.changeTaskStatus);
+
 router.post("/project/:projectId", TaskController.addTaskByProjectId);
 
 router.get("/project/:projectId", TaskController.getTaskPageByProjectId);
-
-// router.put(
-//   "/:id",
-//   async (req: Request<Task>, res: Response<Task>): Promise<void> => {
-//     const task: Task = req.body;
-//     const { id } = req.params;
-//     await TaskControllerFunctions.editCertainTask(id, task, res);
-//   },
-// );
 
 export { router as TaskRoutes };

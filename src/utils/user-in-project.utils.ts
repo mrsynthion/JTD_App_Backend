@@ -1,5 +1,6 @@
 import { UserInProject } from "../api/entity/UserInProject";
 import {
+  UserInProjectBasicDto,
   UserInProjectDto,
   UserInProjectMinimumDto,
 } from "../dto/user-in-project.dto";
@@ -19,9 +20,9 @@ export function mapUserInProjectToUserInProjectDto(
   };
 }
 
-export function mapUserInProjectToUserInProjectMinimumDto(
+export function mapUserInProjectToUserInProjectBasicDto(
   user: UserInProject,
-): UserInProjectMinimumDto {
+): UserInProjectBasicDto {
   return {
     id: user.user!.id!,
     firstName: user.user!.firstName!,
@@ -30,5 +31,14 @@ export function mapUserInProjectToUserInProjectMinimumDto(
     name: user.name!,
     isLeader: !!user.leader?.id,
     memberType: user.type!,
+  };
+}
+
+export function mapUserInProjectToUserInProjectMinimumDto(
+  user: UserInProject,
+): UserInProjectMinimumDto {
+  return {
+    id: user.user!.id!,
+    name: user.name!,
   };
 }
