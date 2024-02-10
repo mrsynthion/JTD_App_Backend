@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { ErrorCode } from "../types/error.types";
 
-export const unknownErrorHandler = (
+export const UnknownErrorMiddleware = (
   error: Error,
   req: Request,
   res: Response,
@@ -11,7 +11,7 @@ export const unknownErrorHandler = (
   return res.status(500).json({ error: "Internal server error" });
 };
 
-export const errorHandler = (
+export const ErrorMiddleware = (
   error: Error | ErrorCode,
   req: Request,
   res: Response,

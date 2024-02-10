@@ -1,14 +1,46 @@
 import * as express from "express";
 import { WorkLogController } from "../controller/work-log.controller";
+import { AuthorizationMiddleware } from "../../middlewares/authorization.middleware";
+import { UserInProjectType } from "../../types/user.types";
 
 const router = express.Router();
 
-router.post("/task/:taskId", WorkLogController.addWorkLogByTaskId);
+router.post(
+  "/task/:taskId",
 
-router.get("/task/:taskId", WorkLogController.getWorkLogListByTaskId);
+  AuthorizationMiddleware(
+    UserInProjectType.MEMBER,
+    UserInProjectType.ADMINISTRATOR,
+  ),
+  WorkLogController.addWorkLogByTaskId,
+);
 
-router.put("/:id", WorkLogController.editWorkLog);
+router.get(
+  "/task/:taskId",
+  AuthorizationMiddleware(
+    UserInProjectType.OBSERVER,
+    UserInProjectType.MEMBER,
+    UserInProjectType.ADMINISTRATOR,
+  ),
+  WorkLogController.getWorkLogListByTaskId,
+);
 
-router.delete("/:id", WorkLogController.deleteWorkLog);
+router.put(
+  "/:id",
+  AuthorizationMiddleware(
+    UserInProjectType.MEMBER,
+    UserInProjectType.ADMINISTRATOR,
+  ),
+  WorkLogController.editWorkLog,
+);
+
+router.delete(
+  "/:id",
+  AuthorizationMiddleware(
+    UserInProjectType.MEMBER,
+    UserInProjectType.ADMINISTRATOR,
+  ),
+  WorkLogController.deleteWorkLog,
+);
 
 export { router as WorkLogRoutes };

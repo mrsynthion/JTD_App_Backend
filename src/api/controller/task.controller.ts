@@ -216,9 +216,9 @@ export class TaskController {
         status,
         assignedUser,
         createdAt,
-        sort,
-        size,
-        page,
+        sort = ["id", "ASC"],
+        size = 10,
+        page = 1,
       } = req.query;
       const data = await AppDataSource.transaction(async (appDataSource) => {
         const query = appDataSource

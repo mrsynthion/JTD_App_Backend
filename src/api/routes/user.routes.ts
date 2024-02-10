@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.get("/", UserController.getCurrentUserData);
 
-router.put("/", UserController.editCertainUser);
+router.put("/", UserController.editCurrentUser);
 
 export { router as UserRoutes };

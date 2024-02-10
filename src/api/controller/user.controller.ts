@@ -51,7 +51,7 @@ export class UserController {
     }
   }
 
-  static async editCertainUser(
+  static async editCurrentUser(
     req: Request<{ id: string }, EditUserDto>,
     res: Response,
     next: NextFunction,

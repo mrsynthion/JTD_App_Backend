@@ -6,37 +6,44 @@ import * as cookieParser from "cookie-parser";
 import * as cors from "cors";
 import { rootRoutes } from "./api/routes";
 import * as dotenv from "dotenv";
-import { unknownErrorHandler } from "./middlewares/error.middleware";
+import { UnknownErrorMiddleware } from "./middlewares/error.middleware";
 
 dotenv.config();
 const { PORT } = process.env;
 
-AppDataSource.initialize()
-  .then(async () => {
-    //await AppDataSource.synchronize(true);
+const App = async () => {
+  // create express app
+  const app = express();
+  // middlewares
+  app.use(bodyParser.json());
+  app.use(cookieParser());
+  app.use(
+    cors({
+      origin: "http://localhost:3000",
+      credentials: true,
+    }),
+  );
+  try {
+    await AppDataSource.initialize();
+    // await AppDataSource.synchronize(true);
+    // unknown error handling
+    app.use(UnknownErrorMiddleware);
 
-    // create express app
-    const app = express();
-    app.use(bodyParser.json());
-    app.use(cookieParser());
-    app.use(
-      cors({
-        origin: "http://localhost:3000",
-        credentials: true,
-      }),
-    );
-    app.use(unknownErrorHandler);
     // register express routes from defined application routes
     app.use("", rootRoutes);
+    // Not found path error
     app.get("*", (req: Request, res: Response) => {
-      res.status(505).json({ message: "Bad Request" });
+      res.status(404).json({ message: "Path not found" });
     });
 
-    // start express server
-    app.listen(PORT);
-
-    // insert new users for test
-
     console.log(`Express server has started on port ${PORT}.`);
-  })
-  .catch((error) => console.log(error));
+  } catch (e) {
+    app.get("*", (req: Request, res: Response) => {
+      res.status(500).json({ message: "Internal server error" });
+    });
+  }
+
+  app.listen(PORT);
+};
+
+App();

@@ -7,7 +7,7 @@ import {
 
 dotenv.config();
 
-export const authenticate = (
+export const AuthenticationMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction,

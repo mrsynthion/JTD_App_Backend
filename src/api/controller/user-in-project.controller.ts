@@ -70,7 +70,7 @@ export class UserInProjectController {
       unknown,
       Filters<UserInProjectBasicDto>
     >,
-    res: Response,
+    res: Response<Page<UserInProjectBasicDto>>,
     next: NextFunction,
   ): Promise<void> {
     try {
@@ -80,9 +80,9 @@ export class UserInProjectController {
         firstName,
         lastName,
         email,
-        size,
-        page,
-        sort,
+        sort = ["id", "ASC"],
+        size = 10,
+        page = 1,
       } = req.query;
 
       const data = await AppDataSource.transaction(async (appDataSource) => {

@@ -1,874 +1,14 @@
 _type: export
 __export_format: 4
-__export_date: 2024-01-24T20:48:26.690Z
+__export_date: 2024-02-07T19:58:32.101Z
 __export_source: insomnia.desktop.app:v2022.2.1
 resources:
-  - _id: req_e623d0519efc4019835f749deeea8f65
-    parentId: fld_d14323c007c1483ead056de2d07d0533
-    modified: 1705516305262
-    created: 1705437662241
-    url: http://localhost:4500/user-in-project-type
-    name: Get user in project list (optional pagination)
-    description: ""
-    method: GET
-    body: { }
-    parameters: [ ]
-    headers: [ ]
-    authentication: { }
-    metaSortKey: -1705437662241
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: fld_d14323c007c1483ead056de2d07d0533
-    parentId: wrk_14836f92b9e948a4a784477c98072ba9
-    modified: 1705516165103
-    created: 1705434237178
-    name: Dict01 User Types
-    description: ""
-    environment: { }
-    environmentPropertyOrder: null
-    metaSortKey: -1705434237178
-    _type: request_group
-  - _id: wrk_14836f92b9e948a4a784477c98072ba9
-    parentId: null
-    modified: 1705524183416
-    created: 1690646191974
-    name: JTD App
-    description: ""
-    scope: collection
-    _type: workspace
-  - _id: req_5dcbdf9c48644a2d9dc961082dfc5c38
-    parentId: fld_d14323c007c1483ead056de2d07d0533
-    modified: 1705516301823
-    created: 1705437297466
-    url: http://localhost:4500/user-in-project-type/code/1
-    name: Get user in project type by code
-    description: ""
-    method: GET
-    body: { }
-    parameters: [ ]
-    headers: [ ]
-    authentication: { }
-    metaSortKey: -1705437297466
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_adb7b6a3d1f64d26a8d38e3bf1ab4657
-    parentId: fld_d14323c007c1483ead056de2d07d0533
-    modified: 1705516297510
-    created: 1705437292429
-    url: http://localhost:4500/user-in-project-type/996a73da-e072-43b4-86f3-f54a6966712e
-    name: Get user in project type by id
-    description: ""
-    method: GET
-    body: { }
-    parameters: [ ]
-    headers: [ ]
-    authentication: { }
-    metaSortKey: -1705437292429
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_3e047ed49fdb444787b34aa40a4c6b69
-    parentId: fld_d14323c007c1483ead056de2d07d0533
-    modified: 1705516321926
-    created: 1705436093156
-    url: http://localhost:4500/user-in-project-type/996a73da-e072-43b4-86f3-f54a6966712e
-    name: Edit user in project type
-    description: ""
-    method: PUT
-    body:
-      mimeType: application/json
-      text: |-
-        {
-        	"value":"USER"
-        }
-    parameters: [ ]
-    headers:
-      - name: Content-Type
-        value: application/json
-        id: pair_b9354d1e1ea647e5a4228c387d86e1e8
-    authentication: { }
-    metaSortKey: -1705436093156
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_6024f2d87f5f4d11bfe1d4909ea04b8f
-    parentId: fld_d14323c007c1483ead056de2d07d0533
-    modified: 1706123550194
-    created: 1705434260217
-    url: http://localhost:4500/user-in-project-type/
-    name: Add new user in project type
-    description: ""
-    method: POST
-    body:
-      mimeType: application/json
-      text: |-
-        {
-        	"value":"Administrator"
-        }
-    parameters: [ ]
-    headers:
-      - name: Content-Type
-        value: application/json
-        id: pair_3e0f10b5ee3c43999ddd3006d2084da4
-    authentication: { }
-    metaSortKey: -1705434260217
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_50940c2396224361b9888999ee01cc6f
-    parentId: fld_ab501dc75a2e464caa1f0dd080869c46
-    modified: 1705516339323
-    created: 1705516150954
-    url: http://localhost:4500/project-type
-    name: Get project type page (optional pagination)
-    description: ""
-    method: GET
-    body: { }
-    parameters: [ ]
-    headers: [ ]
-    authentication: { }
-    metaSortKey: -1705437662241
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: fld_ab501dc75a2e464caa1f0dd080869c46
-    parentId: wrk_14836f92b9e948a4a784477c98072ba9
-    modified: 1705516150948
-    created: 1705516150948
-    name: Dict02 Project Types
-    description: ""
-    environment: { }
-    environmentPropertyOrder: null
-    metaSortKey: -1701532666859.5
-    _type: request_group
-  - _id: req_dc0edb67d89c4c1583e6acba3280f567
-    parentId: fld_ab501dc75a2e464caa1f0dd080869c46
-    modified: 1705516771150
-    created: 1705516150953
-    url: http://localhost:4500/project-type/code/1
-    name: Get project type by code
-    description: ""
-    method: GET
-    body: { }
-    parameters: [ ]
-    headers: [ ]
-    authentication: { }
-    metaSortKey: -1705437297466
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_3b63eb5f9c27475b9eafb0e7f0050472
-    parentId: fld_ab501dc75a2e464caa1f0dd080869c46
-    modified: 1705520746379
-    created: 1705516150953
-    url: http://localhost:4500/project-type/c78e9b76-0216-4911-8180-436f123a3331
-    name: Get project type by id
-    description: ""
-    method: GET
-    body: { }
-    parameters: [ ]
-    headers: [ ]
-    authentication: { }
-    metaSortKey: -1705437292429
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_736ac00b1ae741e8aab7d893e5acfca9
-    parentId: fld_ab501dc75a2e464caa1f0dd080869c46
-    modified: 1705520770957
-    created: 1705516150951
-    url: http://localhost:4500/project-type/1aa06ebc-f168-49a6-be29-c1609eeab266
-    name: Edit project type
-    description: ""
-    method: PUT
-    body:
-      mimeType: application/json
-      text: |-
-        {
-        	"value":"Scrum"
-        }
-    parameters: [ ]
-    headers:
-      - name: Content-Type
-        value: application/json
-        id: pair_b9354d1e1ea647e5a4228c387d86e1e8
-    authentication: { }
-    metaSortKey: -1705436093156
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_99308ab768974e5cbc5381a5a805aac2
-    parentId: fld_ab501dc75a2e464caa1f0dd080869c46
-    modified: 1706125987002
-    created: 1705516150950
-    url: http://localhost:4500/project-type/
-    name: Add project type
-    description: ""
-    method: POST
-    body:
-      mimeType: application/json
-      text: |-
-        {
-        	"value":"Scurm"
-        }
-    parameters: [ ]
-    headers:
-      - name: Content-Type
-        value: application/json
-        id: pair_3e0f10b5ee3c43999ddd3006d2084da4
-    authentication: { }
-    metaSortKey: -1705434260217
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_dcaba3af03bb4b7e8f1f7e269ff27506
-    parentId: fld_30500f47fdf74bd19479da1672941fba
-    modified: 1705600194909
-    created: 1705600147745
-    url: http://localhost:4500/task-type
-    name: Get task type page (optional pagination)
-    description: ""
-    method: GET
-    body: { }
-    parameters: [ ]
-    headers: [ ]
-    authentication: { }
-    metaSortKey: -1705437662241
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: fld_30500f47fdf74bd19479da1672941fba
-    parentId: wrk_14836f92b9e948a4a784477c98072ba9
-    modified: 1705600147740
-    created: 1705600147740
-    name: Dict03 Task Types
-    description: ""
-    environment: { }
-    environmentPropertyOrder: null
-    metaSortKey: -1699581881700.25
-    _type: request_group
-  - _id: req_0dd66fc263b54ca3a5cc9799847aa41d
-    parentId: fld_30500f47fdf74bd19479da1672941fba
-    modified: 1705600249847
-    created: 1705600147744
-    url: http://localhost:4500/task-type/code/3
-    name: Get task type by code
-    description: ""
-    method: GET
-    body: { }
-    parameters: [ ]
-    headers: [ ]
-    authentication: { }
-    metaSortKey: -1705437297466
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_e0c065a2f2bc4fb4a2340dcb4ff2f15b
-    parentId: fld_30500f47fdf74bd19479da1672941fba
-    modified: 1705600246678
-    created: 1705600147743
-    url: http://localhost:4500/task-type/2a4f1eff-9cfa-41f6-936d-0b26108041d8
-    name: Get task type by id
-    description: ""
-    method: GET
-    body: { }
-    parameters: [ ]
-    headers: [ ]
-    authentication: { }
-    metaSortKey: -1705437292429
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_619159b2f1cf46509e3810dc8dc1340d
-    parentId: fld_30500f47fdf74bd19479da1672941fba
-    modified: 1705600340895
-    created: 1705600147742
-    url: http://localhost:4500/task-type/2a4f1eff-9cfa-41f6-936d-0b26108041d8
-    name: Edit task type
-    description: ""
-    method: PUT
-    body:
-      mimeType: application/json
-      text: |-
-        {
-        	"value":"Error"
-        }
-    parameters: [ ]
-    headers:
-      - name: Content-Type
-        value: application/json
-        id: pair_b9354d1e1ea647e5a4228c387d86e1e8
-    authentication: { }
-    metaSortKey: -1705436093156
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_92197961d4c1492ab3d0937ebe9b20e1
-    parentId: fld_30500f47fdf74bd19479da1672941fba
-    modified: 1706123579516
-    created: 1705600147741
-    url: http://localhost:4500/task-type/
-    name: Add task type
-    description: ""
-    method: POST
-    body:
-      mimeType: application/json
-      text: |-
-        {
-        	"value":"Eror"
-        }
-    parameters: [ ]
-    headers:
-      - name: Content-Type
-        value: application/json
-        id: pair_3e0f10b5ee3c43999ddd3006d2084da4
-    authentication: { }
-    metaSortKey: -1705434260217
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_69c691599fcc44f6a0da328144c74ce3
-    parentId: fld_0552a0dc4225413f966d6bf336e1c15f
-    modified: 1705603017821
-    created: 1705602984445
-    url: http://localhost:4500/task-status
-    name: Get task status page (optional pagination)
-    description: ""
-    method: GET
-    body: { }
-    parameters: [ ]
-    headers: [ ]
-    authentication: { }
-    metaSortKey: -1705437662241
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: fld_0552a0dc4225413f966d6bf336e1c15f
-    parentId: wrk_14836f92b9e948a4a784477c98072ba9
-    modified: 1705602994718
-    created: 1705602984440
-    name: Dict04 Task Statuses
-    description: ""
-    environment: { }
-    environmentPropertyOrder: null
-    metaSortKey: -1698606489120.625
-    _type: request_group
-  - _id: req_d848b73068634cdc86f6caa02d7c424f
-    parentId: fld_0552a0dc4225413f966d6bf336e1c15f
-    modified: 1705603058070
-    created: 1705602984445
-    url: http://localhost:4500/task-status/code/2
-    name: Get task status by code
-    description: ""
-    method: GET
-    body: { }
-    parameters: [ ]
-    headers: [ ]
-    authentication: { }
-    metaSortKey: -1705437297466
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_cd265245c2044abba6741db88881192e
-    parentId: fld_0552a0dc4225413f966d6bf336e1c15f
-    modified: 1705603068303
-    created: 1705602984443
-    url: http://localhost:4500/task-status/d2986783-f36c-40bd-a5be-08d1a9574266
-    name: Get task status by id
-    description: ""
-    method: GET
-    body: { }
-    parameters: [ ]
-    headers: [ ]
-    authentication: { }
-    metaSortKey: -1705437292429
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_8cd1d660a2c449d7aa1a0b31a5e81346
-    parentId: fld_0552a0dc4225413f966d6bf336e1c15f
-    modified: 1705603097310
-    created: 1705602984442
-    url: http://localhost:4500/task-status/2f71a886-a8a3-484f-8e3e-5951c0440104
-    name: Edit task status
-    description: ""
-    method: PUT
-    body:
-      mimeType: application/json
-      text: |-
-        {
-        	"value":"Code review"
-        }
-    parameters: [ ]
-    headers:
-      - name: Content-Type
-        value: application/json
-        id: pair_b9354d1e1ea647e5a4228c387d86e1e8
-    authentication: { }
-    metaSortKey: -1705436093156
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_db5fd8094ced42359baac7b7409775d7
-    parentId: fld_0552a0dc4225413f966d6bf336e1c15f
-    modified: 1706123577316
-    created: 1705602984441
-    url: http://localhost:4500/task-status/
-    name: Add task status
-    description: ""
-    method: POST
-    body:
-      mimeType: application/json
-      text: |-
-        {
-        	"value":"Code rev"
-        }
-    parameters: [ ]
-    headers:
-      - name: Content-Type
-        value: application/json
-        id: pair_3e0f10b5ee3c43999ddd3006d2084da4
-    authentication: { }
-    metaSortKey: -1705434260217
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_3c299c205b464967985b0dc5a918550f
-    parentId: fld_beb709adbda343e9b7936f53786d573d
-    modified: 1705605749316
-    created: 1705605662503
-    url: http://localhost:4500/project-management-type
-    name: Get project management type page (optional pagination)
-    description: ""
-    method: GET
-    body: { }
-    parameters: [ ]
-    headers: [ ]
-    authentication: { }
-    metaSortKey: -1705437662241
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: fld_beb709adbda343e9b7936f53786d573d
-    parentId: wrk_14836f92b9e948a4a784477c98072ba9
-    modified: 1705605662499
-    created: 1705605662499
-    name: Dict05 Project Management Types
-    description: ""
-    environment: { }
-    environmentPropertyOrder: null
-    metaSortKey: -1698118792830.8125
-    _type: request_group
-  - _id: req_371926e0cf294a8889f01a977846c687
-    parentId: fld_beb709adbda343e9b7936f53786d573d
-    modified: 1705605743466
-    created: 1705605662504
-    url: http://localhost:4500/project-management-type/code/2
-    name: Get project management type by code
-    description: ""
-    method: GET
-    body: { }
-    parameters: [ ]
-    headers: [ ]
-    authentication: { }
-    metaSortKey: -1705437297466
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_bf651f4a408341e0819ac1f28083dd8c
-    parentId: fld_beb709adbda343e9b7936f53786d573d
-    modified: 1705605798291
-    created: 1705605662502
-    url: http://localhost:4500/project-management-type/8286741b-552a-47d2-ae9a-633804b1c897
-    name: Get project management type  by id
-    description: ""
-    method: GET
-    body: { }
-    parameters: [ ]
-    headers: [ ]
-    authentication: { }
-    metaSortKey: -1705437292429
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_70f4edcf8b144ec597d24de80a018646
-    parentId: fld_beb709adbda343e9b7936f53786d573d
-    modified: 1705605792061
-    created: 1705605662501
-    url: http://localhost:4500/project-management-type/8286741b-552a-47d2-ae9a-633804b1c897
-    name: Edit project management type
-    description: ""
-    method: PUT
-    body:
-      mimeType: application/json
-      text: |-
-        {
-        	"value":"Scrum"
-        }
-    parameters: [ ]
-    headers:
-      - name: Content-Type
-        value: application/json
-        id: pair_b9354d1e1ea647e5a4228c387d86e1e8
-    authentication: { }
-    metaSortKey: -1705436093156
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_8a2935b9788543f1bf3613a62a8c762b
-    parentId: fld_beb709adbda343e9b7936f53786d573d
-    modified: 1706123620746
-    created: 1705605662500
-    url: http://localhost:4500/project-management-type
-    name: Add project management type
-    description: ""
-    method: POST
-    body:
-      mimeType: application/json
-      text: |-
-        {
-        	"value":"Scurm"
-        }
-    parameters: [ ]
-    headers:
-      - name: Content-Type
-        value: application/json
-        id: pair_3e0f10b5ee3c43999ddd3006d2084da4
-    authentication: { }
-    metaSortKey: -1705434260217
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_78fa5537131947d6a932bfc97786a96e
-    parentId: fld_b79734ced4414cacaf9cd2ad07351712
-    modified: 1706043513385
-    created: 1706043501756
-    url: http://localhost:4500/project/733f6cb5-6801-402e-8710-b7baa687f9a8
-    name: Get project. by id
-    description: ""
-    method: GET
-    body: { }
-    parameters: [ ]
-    headers: [ ]
-    authentication: { }
-    metaSortKey: -1706043501756
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: fld_b79734ced4414cacaf9cd2ad07351712
-    parentId: wrk_14836f92b9e948a4a784477c98072ba9
-    modified: 1706126004025
-    created: 1706041707105
-    name: "Project "
-    description: ""
-    environment: { }
-    environmentPropertyOrder: null
-    metaSortKey: -1697874944685.9062
-    _type: request_group
-  - _id: req_a6df81289913460fb534fa45979e3899
-    parentId: fld_b79734ced4414cacaf9cd2ad07351712
-    modified: 1706128995314
-    created: 1706041723070
-    url: http://localhost:4500/project
-    name: Add project
-    description: ""
-    method: POST
-    body:
-      mimeType: application/json
-      text: |-
-        {
-        	"name": "project1",
-          "key": "P123456789",
-          "type": {
-        		"id":"5563ad65-9fab-41e8-868c-72122b723310"
-        	},
-          "projectManagementType": {
-        		"id":"b88cc188-40eb-40fd-b270-8aec8f7706a3"
-        	}
-        }
-    parameters: [ ]
-    headers:
-      - name: Content-Type
-        value: application/json
-        id: pair_f47178f5ddc14eaabbf65e1ec4c34b66
-    authentication: { }
-    metaSortKey: -1706041723070
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_9d3daf184c144ffab4d992008c52178b
-    parentId: fld_0618ef432c934f8092e27ce373f3b233
-    modified: 1699380020577
-    created: 1698241795977
-    url: http://localhost:4500/tasks/03dbfd0c-0f78-42b0-a3a8-9ccd4c5787c2?completed=false
-    name: Edit status
-    description: ""
-    method: PATCH
-    body: { }
-    parameters: [ ]
-    headers: [ ]
-    authentication: { }
-    metaSortKey: -1698241795977
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: fld_0618ef432c934f8092e27ce373f3b233
-    parentId: wrk_14836f92b9e948a4a784477c98072ba9
-    modified: 1697999075161
-    created: 1697999068245
-    name: Tasks
-    description: ""
-    environment: { }
-    environmentPropertyOrder: null
-    metaSortKey: -1697631096541
-    _type: request_group
-  - _id: req_4cd8881e4f414bd88edf4d4b117462eb
-    parentId: fld_0618ef432c934f8092e27ce373f3b233
-    modified: 1702408396778
-    created: 1698166261603
-    url: http://localhost:4500/task?size=10&page=1&sort=title&sort=ASC
-    name: "Get all "
-    description: ""
-    method: GET
-    body: { }
-    parameters: [ ]
-    headers: [ ]
-    authentication: { }
-    metaSortKey: -1698166261603
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_1589b9640b7e412d9401ed81938ea277
-    parentId: fld_0618ef432c934f8092e27ce373f3b233
-    modified: 1698166207424
-    created: 1698166174383
-    url: http://localhost:4500/tasks/d9ae1ef8-ebe7-41c1-a20e-5585f12afb94
-    name: Get one by id
-    description: ""
-    method: GET
-    body: { }
-    parameters: [ ]
-    headers: [ ]
-    authentication: { }
-    metaSortKey: -1698166174383
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_da344643252a4703b0f7805d5da76105
-    parentId: fld_0618ef432c934f8092e27ce373f3b233
-    modified: 1698243101583
-    created: 1698241757790
-    url: http://localhost:4500/tasks
-    name: Edit task
-    description: ""
-    method: PUT
-    body:
-      mimeType: application/json
-      text: ""
-    parameters: [ ]
-    headers:
-      - name: Content-Type
-        value: application/json
-        id: pair_fc29e7c7d69c4bef8712f9f4a36be842
-    authentication: { }
-    metaSortKey: -1698082630300.5
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
-  - _id: req_9555bb60431f4e129737aa2da5a5d081
-    parentId: fld_0618ef432c934f8092e27ce373f3b233
-    modified: 1705434268973
-    created: 1697999086218
-    url: http://localhost:4500/tasks
-    name: Add task
-    description: ""
-    method: POST
-    body:
-      mimeType: application/json
-      text: |-
-        {
-        	"title":"Fajny tytul",
-        		"description":"Nowy task test 13",
-        		"importanceLevel":"HIGH"
-        }
-    parameters: [ ]
-    headers:
-      - name: Content-Type
-        value: application/json
-        id: pair_e0da86492b45412596c9c86f0c4ad899
-    authentication: { }
-    metaSortKey: -1697999086218
-    isPrivate: false
-    settingStoreCookies: true
-    settingSendCookies: true
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingFollowRedirects: global
-    _type: request
   - _id: req_70fb351e5691447fa6fce7d062c313e7
     parentId: fld_52f73d94fbb34d56882f892db0142441
-    modified: 1705349061607
+    modified: 1707293782813
     created: 1702320286010
-    url: http://localhost:4500/auth/verifyToken
-    name: Validate token
+    url: "{{ _.auth_path }}/verifyToken"
+    name: "[Auth] Validate token"
     description: ""
     method: POST
     body: { }
@@ -886,20 +26,31 @@ resources:
     _type: request
   - _id: fld_52f73d94fbb34d56882f892db0142441
     parentId: wrk_14836f92b9e948a4a784477c98072ba9
-    modified: 1697631096491
+    modified: 1707293770441
     created: 1697631096491
     name: Auth
     description: ""
-    environment: { }
-    environmentPropertyOrder: null
-    metaSortKey: -1697631096491
+    environment:
+      auth_path: "{{ _.base_path }}/auth"
+    environmentPropertyOrder:
+      "&":
+        - auth_path
+    metaSortKey: -1697874944835.9062
     _type: request_group
+  - _id: wrk_14836f92b9e948a4a784477c98072ba9
+    parentId: null
+    modified: 1705524183416
+    created: 1690646191974
+    name: JTD App
+    description: ""
+    scope: collection
+    _type: workspace
   - _id: req_db293fab40a441ffb02a03eb40c98fca
     parentId: fld_52f73d94fbb34d56882f892db0142441
-    modified: 1697646668177
+    modified: 1707293790393
     created: 1697646623940
-    url: http://localhost:4500/auth/logout
-    name: Logout
+    url: "{{ _.auth_path }}/logout"
+    name: "[Auth] Logout"
     description: ""
     method: POST
     body: { }
@@ -921,20 +72,20 @@ resources:
     _type: request
   - _id: req_03451ffcc82a4f8a97bbb596ef92f252
     parentId: fld_52f73d94fbb34d56882f892db0142441
-    modified: 1706125964297
+    modified: 1707332081495
     created: 1697638619256
-    url: http://localhost:4500/auth/signup
-    name: Sign up
+    url: "{{ _.auth_path }}/signup"
+    name: "[Auth] Sign up"
     description: ""
     method: POST
     body:
       mimeType: application/json
       text: |-
         {
-        	"firstName":"Forsuk",
-        	"lastName":"Igorew",
+        	"firstName":"Edyt",
+        	"lastName":"Jelop",
         	"password":"Zxcvbbvcxz2121!",
-        	"email":"mail1@mail.com"
+        	"email":"mail2@mail.com"
         }
     parameters: [ ]
     headers:
@@ -953,17 +104,17 @@ resources:
     _type: request
   - _id: req_be10bfbed4bd4f61bb005a37480a3d21
     parentId: fld_52f73d94fbb34d56882f892db0142441
-    modified: 1706125982837
+    modified: 1707335271110
     created: 1697631112284
-    url: http://localhost:4500/auth/login
-    name: Login
+    url: "{{ _.auth_path }}/login"
+    name: "[Auth] Login"
     description: ""
     method: POST
     body:
       mimeType: application/json
       text: |-
         {
-        	"email":"mail1@mail.com",
+        	"email":"mail2@mail.com",
         	"password":"Zxcvbbvcxz2121!"			
         }
     parameters: [ ]
@@ -983,10 +134,10 @@ resources:
     _type: request
   - _id: req_7c599e577c534f5e8fe5a229e38c1169
     parentId: fld_90e822a1bf2749289472c2fbf7c10f51
-    modified: 1698346740394
+    modified: 1707292528078
     created: 1697543884087
-    url: http://localhost:4500/users/59287d03-fc6e-4df8-acf9-9343933e5d25
-    name: Get one by id
+    url: "{{ _.user_path }}"
+    name: "[Users] Get current user data"
     description: ""
     method: GET
     body: { }
@@ -1004,27 +155,30 @@ resources:
     _type: request
   - _id: fld_90e822a1bf2749289472c2fbf7c10f51
     parentId: wrk_14836f92b9e948a4a784477c98072ba9
-    modified: 1690646232784
+    modified: 1706556069653
     created: 1690646224756
     name: Users
     description: ""
-    environment: { }
-    environmentPropertyOrder: null
-    metaSortKey: -1690646224756
+    environment:
+      user_path: "{{ _.base_path }}/user"
+    environmentPropertyOrder:
+      "&":
+        - user_path
+    metaSortKey: -1697874944810.9062
     _type: request_group
   - _id: req_f75ce8df13fb49dd824702ca57af78a4
     parentId: fld_90e822a1bf2749289472c2fbf7c10f51
-    modified: 1698346744082
+    modified: 1707293800286
     created: 1697739389292
-    url: http://localhost:4500/users/59287d03-fc6e-4df8-acf9-9343933e5d25
-    name: Edit user
+    url: "{{ _.user_path }}"
+    name: "[Users] Edit current user data"
     description: ""
     method: PUT
     body:
       mimeType: application/json
       text: |
         {
-        	"username":"login1"
+        	"firstName":"Imie"
         }
     parameters: [ ]
     headers:
@@ -1041,19 +195,596 @@ resources:
     settingRebuildPath: true
     settingFollowRedirects: global
     _type: request
-  - _id: req_8030eef05f9c4fd8abae4dcfdc90049d
-    parentId: fld_90e822a1bf2749289472c2fbf7c10f51
-    modified: 1698346752807
-    created: 1690646217910
-    url: " http://localhost:4500/users?size=3&sort=username&sort=ASC"
-    name: Get users
+  - _id: req_a6df81289913460fb534fa45979e3899
+    parentId: fld_b79734ced4414cacaf9cd2ad07351712
+    modified: 1707332087303
+    created: 1706041723070
+    url: "{{ _.project_path }}"
+    name: "[Project] Add project"
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "project2",
+          "key": "P1234567",
+          "type": "SOFTWARE",
+          "projectManagementType":"KANBAN"
+        }
+    parameters: [ ]
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_f47178f5ddc14eaabbf65e1ec4c34b66
+    authentication: { }
+    metaSortKey: -1706214540421
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_b79734ced4414cacaf9cd2ad07351712
+    parentId: wrk_14836f92b9e948a4a784477c98072ba9
+    modified: 1706560926472
+    created: 1706041707105
+    name: "Project "
+    description: ""
+    environment:
+      project_path: "{{ _.base_path }}/project"
+    environmentPropertyOrder:
+      "&":
+        - project_path
+    metaSortKey: -1697874944785.9062
+    _type: request_group
+  - _id: req_2ca19307bbf346c4841aba16ad67378f
+    parentId: fld_b79734ced4414cacaf9cd2ad07351712
+    modified: 1707292546922
+    created: 1707064182322
+    url: "{{ _.project_path }}"
+    name: "[Project] Get current user projects list"
     description: ""
     method: GET
     body: { }
     parameters: [ ]
     headers: [ ]
     authentication: { }
-    metaSortKey: -1690646221333
+    metaSortKey: -1706214540396
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_8528cf12cfed40c786173b6aaa1ce043
+    parentId: fld_b79734ced4414cacaf9cd2ad07351712
+    modified: 1707293802615
+    created: 1706214540371
+    url: "{{ _.project_path }}/1e85c631-887c-4d4f-8c06-e0be65b3c377"
+    name: "[Project] Edit Project"
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name":"Project 4"
+        }
+    parameters: [ ]
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_b26848d9142e4f2ea9d3b8ff6c27060b
+    authentication: { }
+    metaSortKey: -1706214540371
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_7a7adedfe527485683fd5fcfa271a73d
+    parentId: fld_b79734ced4414cacaf9cd2ad07351712
+    modified: 1707293803351
+    created: 1706896494861
+    url: "{{ _.project_path }}/1e85c631-887c-4d4f-8c06-e0be65b3c377"
+    name: "[Project] Edit leader in project by id and user id"
+    description: ""
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"leaderId":"a3ed6473-b010-49a0-b516-3ad2345ef2b7"
+        }
+    parameters: [ ]
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_98a593fd13e54336bbb4da913dbb235f
+    authentication: { }
+    metaSortKey: -1706129021063.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_78fa5537131947d6a932bfc97786a96e
+    parentId: fld_b79734ced4414cacaf9cd2ad07351712
+    modified: 1707292557260
+    created: 1706043501756
+    url: "{{ _.project_path }}/1e85c631-887c-4d4f-8c06-e0be65b3c377"
+    name: "[Project] Get project. by id"
+    description: ""
+    method: GET
+    body: { }
+    parameters: [ ]
+    headers: [ ]
+    authentication: { }
+    metaSortKey: -1706043501756
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_1589b9640b7e412d9401ed81938ea277
+    parentId: fld_0618ef432c934f8092e27ce373f3b233
+    modified: 1707293211411
+    created: 1698166174383
+    url: "{{ _.task_path }}/4784afed-7099-488d-a25b-b844526681f2"
+    name: "[Task] Get one by id"
+    description: ""
+    method: GET
+    body: { }
+    parameters: [ ]
+    headers: [ ]
+    authentication: { }
+    metaSortKey: -1707292458988
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_0618ef432c934f8092e27ce373f3b233
+    parentId: wrk_14836f92b9e948a4a784477c98072ba9
+    modified: 1707254398260
+    created: 1697999068245
+    name: Tasks
+    description: ""
+    environment:
+      task_path: "{{ _.base_path }}/task"
+    environmentPropertyOrder:
+      "&":
+        - task_path
+    metaSortKey: -1697874944760.9062
+    _type: request_group
+  - _id: req_da344643252a4703b0f7805d5da76105
+    parentId: fld_0618ef432c934f8092e27ce373f3b233
+    modified: 1707293805571
+    created: 1698241757790
+    url: "{{ _.task_path }}/4784afed-7099-488d-a25b-b844526681f2"
+    name: "[Task] Edit task"
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"label":"LAbel 1"
+        }
+    parameters: [ ]
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_fc29e7c7d69c4bef8712f9f4a36be842
+    authentication: { }
+    metaSortKey: -1707292458963
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_a840026e31534b6c9d97f2df24517add
+    parentId: fld_0618ef432c934f8092e27ce373f3b233
+    modified: 1707331239381
+    created: 1707292458938
+    url: "{{ _.task_path }}/58bd6fde-d1c9-42b8-96eb-c55b0aad14f8"
+    name: "[Task] Edit assigned user "
+    description: ""
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"id":"670112dc-18ff-46ab-a2c5-62e3c27d2480"
+        }
+    parameters: [ ]
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_780cfd9b5961426dafb1095999ebfead
+    authentication: { }
+    metaSortKey: -1707292458938
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_f4ab69ce372545d69f08d7478e62bd34
+    parentId: fld_0618ef432c934f8092e27ce373f3b233
+    modified: 1707292481007
+    created: 1707289365400
+    url: "{{ _.task_path }}/759e51eb-ca52-4904-9617-73affa1313bb"
+    name: "[Task] Delete certain task"
+    description: ""
+    method: DELETE
+    body: { }
+    parameters: [ ]
+    headers: [ ]
+    authentication: { }
+    metaSortKey: -1698166174458
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_9d3daf184c144ffab4d992008c52178b
+    parentId: fld_0618ef432c934f8092e27ce373f3b233
+    modified: 1707293191043
+    created: 1698241795977
+    url: "{{ _.task_path }}/4784afed-7099-488d-a25b-b844526681f2/status/IN_PROGRESS"
+    name: "[Task] Edit status"
+    description: ""
+    method: PATCH
+    body: { }
+    parameters: [ ]
+    headers: [ ]
+    authentication: { }
+    metaSortKey: -1698166174445.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_9555bb60431f4e129737aa2da5a5d081
+    parentId: fld_0618ef432c934f8092e27ce373f3b233
+    modified: 1707332101367
+    created: 1697999086218
+    url: "{{ _.task_path }}/project/dd0e9004-efaa-4477-b78d-f8d041f9c010"
+    name: "[Task] Add task"
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"title":"Fajny tytul",
+        	"description":"Nowy task test 13",
+          "type": "EPIC"
+        }
+    parameters: [ ]
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_e0da86492b45412596c9c86f0c4ad899
+    authentication: { }
+    metaSortKey: -1698166174433
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_4cd8881e4f414bd88edf4d4b117462eb
+    parentId: fld_0618ef432c934f8092e27ce373f3b233
+    modified: 1707331111250
+    created: 1698166261603
+    url: "{{ _.task_path
+      }}/project/5d19017e-e46b-47ec-9198-b90600eea073?size=10&sort=id&sort=ASC&\
+      page=1"
+    name: "[Task] Get all"
+    description: ""
+    method: GET
+    body: { }
+    parameters: [ ]
+    headers: [ ]
+    authentication: { }
+    metaSortKey: -1698082630300.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_55b8efb277fb4e039332337616e7a024
+    parentId: fld_0d1e3f1414d145c28e35479ba8f15101
+    modified: 1707293816393
+    created: 1706649443888
+    url: "{{ _.user_in_project_path }}/project/{{ _.projectId }}"
+    name: "[UserInProject] Add user in project"
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email":"mail2@mail.com"
+        }
+    parameters: [ ]
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_16d7aa45a93e45b3890466b1d4f85adb
+    authentication: { }
+    metaSortKey: -1706894793856
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_0d1e3f1414d145c28e35479ba8f15101
+    parentId: wrk_14836f92b9e948a4a784477c98072ba9
+    modified: 1707331184789
+    created: 1706556030564
+    name: UserInProject
+    description: ""
+    environment:
+      user_in_project_path: "{{ _.base_path }}/user-in-project"
+      userId: 670112dc-18ff-46ab-a2c5-62e3c27d2480
+      projectId: 5d19017e-e46b-47ec-9198-b90600eea073
+    environmentPropertyOrder:
+      "&":
+        - user_in_project_path
+        - userId
+        - projectId
+    metaSortKey: -1697874944735.9062
+    _type: request_group
+  - _id: req_8030eef05f9c4fd8abae4dcfdc90049d
+    parentId: fld_0d1e3f1414d145c28e35479ba8f15101
+    modified: 1707292572565
+    created: 1690646217910
+    url: "{{ _.user_in_project_path }}/project/{{ _.projectId
+      }}?size=3&sort=id&sort=ASC"
+    name: "[UserInProject] Get users"
+    description: ""
+    method: GET
+    body: { }
+    parameters: [ ]
+    headers: [ ]
+    authentication: { }
+    metaSortKey: -1706894793831
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_c30aa33753b24772a1ab03adeea631a2
+    parentId: fld_0d1e3f1414d145c28e35479ba8f15101
+    modified: 1707293818926
+    created: 1706815664303
+    url: "{{ _.user_in_project_path }}/project/1e85c631-887c-4d4f-8c06-e0be65b3c377"
+    name: "[UserInProject] Edit current user data"
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "Nowe Imie6"
+        }
+    parameters: [ ]
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_125867bd82f545e5936dbb332cdcfcf0
+    authentication: { }
+    metaSortKey: -1706894793818.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_2414a5ceccb94b6ebae0d31b2ca2e33c
+    parentId: fld_0d1e3f1414d145c28e35479ba8f15101
+    modified: 1707292575950
+    created: 1706705722618
+    url: "{{ _.user_in_project_path }}/user/{{ _.userId }}/project/{{ _.projectId
+      }}"
+    name: "[UserInProject] Get user by user id and project id"
+    description: ""
+    method: GET
+    body: { }
+    parameters: [ ]
+    headers: [ ]
+    authentication: { }
+    metaSortKey: -1706894793812.25
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_c9bcb02bcb4a4f1c9b7c916c1e649c44
+    parentId: fld_0d1e3f1414d145c28e35479ba8f15101
+    modified: 1707293820610
+    created: 1706894793806
+    url: "{{ _.user_in_project_path
+      }}/user/3003f85f-566d-48f3-9e21-30be09171c89/project/1e85c631-887c-4d4f-8\
+      c06-e0be65b3c377"
+    name: "[UserInProject] Edit user member type by project id and user id"
+    description: ""
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"memberType":"ADMINISTRATOR"
+        }
+    parameters: [ ]
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_b46571d98f5e4c5091b7b3a13fae1707
+    authentication: { }
+    metaSortKey: -1706894793806
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_86b5f18807c64e6999d691d5827cfc11
+    parentId: fld_a5b206bbb8d5493987f4637057692f5c
+    modified: 1707335743811
+    created: 1707330556359
+    url: "{{ _.work_log_path }}/task/41a8c408-d523-4af3-87f7-89ef19d5d559"
+    name: "[WorkLog] Add work log by task id"
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"description":"Moja pierwsza praca lol",
+        	"startDate":"2024-02-05 22:27:42",
+        	"endDate":"2024-02-05 23:27:42"
+        }
+    parameters: [ ]
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_31ef36a9f07b4d54a0c96fc015f9fc71
+    authentication: { }
+    metaSortKey: -1707330556359
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_a5b206bbb8d5493987f4637057692f5c
+    parentId: wrk_14836f92b9e948a4a784477c98072ba9
+    modified: 1707330607258
+    created: 1707330540324
+    name: WorkLog
+    description: ""
+    environment:
+      work_log_path: "{{ _.base_path }}/work-log"
+    environmentPropertyOrder:
+      "&":
+        - work_log_path
+    metaSortKey: -1697874944685.9062
+    _type: request_group
+  - _id: req_a663d08123c042fcb870421bc4ba4a6c
+    parentId: fld_a5b206bbb8d5493987f4637057692f5c
+    modified: 1707332150775
+    created: 1707332012616
+    url: "{{ _.work_log_path }}/task/41a8c408-d523-4af3-87f7-89ef19d5d559"
+    name: "[WorkLog] Get work log list by task id"
+    description: ""
+    method: GET
+    body: { }
+    parameters: [ ]
+    headers: [ ]
+    authentication: { }
+    metaSortKey: -1707311507673.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_dcef8550e8894594b024feb11c069e17
+    parentId: fld_a5b206bbb8d5493987f4637057692f5c
+    modified: 1707335757264
+    created: 1707335220020
+    url: "{{ _.work_log_path }}/2e3525f3-7e62-479f-afb9-92ee0c4ad44f"
+    name: "[WorkLog] Edit work log by id"
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"description":"Moja pierwsza praca l o l"
+        }
+    parameters: [ ]
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_b342082b61b5435884ff6224c7ca84bd
+    authentication: { }
+    metaSortKey: -1707301983330.75
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_d47f6a73cb5548d0a880bb686dec5861
+    parentId: fld_a5b206bbb8d5493987f4637057692f5c
+    modified: 1707335764258
+    created: 1707335733011
+    url: "{{ _.work_log_path }}/333c44a0-3a1e-4950-be6e-5211d9a4cbac"
+    name: "[WorkLog] Delete work log by id"
+    description: ""
+    method: DELETE
+    body: { }
+    parameters: [ ]
+    headers: [ ]
+    authentication: { }
+    metaSortKey: -1707297221159.375
     isPrivate: false
     settingStoreCookies: true
     settingSendCookies: true
@@ -1064,33 +795,30 @@ resources:
     _type: request
   - _id: env_9774d76eabd94f968c8c358d1d4ad38b3c131453
     parentId: wrk_14836f92b9e948a4a784477c98072ba9
-    modified: 1697638662069
+    modified: 1706367382177
     created: 1690646191983
     name: Base Environment
-    data:
-      base_path: localhost:4500
-    dataPropertyOrder:
-      "&":
-        - base_path
+    data: { }
+    dataPropertyOrder: { }
     color: null
     isPrivate: false
     metaSortKey: 1690646191983
     _type: environment
   - _id: jar_9774d76eabd94f968c8c358d1d4ad38b3c131453
     parentId: wrk_14836f92b9e948a4a784477c98072ba9
-    modified: 1706125983978
+    modified: 1707335272108
     created: 1690646191985
     name: Default Jar
     cookies:
       - key: token
-        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiMjlmYjk5MGUtYmM1Zi00MDY5LTliNGMtZDk2YTliZTRlNjNmIiwiZmlyc3ROYW1lIjoiRm9yc3VrIiwibGFzdE5hbWUiOiJJZ29yZXciLCJlbWFpbCI6Im1haWwxQG1haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkMFUvMFBLQWI1N1g3TFFFMzYzdVBwT0xMOEVvQmRKQkhVdmR6ZlIvVzNhT3ZSbjluVXFEZUcifSwiaWF0IjoxNzA2MTI1OTgzLCJleHAiOjE3MDYxMjc3ODN9.sFLTfZtodjlPOMgIrI2oddaTszEv1cD1DVuhLfKO-Vo
+        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiMWUyNzRiNDQtZTVmMC00MjUwLWE3MjctZjQ1OGFjNzhkNGZiIiwiZmlyc3ROYW1lIjoiRWR5dCIsImxhc3ROYW1lIjoiSmVsb3AiLCJlbWFpbCI6Im1haWwyQG1haWwuY29tIn0sImlhdCI6MTcwNzMzNTI3MiwiZXhwIjoxNzA3MzM3MDcyfQ.SKnXHtBpcdxpffbCf68AoGIeRY_5hjMgpmN-nWRNYRk
         domain: localhost
         path: /
         httpOnly: true
         hostOnly: true
         creation: 2023-10-18T14:08:13.829Z
-        lastAccessed: 2024-01-24T19:53:03.978Z
-        id: "6016115847785157"
+        lastAccessed: 2024-02-07T19:47:52.108Z
+        id: "032821313908612426"
     _type: cookie_jar
   - _id: spc_f7b35248b8934c349a4f5f4512d7a2ac
     parentId: wrk_14836f92b9e948a4a784477c98072ba9
@@ -1100,3 +828,23 @@ resources:
     contents: ""
     contentType: yaml
     _type: api_spec
+  - _id: env_b473fe75f5b24d42a78d50b68dd1051b
+    parentId: env_9774d76eabd94f968c8c358d1d4ad38b3c131453
+    modified: 1706367372304
+    created: 1706354060574
+    name: JTD_APP
+    data:
+      protocol: http
+      path: localhost
+      port: "4500"
+      base_path: "{{ _.protocol }}://{{ _.path }}:{{ _.port }}"
+    dataPropertyOrder:
+      "&":
+        - protocol
+        - path
+        - port
+        - base_path
+    color: null
+    isPrivate: false
+    metaSortKey: 1706354060574
+    _type: environment
