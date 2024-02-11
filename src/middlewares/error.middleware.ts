@@ -1,11 +1,12 @@
 import { NextFunction, Request, Response } from "express";
-import { ErrorCode, ServerError } from "../types/error.types";
+import { ErrorCode } from "../types/error.types";
 import { HttpCode } from "../types/http.types";
+import { ServerErrorDto } from "../dto/error.dto";
 
 export const UnknownErrorMiddleware = (
   error: Error,
   req: Request,
-  res: Response<ServerError>,
+  res: Response<ServerErrorDto>,
   next: NextFunction,
 ) => {
   console.error(`Error: HttpCode.INTERNAL_SERVER_ERROR ${error.message}`);
@@ -17,7 +18,7 @@ export const UnknownErrorMiddleware = (
 export const ErrorMiddleware = (
   error: Error | ErrorCode,
   req: Request,
-  res: Response<ServerError>,
+  res: Response<ServerErrorDto>,
   next: NextFunction,
 ) => {
   let errorCode = HttpCode.CLIENT_ERROR;

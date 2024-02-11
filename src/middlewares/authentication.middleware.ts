@@ -5,13 +5,14 @@ import {
   verifyToken,
 } from "../utils/token-managements.utils";
 import { HttpCode } from "../types/http.types";
-import { ErrorCode, ServerError } from "../types/error.types";
+import { ErrorCode } from "../types/error.types";
+import { ServerErrorDto } from "../dto/error.dto";
 
 dotenv.config();
 
 export const AuthenticationMiddleware = (
   req: Request,
-  res: Response<ServerError>,
+  res: Response<ServerErrorDto>,
   next: NextFunction,
 ) => {
   try {

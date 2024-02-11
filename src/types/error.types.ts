@@ -1,45 +1,45 @@
 export enum ErrorCode {
   //TOKEN
-  TOKEN_NPK = "NO PRIVATE KEY",
-  TOKEN_UTGT = "UNABLE TO GENERATE TOKEN",
-  TOKEN_TE = "TOKEN EXPIRED",
-  TOKEN_WT = "TOKEN WRONG TOKEN",
+  TOKEN_NPK = "No private key",
+  TOKEN_UTGT = "Unable to generate token",
+  TOKEN_TE = "Token expired",
+  TOKEN_WT = "Token wrong token",
 
   //AUTH
-  AUTH_PDNM = "PASSWORDS DO NOT MATCH",
-  AUTH_PIR = "PASSWORD IS REQUIRED",
-  AUTH_PSHMTCALOSCOBCONOSC = "PASSWORD SHOULD HAVE MINIMUM TEN CHARACTERS,AT LEAST ONE SMALL CHARACTER, ONE BIG CHARACTER, ONE NUMBER, ONE SPECIAL CHARACTER",
-  AUTH_EIR = "EMAIL IS REQUIRED",
-  AUTH_TEIAIU = "THIS EMAIL IS ALREADY IN USE",
-  AUTH_FNIR = "FIRST NAME IS REQUIRED",
-  AUTH_LNIR = "LAST NAME IS REQUIRED",
-  AUTH_CNFU = "CAN NOT FIND USER",
+  AUTH_PDNM = "Passwords do not match",
+  AUTH_PIR = "Password is required",
+  AUTH_PSHMTCALOSCOBCONOSC = "Password should have minimum ten characters,at least one small character, one big character, one number, one special character",
+  AUTH_EIR = "Email is required",
+  AUTH_TEIAIU = "This email is already in use",
+  AUTH_FNIR = "First name is required",
+  AUTH_LNIR = "Last name is required",
+  AUTH_CNFU = "Can not find user",
 
   // USER
-  USER_NVII = "NO VALID ID INCLUDED",
-  USER_CNFU = "CAN NOT FIND USER",
+  USER_NVII = "No valid id included",
+  USER_CNFU = "Can not find user",
 
   //TASK
-  TASK_TIR = "TITLE IS REQUIRED",
-  TASK_TMBMFC = "TITLE MUST BE MINIMUM FIVE CHARACTERS",
-  TASK_TTIR = "TASK TYPE IS REQUIRED",
-  TASK_TECNHPT = "TYPE EPIC CAN NOT HAVE PARENT TASK",
+  TASK_TIR = "Title is required",
+  TASK_TMBMFC = "Title must be minimum five characters",
+  TASK_TTIR = "Task type is required",
+  TASK_TECNHPT = "Type epic can not have parent task",
   TASK_TME = "Task must exist",
   TASK_TTCNHC = "This task can not have children",
   TASK_TSME = "Task status must exist",
 
   //PROJECT
-  PROJECT_KIR = "KEY IS REQUIRED",
-  PROJECT_KMBMTC = "KEY MUST BE MAX TEN CHARACTERS",
-  PROJECT_NIR = "NAME IS REQUIRED",
-  PROJECT_TIR = "PROJECT TYPE IS REQUIRED",
-  PROJECT_MTIR = "PROJECT MANAGEMENT TYPE IS REQUIRED",
-  PROJECT_UIPTIR = "USER IN PROJECT TYPE IS REQUIRED",
-  PROJECT_NLME = "NEW LEADER MUST EXIST",
-  PROJECT_PME = "PROJECT MUST EXIST",
-  PROJECT_YMPMOVTC = "YOU MUST PROVIDE MINIMUM ONE VALUE TO CHANGE",
-  PROJECT_IIR = "PROJECT ID IS REQUIRED",
-  PROJECT_LIIR = "PROJECT LEADER ID IS REQUIRED",
+  PROJECT_KIR = "Key is required",
+  PROJECT_KMBMTC = "Key must be max ten characters",
+  PROJECT_NIR = "Name is required",
+  PROJECT_TIR = "Project type is required",
+  PROJECT_MTIR = "Project management type is required",
+  PROJECT_UIPTIR = "User in project type is required",
+  PROJECT_NLME = "New leader must exist",
+  PROJECT_PME = "Project must exist",
+  PROJECT_YMPMOVTC = "You must provide minimum one value to change",
+  PROJECT_IIR = "Project id is required",
+  PROJECT_LIIR = "Project leader id is required",
   PROJECT_PDSE = "Project does not exist",
   PROJECT_UINMOTP = "User is not member of this project",
 
@@ -49,7 +49,3 @@ export enum ErrorCode {
   SERVER_UNA = "Unauthorized",
   SERVER_FOR = "Forbidden",
 }
-
-export type ServerError = {
-  message: ErrorCode;
-};

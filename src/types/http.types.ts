@@ -1,3 +1,5 @@
+import { SuccessMessageDto } from "../dto/http.dto";
+
 export enum HttpCode {
   SUCCESS = 200,
   CREATED = 201,
@@ -8,10 +10,6 @@ export enum HttpCode {
   INTERNAL_SERVER_ERROR = 500,
 }
 
-interface SuccessMessage {
-  message: "ok";
-}
-
-export const successMessage: SuccessMessage = {
+export const successMessage: SuccessMessageDto = {
   message: "ok",
 };

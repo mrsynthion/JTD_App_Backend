@@ -1,5 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { AddWorkLogDto, EditWorkLogDto } from "../../dto/work-log.dto";
+import {
+  AddWorkLogDto,
+  EditWorkLogDto,
+  WorkLogDto,
+} from "../../dto/work-log.dto";
 import { Repository } from "typeorm";
 import { WorkLog } from "../entity/WorkLog";
 import { AppDataSource } from "../../data-source";
@@ -32,13 +36,13 @@ export class WorkLogController {
   }
 
   static async getWorkLogListByTaskId(
-    req: Request<{ taskId: string }, WorkLog[]>,
-    res: Response<WorkLog[]>,
+    req: Request<{ taskId: string }, WorkLogDto[]>,
+    res: Response<WorkLogDto[]>,
     next: NextFunction,
   ): Promise<void> {
     const { taskId } = req.params;
     try {
-      const workLogRepository: Repository<WorkLog> =
+      const workLogRepository: Repository<WorkLogDto> =
         AppDataSource.getRepository(WorkLog);
       const workLogList = await workLogRepository
         .createQueryBuilder("workLog")

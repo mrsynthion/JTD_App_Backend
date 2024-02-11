@@ -23,6 +23,7 @@ import {
 import { UserBasicDto } from "../../dto/user.dto";
 import { mapUserInProjectToUserInProjectBasicDto } from "../../utils/user-in-project.utils";
 import { HttpCode, successMessage } from "../../types/http.types";
+import { SuccessMessageDto } from "../../dto/http.dto";
 
 export class ProjectController {
   static async addProject(
@@ -162,7 +163,7 @@ export class ProjectController {
   }
 
   static async editProject(
-    req: Request<{ id: string }, ProjectDto, EditProjectDto>,
+    req: Request<{ id: string }, SuccessMessageDto, EditProjectDto>,
     res: Response,
     next: NextFunction,
   ): Promise<void> {

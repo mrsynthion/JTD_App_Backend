@@ -6,18 +6,19 @@ import { Repository } from "typeorm";
 import { validateEmail, validateNewPassword } from "../../utils/auth.utils";
 import { hash } from "bcrypt";
 import { saltRounds } from "../../types/auth.types";
-import { EditUserDto } from "../../dto/user.dto";
+import { EditUserDto, UserDto } from "../../dto/user.dto";
 import {
   getDataFromTokenByKey,
   getTokenFromRequest,
 } from "../../utils/token-managements.utils";
 import { mapUserToUserDto } from "../../utils/user.utils";
 import { HttpCode, successMessage } from "../../types/http.types";
+import { SuccessMessageDto } from "../../dto/http.dto";
 
 export class UserController {
   static async getCurrentUserData(
-    req: Request<{ id: string }>,
-    res: Response,
+    req: Request,
+    res: Response<UserDto>,
     next: NextFunction,
   ): Promise<void> {
     try {
@@ -53,8 +54,8 @@ export class UserController {
   }
 
   static async editCurrentUser(
-    req: Request<{ id: string }, EditUserDto>,
-    res: Response,
+    req: Request<unknown, EditUserDto>,
+    res: Response<SuccessMessageDto>,
     next: NextFunction,
   ): Promise<void> {
     try {

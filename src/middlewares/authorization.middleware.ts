@@ -11,10 +11,11 @@ import { AppDataSource } from "../data-source";
 import { UserInProject } from "../api/entity/UserInProject";
 import { Task } from "../api/entity/Task";
 import { HttpCode } from "../types/http.types";
-import { ErrorCode, ServerError } from "../types/error.types";
+import { ErrorCode } from "../types/error.types";
+import { ServerErrorDto } from "../dto/error.dto";
 
 dotenv.config();
-const sendForbiddenResponse = (res: Response<ServerError>) =>
+const sendForbiddenResponse = (res: Response<ServerErrorDto>) =>
   res.status(HttpCode.FORBIDDEN).json({ message: ErrorCode.SERVER_FOR });
 
 const checkUserAndUserRole = (
@@ -25,7 +26,7 @@ const checkUserAndUserRole = (
 export const AuthorizationMiddleware = (...roles: UserInProjectType[]) => {
   return async (
     req: Request,
-    res: Response<ServerError>,
+    res: Response<ServerErrorDto>,
     next: NextFunction,
   ) => {
     try {

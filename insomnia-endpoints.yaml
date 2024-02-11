@@ -1,6 +1,6 @@
 _type: export
 __export_format: 4
-__export_date: 2024-02-07T19:58:32.101Z
+__export_date: 2024-02-11T14:31:26.020Z
 __export_source: insomnia.desktop.app:v2022.2.1
 resources:
   - _id: req_70fb351e5691447fa6fce7d062c313e7
@@ -72,7 +72,7 @@ resources:
     _type: request
   - _id: req_03451ffcc82a4f8a97bbb596ef92f252
     parentId: fld_52f73d94fbb34d56882f892db0142441
-    modified: 1707332081495
+    modified: 1707595130100
     created: 1697638619256
     url: "{{ _.auth_path }}/signup"
     name: "[Auth] Sign up"
@@ -85,7 +85,7 @@ resources:
         	"firstName":"Edyt",
         	"lastName":"Jelop",
         	"password":"Zxcvbbvcxz2121!",
-        	"email":"mail2@mail.com"
+        	"email":"mail12@mail.com"
         }
     parameters: [ ]
     headers:
@@ -104,7 +104,7 @@ resources:
     _type: request
   - _id: req_be10bfbed4bd4f61bb005a37480a3d21
     parentId: fld_52f73d94fbb34d56882f892db0142441
-    modified: 1707335271110
+    modified: 1707597407295
     created: 1697631112284
     url: "{{ _.auth_path }}/login"
     name: "[Auth] Login"
@@ -114,7 +114,7 @@ resources:
       mimeType: application/json
       text: |-
         {
-        	"email":"mail2@mail.com",
+        	"email":"mail12@mail.com",
         	"password":"Zxcvbbvcxz2121!"			
         }
     parameters: [ ]
@@ -263,9 +263,9 @@ resources:
     _type: request
   - _id: req_8528cf12cfed40c786173b6aaa1ce043
     parentId: fld_b79734ced4414cacaf9cd2ad07351712
-    modified: 1707293802615
+    modified: 1707380792793
     created: 1706214540371
-    url: "{{ _.project_path }}/1e85c631-887c-4d4f-8c06-e0be65b3c377"
+    url: "{{ _.project_path }}/dd0e9004-efaa-4477-b78d-f8d041f9c010"
     name: "[Project] Edit Project"
     description: ""
     method: PUT
@@ -273,7 +273,7 @@ resources:
       mimeType: application/json
       text: |-
         {
-        	"name":"Project 4"
+        	"name":"Project 5"
         }
     parameters: [ ]
     headers:
@@ -292,9 +292,9 @@ resources:
     _type: request
   - _id: req_7a7adedfe527485683fd5fcfa271a73d
     parentId: fld_b79734ced4414cacaf9cd2ad07351712
-    modified: 1707293803351
+    modified: 1707380824805
     created: 1706896494861
-    url: "{{ _.project_path }}/1e85c631-887c-4d4f-8c06-e0be65b3c377"
+    url: "{{ _.project_path }}/dd0e9004-efaa-4477-b78d-f8d041f9c010"
     name: "[Project] Edit leader in project by id and user id"
     description: ""
     method: PATCH
@@ -302,7 +302,7 @@ resources:
       mimeType: application/json
       text: |-
         {
-        	"leaderId":"a3ed6473-b010-49a0-b516-3ad2345ef2b7"
+        	"leaderId":"0f3886c9-06df-4472-ad46-f0657cf6cffd"
         }
     parameters: [ ]
     headers:
@@ -376,7 +376,7 @@ resources:
     _type: request_group
   - _id: req_da344643252a4703b0f7805d5da76105
     parentId: fld_0618ef432c934f8092e27ce373f3b233
-    modified: 1707293805571
+    modified: 1707588696791
     created: 1698241757790
     url: "{{ _.task_path }}/4784afed-7099-488d-a25b-b844526681f2"
     name: "[Task] Edit task"
@@ -405,7 +405,7 @@ resources:
     _type: request
   - _id: req_a840026e31534b6c9d97f2df24517add
     parentId: fld_0618ef432c934f8092e27ce373f3b233
-    modified: 1707331239381
+    modified: 1707588699725
     created: 1707292458938
     url: "{{ _.task_path }}/58bd6fde-d1c9-42b8-96eb-c55b0aad14f8"
     name: "[Task] Edit assigned user "
@@ -476,7 +476,7 @@ resources:
     _type: request
   - _id: req_9555bb60431f4e129737aa2da5a5d081
     parentId: fld_0618ef432c934f8092e27ce373f3b233
-    modified: 1707332101367
+    modified: 1707588707017
     created: 1697999086218
     url: "{{ _.task_path }}/project/dd0e9004-efaa-4477-b78d-f8d041f9c010"
     name: "[Task] Add task"
@@ -530,7 +530,7 @@ resources:
     _type: request
   - _id: req_55b8efb277fb4e039332337616e7a024
     parentId: fld_0d1e3f1414d145c28e35479ba8f15101
-    modified: 1707293816393
+    modified: 1707383948979
     created: 1706649443888
     url: "{{ _.user_in_project_path }}/project/{{ _.projectId }}"
     name: "[UserInProject] Add user in project"
@@ -540,7 +540,7 @@ resources:
       mimeType: application/json
       text: |-
         {
-        	"email":"mail2@mail.com"
+        	"email":"mail1@mail.com"
         }
     parameters: [ ]
     headers:
@@ -559,14 +559,14 @@ resources:
     _type: request
   - _id: fld_0d1e3f1414d145c28e35479ba8f15101
     parentId: wrk_14836f92b9e948a4a784477c98072ba9
-    modified: 1707331184789
+    modified: 1707383920055
     created: 1706556030564
     name: UserInProject
     description: ""
     environment:
       user_in_project_path: "{{ _.base_path }}/user-in-project"
-      userId: 670112dc-18ff-46ab-a2c5-62e3c27d2480
-      projectId: 5d19017e-e46b-47ec-9198-b90600eea073
+      userId: 0f3886c9-06df-4472-ad46-f0657cf6cffd
+      projectId: dd0e9004-efaa-4477-b78d-f8d041f9c010
     environmentPropertyOrder:
       "&":
         - user_in_project_path
@@ -576,10 +576,10 @@ resources:
     _type: request_group
   - _id: req_8030eef05f9c4fd8abae4dcfdc90049d
     parentId: fld_0d1e3f1414d145c28e35479ba8f15101
-    modified: 1707292572565
+    modified: 1707383962362
     created: 1690646217910
     url: "{{ _.user_in_project_path }}/project/{{ _.projectId
-      }}?size=3&sort=id&sort=ASC"
+      }}?size=3&sort=id&sort=DESC"
     name: "[UserInProject] Get users"
     description: ""
     method: GET
@@ -680,7 +680,7 @@ resources:
     _type: request
   - _id: req_86b5f18807c64e6999d691d5827cfc11
     parentId: fld_a5b206bbb8d5493987f4637057692f5c
-    modified: 1707335743811
+    modified: 1707595302176
     created: 1707330556359
     url: "{{ _.work_log_path }}/task/41a8c408-d523-4af3-87f7-89ef19d5d559"
     name: "[WorkLog] Add work log by task id"
@@ -745,7 +745,7 @@ resources:
     _type: request
   - _id: req_dcef8550e8894594b024feb11c069e17
     parentId: fld_a5b206bbb8d5493987f4637057692f5c
-    modified: 1707335757264
+    modified: 1707595306936
     created: 1707335220020
     url: "{{ _.work_log_path }}/2e3525f3-7e62-479f-afb9-92ee0c4ad44f"
     name: "[WorkLog] Edit work log by id"
@@ -774,9 +774,9 @@ resources:
     _type: request
   - _id: req_d47f6a73cb5548d0a880bb686dec5861
     parentId: fld_a5b206bbb8d5493987f4637057692f5c
-    modified: 1707335764258
+    modified: 1707595290372
     created: 1707335733011
-    url: "{{ _.work_log_path }}/333c44a0-3a1e-4950-be6e-5211d9a4cbac"
+    url: "{{ _.work_log_path }}/8f6b7dfd-0c69-489d-930d-f57f80c2e395"
     name: "[WorkLog] Delete work log by id"
     description: ""
     method: DELETE
@@ -806,19 +806,18 @@ resources:
     _type: environment
   - _id: jar_9774d76eabd94f968c8c358d1d4ad38b3c131453
     parentId: wrk_14836f92b9e948a4a784477c98072ba9
-    modified: 1707335272108
+    modified: 1707597406036
     created: 1690646191985
     name: Default Jar
     cookies:
       - key: token
-        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiMWUyNzRiNDQtZTVmMC00MjUwLWE3MjctZjQ1OGFjNzhkNGZiIiwiZmlyc3ROYW1lIjoiRWR5dCIsImxhc3ROYW1lIjoiSmVsb3AiLCJlbWFpbCI6Im1haWwyQG1haWwuY29tIn0sImlhdCI6MTcwNzMzNTI3MiwiZXhwIjoxNzA3MzM3MDcyfQ.SKnXHtBpcdxpffbCf68AoGIeRY_5hjMgpmN-nWRNYRk
+        expires: 1970-01-01T00:00:00.000Z
         domain: localhost
         path: /
-        httpOnly: true
         hostOnly: true
         creation: 2023-10-18T14:08:13.829Z
-        lastAccessed: 2024-02-07T19:47:52.108Z
-        id: "032821313908612426"
+        lastAccessed: 2024-02-10T20:36:46.036Z
+        id: "18948105831755502"
     _type: cookie_jar
   - _id: spc_f7b35248b8934c349a4f5f4512d7a2ac
     parentId: wrk_14836f92b9e948a4a784477c98072ba9

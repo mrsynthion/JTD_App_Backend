@@ -39,5 +39,5 @@ export interface EditTaskDto {
   status?: TaskStatus;
   assignedUser?: UserInProjectBasicDto;
   parentTask?: TaskBasicDto | null;
-  childrenTask?: TaskBasicDto;
+  childrenTasks?: TaskBasicDto[];
 }

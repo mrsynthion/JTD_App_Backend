@@ -1,6 +1,6 @@
 import { UserBasicDto } from "./user.dto";
 import { UserInProjectType } from "../types/user.types";
-import { Task } from "../api/entity/Task";
+import { TaskBasicDto } from "./task.dto";
 
 export interface AddUserInProjectDto {
   email: string;
@@ -26,5 +26,5 @@ export type UserInProjectBasicDto = UserBasicDto & {
 };
 
 export type UserInProjectDto = UserInProjectBasicDto & {
-  tasks: Task[];
+  tasks: TaskBasicDto[];
 };

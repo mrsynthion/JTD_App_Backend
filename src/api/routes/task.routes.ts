@@ -47,7 +47,6 @@ router.delete(
 
 router.patch(
   "/:id/status/:status",
-
   AuthorizationMiddleware(
     UserInProjectType.MEMBER,
     UserInProjectType.ADMINISTRATOR,
@@ -57,7 +56,6 @@ router.patch(
 
 router.post(
   "/project/:projectId",
-
   AuthorizationMiddleware(
     UserInProjectType.MEMBER,
     UserInProjectType.ADMINISTRATOR,

@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.get("/", UserController.getCurrentUserData);
 
+// @ts-ignore
 router.put("/", UserController.editCurrentUser);
 
 export { router as UserRoutes };
