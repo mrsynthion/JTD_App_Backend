@@ -12,6 +12,7 @@ import {
   getTokenFromRequest,
 } from "../../utils/token-managements.utils";
 import { mapUserToUserDto } from "../../utils/user.utils";
+import { HttpCode, successMessage } from "../../types/http.types";
 
 export class UserController {
   static async getCurrentUserData(
@@ -42,10 +43,10 @@ export class UserController {
           id,
         })
         .getOne()) as User;
-      if (!user) throw Error(ErrorCode.UCNFU);
+      if (!user) throw Error(ErrorCode.USER_CNFU);
 
       const userDto = mapUserToUserDto(user);
-      res.status(200).json(userDto);
+      res.status(HttpCode.SUCCESS).json(userDto);
     } catch ({ message }) {
       next(message);
     }
@@ -65,8 +66,8 @@ export class UserController {
       const isUserExist: boolean = await userRepository.exist({
         where: { id },
       });
-      if (!id) throw new Error(ErrorCode.UNVII);
-      if (!isUserExist) throw new Error(ErrorCode.UCNFU);
+      if (!id) throw new Error(ErrorCode.USER_NVII);
+      if (!isUserExist) throw new Error(ErrorCode.USER_CNFU);
       if (user.email) validateEmail(user.email);
       if (user.password) {
         validateNewPassword(user.password);
@@ -75,9 +76,9 @@ export class UserController {
       }
       user = { ...user, id };
       await userRepository.save(user);
-      res.status(200).json({ message: "ok" });
+      res.status(HttpCode.SUCCESS).json(successMessage);
     } catch ({ message }) {
-      if ((message as string).includes("uq1")) message = ErrorCode.SUTEIAIU;
+      if ((message as string).includes("uq1")) message = ErrorCode.AUTH_TEIAIU;
       next(message);
     }
   }

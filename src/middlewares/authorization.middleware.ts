@@ -10,10 +10,12 @@ import { Repository } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { UserInProject } from "../api/entity/UserInProject";
 import { Task } from "../api/entity/Task";
+import { HttpCode } from "../types/http.types";
+import { ErrorCode, ServerError } from "../types/error.types";
 
 dotenv.config();
-const sendForbiddenResponse = (res: Response) =>
-  res.status(403).json({ message: "Error - forbidden" });
+const sendForbiddenResponse = (res: Response<ServerError>) =>
+  res.status(HttpCode.FORBIDDEN).json({ message: ErrorCode.SERVER_FOR });
 
 const checkUserAndUserRole = (
   userInProject: UserInProject | null,
@@ -21,7 +23,11 @@ const checkUserAndUserRole = (
 ) => userInProject && roles.includes(userInProject.type);
 
 export const AuthorizationMiddleware = (...roles: UserInProjectType[]) => {
-  return async (req: Request, res: Response, next: NextFunction) => {
+  return async (
+    req: Request,
+    res: Response<ServerError>,
+    next: NextFunction,
+  ) => {
     try {
       const token = getTokenFromRequest(req);
       const user = getDataFromTokenByKey(token, "user");

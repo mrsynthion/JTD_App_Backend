@@ -23,6 +23,7 @@ import {
 } from "../../utils/token-managements.utils";
 import { ErrorCode } from "../../types/error.types";
 import { Project } from "../entity/Project";
+import { HttpCode, successMessage } from "../../types/http.types";
 
 export class UserInProjectController {
   static async addUserInProject(
@@ -40,7 +41,7 @@ export class UserInProjectController {
           where: { email },
         })) as UserBasicDto;
 
-        if (!id) throw new Error("User doesnt exist");
+        if (!id) throw new Error(ErrorCode.USER_CNFU);
         const userInProjectRepository: Repository<UserInProject> =
           appDataSource.getRepository(UserInProject);
         await userInProjectRepository.save({
@@ -54,10 +55,10 @@ export class UserInProjectController {
           type: UserInProjectType.MEMBER,
         });
       });
-      res.status(200).json({ message: "ok" });
+      res.status(HttpCode.SUCCESS).json(successMessage);
     } catch ({ message }) {
       if ((message as string).includes("Cannot read")) {
-        message = "User does not exist";
+        message = ErrorCode.USER_CNFU;
       }
       next(message);
     }
@@ -142,7 +143,7 @@ export class UserInProjectController {
           numberOfElements: content.length,
         } as Page<UserInProjectBasicDto>;
       });
-      res.status(200).json(data);
+      res.status(HttpCode.SUCCESS).json(data);
     } catch ({ message }) {
       next(message);
     }
@@ -181,7 +182,7 @@ export class UserInProjectController {
         const user: UserInProjectDto =
           mapUserInProjectToUserInProjectDto(userInProject);
 
-        res.status(200).json(user);
+        res.status(HttpCode.SUCCESS).json(user);
       });
     } catch ({ message }) {
       next(message);
@@ -210,7 +211,7 @@ export class UserInProjectController {
           user: { id },
         },
       });
-      if (!isUserExist) throw new Error(ErrorCode.UCNFU);
+      if (!isUserExist) throw new Error(ErrorCode.USER_CNFU);
 
       await userInProjectRepository.update(
         {
@@ -222,7 +223,7 @@ export class UserInProjectController {
         editUserInProject,
       );
 
-      res.status(200).json({ message: "ok" });
+      res.status(HttpCode.SUCCESS).json(successMessage);
     } catch (e) {
       if (e instanceof Error) {
         next(e.message);
@@ -254,7 +255,7 @@ export class UserInProjectController {
           user: { id },
         },
       });
-      if (!isUserExist) throw new Error(ErrorCode.UCNFU);
+      if (!isUserExist) throw new Error(ErrorCode.USER_CNFU);
 
       await userInProjectRepository.update(
         {
@@ -266,7 +267,7 @@ export class UserInProjectController {
         { type },
       );
 
-      res.status(200).json({ message: "ok" });
+      res.status(HttpCode.SUCCESS).json(successMessage);
     } catch (e) {
       if (e instanceof Error) {
         next(e.message);

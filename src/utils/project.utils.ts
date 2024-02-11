@@ -19,12 +19,12 @@ const projectRepository: Repository<Project> =
   AppDataSource.getRepository(Project);
 
 function validateAddProjectKey(key: string | undefined): void {
-  if (!key) throw new Error(ErrorCode.PKIR);
-  if (key?.length > 10) throw new Error(ErrorCode.PKMBMTC);
+  if (!key) throw new Error(ErrorCode.PROJECT_KIR);
+  if (key?.length > 10) throw new Error(ErrorCode.PROJECT_KMBMTC);
 }
 
 function validateAddProjectName(name: string | undefined): void {
-  if (!name) throw new Error(ErrorCode.PNIR);
+  if (!name) throw new Error(ErrorCode.PROJECT_NIR);
 }
 
 function validateAddProjectType(type: ProjectTypes | undefined): void {
@@ -32,7 +32,7 @@ function validateAddProjectType(type: ProjectTypes | undefined): void {
     (projectType) => projectType === type,
   );
   if (!isValidType) {
-    throw new Error(ErrorCode.PTIR);
+    throw new Error(ErrorCode.PROJECT_TIR);
   }
 }
 
@@ -43,7 +43,7 @@ function validateAddProjectManagementType(
     ProjectManagementType,
   ).find((projectManagementType) => projectManagementType === type);
   if (!isValidProjectManagementType) {
-    throw new Error(ErrorCode.PMTIR);
+    throw new Error(ErrorCode.PROJECT_MTIR);
   }
 }
 
@@ -54,7 +54,7 @@ function validateAddProjectUserInProjectType(
     UserInProjectType,
   ).find((userInProjectType) => userInProjectType === type);
   if (!isValidUserInProjectType) {
-    throw new Error(ErrorCode.PUIPTIR);
+    throw new Error(ErrorCode.PROJECT_UIPTIR);
   }
 }
 
@@ -69,7 +69,7 @@ export async function validateAddProjectData(
 
 function validateEditProjectKey(key: string | undefined): boolean {
   if (!key) return false;
-  if (key?.length > 10) throw new Error(ErrorCode.PKMBMTC);
+  if (key?.length > 10) throw new Error(ErrorCode.PROJECT_KMBMTC);
   return true;
 }
 
@@ -88,7 +88,7 @@ async function validateEditProjectLeader(
       },
     },
   });
-  if (!isLeaderExist) throw new Error(ErrorCode.PNLME);
+  if (!isLeaderExist) throw new Error(ErrorCode.PROJECT_NLME);
   return true;
 }
 
@@ -99,10 +99,10 @@ async function validateIfProjectExistById(
     const isProjectExist: boolean = await projectRepository.exist({
       where: { id },
     });
-    if (!isProjectExist) throw new Error();
+    if (!isProjectExist) throw new Error(ErrorCode.PROJECT_PDSE);
     return true;
   } catch (e) {
-    throw new Error(ErrorCode.PPME);
+    throw new Error(ErrorCode.PROJECT_PME);
   }
 }
 
@@ -118,7 +118,7 @@ export async function validateEditProjectData(
   if (!!editProject.projectManagementType) {
     set.add("projectManagementType");
   }
-  if (!set.size) throw new Error(ErrorCode.PYMPMOVTC);
+  if (!set.size) throw new Error(ErrorCode.PROJECT_YMPMOVTC);
   return set;
 }
 

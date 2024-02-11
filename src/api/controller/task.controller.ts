@@ -20,6 +20,7 @@ import {
 } from "../../utils/task.utils";
 import { UserInProjectBasicDto } from "../../dto/user-in-project.dto";
 import { UserInProject } from "../entity/UserInProject";
+import { HttpCode, successMessage } from "../../types/http.types";
 
 export class TaskController {
   static async getCertainTask(
@@ -74,7 +75,7 @@ export class TaskController {
 
       const taskDto: TaskDto = mapTaskToTaskDto(task);
 
-      res.status(200).json(taskDto);
+      res.status(HttpCode.SUCCESS).json(taskDto);
     } catch ({ message }) {
       next(message);
     }
@@ -92,7 +93,7 @@ export class TaskController {
       const taskRepository: Repository<Task> =
         AppDataSource.getRepository(Task);
       await taskRepository.update({ id }, editTask);
-      res.status(200).json({ message: "ok" });
+      res.status(HttpCode.SUCCESS).json(successMessage);
     } catch ({ message }) {
       next(message);
     }
@@ -119,7 +120,7 @@ export class TaskController {
       const taskRepository: Repository<Task> =
         AppDataSource.getRepository(Task);
       await taskRepository.update({ id }, { assignedUser: userInProject });
-      res.status(200).json({ message: "ok" });
+      res.status(HttpCode.SUCCESS).json(successMessage);
     } catch ({ message }) {
       next(message);
     }
@@ -146,7 +147,7 @@ export class TaskController {
       validateDeleteTaskDto(task);
 
       await taskRepository.delete({ id });
-      res.status(200).json({ message: "ok" });
+      res.status(HttpCode.SUCCESS).json(successMessage);
     } catch ({ message }) {
       next(message);
     }
@@ -163,7 +164,7 @@ export class TaskController {
       const taskRepository: Repository<Task> =
         AppDataSource.getRepository(Task);
       await taskRepository.update({ id }, { status });
-      res.status(200).json({ message: "ok" });
+      res.status(HttpCode.SUCCESS).json(successMessage);
     } catch ({ message }) {
       next(message);
     }
@@ -190,7 +191,7 @@ export class TaskController {
         AppDataSource.getRepository(Task);
       const savedTask = (await taskRepository.save(addTaskType)) as Task;
       const task: TaskBasicDto = mapTaskToTaskBasicDto(savedTask);
-      res.status(200).json(task);
+      res.status(HttpCode.SUCCESS).json(task);
     } catch ({ message }) {
       next(message);
     }
@@ -289,7 +290,7 @@ export class TaskController {
           totalPages: Math.floor(totalElements / size || 0),
           numberOfElements: content.length,
         } as Page<TaskBasicDto>;
-        res.status(200).json(taskPage);
+        res.status(HttpCode.SUCCESS).json(taskPage);
       });
     } catch ({ message }) {
       next(message);

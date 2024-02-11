@@ -13,12 +13,12 @@ import {
 } from "./user-in-project.utils";
 
 function validateTitle(title?: string, edit?: boolean): void {
-  if (!title && !edit) throw new Error(ErrorCode.TTIR);
-  if (title && title.length < 5) throw new Error(ErrorCode.TTMBMFC);
+  if (!title && !edit) throw new Error(ErrorCode.TASK_TIR);
+  if (title && title.length < 5) throw new Error(ErrorCode.TASK_TMBMFC);
 }
 
 function validateType(type?: TaskType): void {
-  if (!type) throw new Error(ErrorCode.TTTIR);
+  if (!type) throw new Error(ErrorCode.TASK_TTIR);
 }
 
 function validateTypeAndParentTask(
@@ -26,17 +26,16 @@ function validateTypeAndParentTask(
   parentTask?: TaskBasicDto | null,
 ): void {
   if (type === TaskType.EPIC && parentTask?.id) {
-    throw new Error(ErrorCode.TTECNHPT);
+    throw new Error(ErrorCode.TASK_TECNHPT);
   }
 }
 
 function validateTaskExist(id?: string): void {
-  if (!id) throw new Error("Task must exist");
+  if (!id) throw new Error(ErrorCode.TASK_TME);
 }
 
 function validateTaskChildren(children?: Task[]): void {
-  if (children && children.length !== 0)
-    throw new Error("Task can not have children");
+  if (children && children.length !== 0) throw new Error(ErrorCode.TASK_TTCNHC);
 }
 
 export function validateTaskStatus(status?: TaskStatus) {
@@ -44,7 +43,7 @@ export function validateTaskStatus(status?: TaskStatus) {
     (s) => s === status,
   );
 
-  if (status && !statusFound) throw new Error("Task status must exist");
+  if (status && !statusFound) throw new Error(ErrorCode.TASK_TSME);
 }
 
 export function validateAddTaskDto(addTaskDto: AddTaskDto): void {

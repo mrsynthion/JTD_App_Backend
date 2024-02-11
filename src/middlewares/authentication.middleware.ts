@@ -4,23 +4,29 @@ import {
   getTokenFromRequest,
   verifyToken,
 } from "../utils/token-managements.utils";
+import { HttpCode } from "../types/http.types";
+import { ErrorCode, ServerError } from "../types/error.types";
 
 dotenv.config();
 
 export const AuthenticationMiddleware = (
   req: Request,
-  res: Response,
+  res: Response<ServerError>,
   next: NextFunction,
 ) => {
   try {
     const token = getTokenFromRequest(req);
     if (!token) {
-      return res.status(401).json({ message: "Unauthorized" });
+      return res
+        .status(HttpCode.UNAUTHORIZED)
+        .json({ message: ErrorCode.SERVER_UNA });
     }
 
     verifyToken(token);
     next();
   } catch (error) {
-    return res.status(401).json({ message: "Unauthorized" });
+    return res
+      .status(HttpCode.UNAUTHORIZED)
+      .json({ message: ErrorCode.SERVER_UNA });
   }
 };

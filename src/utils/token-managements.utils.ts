@@ -19,15 +19,26 @@ const options: SignOptions = {
 };
 
 export function generateToken(user: User | UserBasicDto): string {
-  const privateKey: string = process.env[PRIVATE_KEY]!;
-  if (!privateKey) {
-    throw new Error(ErrorCode.TNPK);
+  try {
+    const privateKey: string = process.env[PRIVATE_KEY]!;
+    if (!privateKey) {
+      throw new Error(ErrorCode.TOKEN_NPK);
+    }
+    return sign({ user } as TokenPayload, privateKey, options);
+  } catch ({ message }) {
+    throw new Error(ErrorCode.TOKEN_UTGT);
   }
-  return sign({ user } as TokenPayload, privateKey, options);
 }
 
 export function verifyToken(token: string): boolean {
-  return !!verify(token, process.env[PRIVATE_KEY]!);
+  try {
+    return !!verify(token, process.env[PRIVATE_KEY]!);
+  } catch ({ message }) {
+    if ((message as string).includes("expired")) {
+      throw new Error(ErrorCode.TOKEN_TE);
+    }
+    throw new Error(ErrorCode.TOKEN_WT);
+  }
 }
 
 export function getDataFromToken(token: string): TokenPayload {

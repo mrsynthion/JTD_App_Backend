@@ -7,6 +7,8 @@ import * as cors from "cors";
 import { rootRoutes } from "./api/routes";
 import * as dotenv from "dotenv";
 import { UnknownErrorMiddleware } from "./middlewares/error.middleware";
+import { HttpCode } from "./types/http.types";
+import { ErrorCode, ServerError } from "./types/error.types";
 
 dotenv.config();
 const { PORT } = process.env;
@@ -32,14 +34,16 @@ const App = async () => {
     // register express routes from defined application routes
     app.use("", rootRoutes);
     // Not found path error
-    app.get("*", (req: Request, res: Response) => {
-      res.status(404).json({ message: "Path not found" });
+    app.get("*", (req: Request, res: Response<ServerError>) => {
+      res.status(HttpCode.NOT_FOUND).json({ message: ErrorCode.SERVER_PNF });
     });
 
     console.log(`Express server has started on port ${PORT}.`);
   } catch (e) {
-    app.get("*", (req: Request, res: Response) => {
-      res.status(500).json({ message: "Internal server error" });
+    app.get("*", (req: Request, res: Response<ServerError>) => {
+      res
+        .status(HttpCode.INTERNAL_SERVER_ERROR)
+        .json({ message: ErrorCode.SERVER_ISE });
     });
   }
 

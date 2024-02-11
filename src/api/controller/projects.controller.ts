@@ -22,6 +22,7 @@ import {
 } from "../../dto/project.dto";
 import { UserBasicDto } from "../../dto/user.dto";
 import { mapUserInProjectToUserInProjectBasicDto } from "../../utils/user-in-project.utils";
+import { HttpCode, successMessage } from "../../types/http.types";
 
 export class ProjectController {
   static async addProject(
@@ -111,7 +112,7 @@ export class ProjectController {
             ? mapUserInProjectToUserInProjectBasicDto(leaderInProject)
             : null,
         };
-        res.status(201).json(project);
+        res.status(HttpCode.CREATED).json(project);
       });
     } catch ({ message }) {
       let newMessage: ErrorCode = message as ErrorCode;
@@ -153,7 +154,7 @@ export class ProjectController {
           projectManagementType: projectFromBase.projectManagementType,
         }),
       );
-      res.status(200).json(projectsList);
+      res.status(HttpCode.SUCCESS).json(projectsList);
     } catch ({ message }) {
       let newMessage: ErrorCode = message as ErrorCode;
       next(newMessage);
@@ -189,7 +190,7 @@ export class ProjectController {
         editProjectData,
       );
 
-      res.status(200).json({ message: "ok" });
+      res.status(HttpCode.SUCCESS).json(successMessage);
     } catch ({ message }) {
       next(message);
     }
@@ -202,7 +203,7 @@ export class ProjectController {
   ): Promise<void> {
     try {
       const { id } = req.params;
-      if (!id) throw new Error("Id is required");
+      if (!id) throw new Error(ErrorCode.PROJECT_IIR);
       const projectRepository: Repository<Project> =
         AppDataSource.getRepository(Project);
 
@@ -250,7 +251,7 @@ export class ProjectController {
         ),
         projectManagementType: projectFromBase.projectManagementType,
       };
-      res.status(200).json(project);
+      res.status(HttpCode.SUCCESS).json(project);
     } catch ({ message }) {
       next(message);
     }
@@ -264,8 +265,8 @@ export class ProjectController {
     try {
       const { id } = req.params;
       const { leaderId } = req.body;
-      if (!id) throw new Error("Id is required");
-      if (!leaderId) throw new Error("Leader id is required");
+      if (!id) throw new Error(ErrorCode.PROJECT_IIR);
+      if (!leaderId) throw new Error(ErrorCode.PROJECT_LIIR);
       const projectRepository: Repository<Project> =
         AppDataSource.getRepository(Project);
       const userInProjectRepository: Repository<UserInProject> =
@@ -274,7 +275,7 @@ export class ProjectController {
       const isProjectExist: boolean = await projectRepository.exist({
         where: { id },
       });
-      if (!isProjectExist) throw new Error("Project doesnt exist");
+      if (!isProjectExist) throw new Error(ErrorCode.PROJECT_PDSE);
 
       const isUserInProjectExist: boolean = await userInProjectRepository.exist(
         {
@@ -287,7 +288,7 @@ export class ProjectController {
         },
       );
       if (!isUserInProjectExist) {
-        throw new Error("User is not member of this project");
+        throw new Error(ErrorCode.PROJECT_UINMOTP);
       }
 
       const leaderInProject: UserInProject =
@@ -297,7 +298,7 @@ export class ProjectController {
         })) as UserInProject;
       await projectRepository.update({ id }, { leaderInProject });
 
-      res.status(200).json({ message: "ok" });
+      res.status(HttpCode.SUCCESS).json(successMessage);
     } catch ({ message }) {
       next(message);
     }
