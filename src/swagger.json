@@ -49,9 +49,9 @@
           "400": {
             "description": "Invalid data",
             "content": {
-              "text/plain": {
+              "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
+                  "$ref": "#/components/schemas/ServerErrorDto"
                 }
               }
             }
@@ -91,9 +91,9 @@
           "400": {
             "description": "Invalid data",
             "content": {
-              "text/plain": {
+              "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
+                  "$ref": "#/components/schemas/ServerErrorDto"
                 }
               }
             }
@@ -116,9 +116,9 @@
           "400": {
             "description": "Invalid data",
             "content": {
-              "text/plain": {
+              "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
+                  "$ref": "#/components/schemas/ServerErrorDto"
                 }
               }
             }
@@ -148,9 +148,9 @@
           "400": {
             "description": "Invalid data",
             "content": {
-              "text/plain": {
+              "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
+                  "$ref": "#/components/schemas/ServerErrorDto"
                 }
               }
             }
@@ -163,60 +163,9 @@
         "tags": [
           "User"
         ],
-        "summary": "Get user page",
-        "description": "Get paginated user page",
-        "operationId": "userPage",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "userFilteredQuery",
-            "schema": {
-              "$ref": "#/components/schemas/UserFilteredQuery"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PageUserDto"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid data",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/user/{id}": {
-      "get": {
-        "tags": [
-          "User"
-        ],
-        "summary": "Get certain user",
-        "description": "Get certain user by id",
-        "operationId": "userById",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "summary": "Get current user data",
+        "description": "Get current user data",
+        "operationId": "getCurrentUserData",
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -231,9 +180,9 @@
           "400": {
             "description": "Invalid data",
             "content": {
-              "text/plain": {
+              "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
+                  "$ref": "#/components/schemas/ServerErrorDto"
                 }
               }
             }
@@ -244,14 +193,62 @@
         "tags": [
           "User"
         ],
-        "summary": "Edit certain user",
-        "description": "Edit certain user by id",
-        "operationId": "editUserById",
+        "summary": "Edit current user",
+        "description": "Edit current user",
+        "operationId": "editCurrentUser",
+        "requestBody": {
+          "description": "User data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessMessageDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerErrorDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user-in-project/project/{projectId}": {
+      "get": {
+        "tags": [
+          "User in project"
+        ],
+        "summary": "Get current user data",
+        "description": "Get user page by project id",
+        "operationId": "getUserPageByProjectId",
         "parameters": [
           {
+            "in": "query",
+            "name": "userInProjectFilteredQuery",
+            "schema": {
+              "$ref": "#/components/schemas/UserInProjectFilteredQuery"
+            }
+          },
+          {
             "in": "path",
-            "name": "id",
-            "required": true,
+            "name": "projectId",
             "schema": {
               "type": "string"
             }
@@ -263,7 +260,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserDto"
+                  "$ref": "#/components/schemas/PageUserInProjectDto"
                 }
               }
             }
@@ -271,9 +268,58 @@
           "400": {
             "description": "Invalid data",
             "content": {
-              "text/plain": {
+              "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
+                  "$ref": "#/components/schemas/ServerErrorDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User in project"
+        ],
+        "summary": "Edit current user data by project id",
+        "description": "Edit current user data by project id",
+        "operationId": "editCurrentUserDataByProjectId",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "User in project data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditUserInProjectDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessMessageDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerErrorDto"
                 }
               }
             }
@@ -281,20 +327,27 @@
         }
       }
     },
-    "/task": {
+    "/user-in-project/user/{userId}/project/{projectId}": {
       "get": {
         "tags": [
-          "Task"
+          "User in project"
         ],
-        "summary": "Get task page",
-        "description": "Get paginated task page",
-        "operationId": "taskPage",
+        "summary": "Get user by user id and by project id",
+        "description": "Get user by user id and by project id",
+        "operationId": "getUserByUserIdAndProjectId",
         "parameters": [
           {
-            "in": "query",
-            "name": "taskFilteredQuery",
+            "in": "path",
+            "name": "userId",
             "schema": {
-              "$ref": "#/components/schemas/TaskFilteredQuery"
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "projectId",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -304,7 +357,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PageTaskDto"
+                  "$ref": "#/components/schemas/UserInProjectDto"
                 }
               }
             }
@@ -312,39 +365,97 @@
           "400": {
             "description": "Invalid data",
             "content": {
-              "text/plain": {
+              "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
+                  "$ref": "#/components/schemas/ServerErrorDto"
                 }
               }
             }
           }
         }
       },
-      "post": {
+      "patch": {
         "tags": [
-          "Task"
+          "User in project"
         ],
-        "summary": "Create new task",
-        "description": "Create new task",
-        "operationId": "newTask",
+        "summary": "Edit member type by user id and project id",
+        "description": "Edit member type by user id and project id",
+        "operationId": "editMemberTypeByUserIdAndProjectId",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "projectId",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
-          "required": true,
+          "description": "User in project data",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TaskDto"
+                "$ref": "#/components/schemas/EditUserInProjectMemberTypeDto"
               }
             }
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TaskDto"
+                  "$ref": "#/components/schemas/SuccessMessageDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerErrorDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/project": {
+      "post": {
+        "tags": [
+          "Project"
+        ],
+        "summary": "Add project",
+        "description": "Add project",
+        "operationId": "addProject",
+        "requestBody": {
+          "description": "Add project data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddProjectDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectBasicDto"
                 }
               }
             }
@@ -354,7 +465,179 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
+                  "$ref": "#/components/schemas/ServerErrorDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Project"
+        ],
+        "summary": "Get current user project list",
+        "description": "Get current user project list",
+        "operationId": "getCurrentUserProjectsList",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProjectBasicDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerErrorDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/project/{id}": {
+      "put": {
+        "tags": [
+          "Project"
+        ],
+        "summary": "Edit project",
+        "description": "Edit project",
+        "operationId": "editProject",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Edit project data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditProjectDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessMessageDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerErrorDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Project"
+        ],
+        "summary": "Edit project leader by id",
+        "description": "Edit project leader by id",
+        "operationId": "editProjectLeaderById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Edit project leader data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditProjectLeaderDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessMessageDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerErrorDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Project"
+        ],
+        "summary": "Get project by id",
+        "description": "Get project by id",
+        "operationId": "getProjectById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerErrorDto"
                 }
               }
             }
@@ -369,7 +652,7 @@
         ],
         "summary": "Get certain task",
         "description": "Get certain task by id",
-        "operationId": "taskById",
+        "operationId": "getCertainTask",
         "parameters": [
           {
             "in": "path",
@@ -396,55 +679,7 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Task"
-        ],
-        "summary": "Edit completed field in task",
-        "description": "Edit completed field in task by id",
-        "operationId": "editCompletedFieldInTaskById",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "in": "query",
-            "name": "completed",
-            "required": true,
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TaskDto"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid data",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
+                  "$ref": "#/components/schemas/ServerErrorDto"
                 }
               }
             }
@@ -457,7 +692,7 @@
         ],
         "summary": "Edit certain task",
         "description": "Edit certain task by id",
-        "operationId": "editTaskById",
+        "operationId": "editCertainTask",
         "parameters": [
           {
             "in": "path",
@@ -469,11 +704,11 @@
           }
         ],
         "requestBody": {
-          "required": true,
+          "description": "Edit project data",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TaskDto"
+                "$ref": "#/components/schemas/EditTaskDto"
               }
             }
           }
@@ -484,7 +719,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TaskDto"
+                  "$ref": "#/components/schemas/SuccessMessageDto"
                 }
               }
             }
@@ -494,7 +729,97 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
+                  "$ref": "#/components/schemas/ServerErrorDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Change assigned user",
+        "description": "Change assigned user",
+        "operationId": "changeTaskAssignedUser",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "User in project basic data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserInProjectBasicDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessMessageDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerErrorDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Get certain task",
+        "description": "Get certain task by id",
+        "operationId": "getCertainTask",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessMessageDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerErrorDto"
                 }
               }
             }
@@ -502,31 +827,39 @@
         }
       }
     },
-    "/user-in-project-type": {
-      "post": {
+    "/task/{id}/status/{status}": {
+      "patch": {
         "tags": [
-          "User In Project Type"
+          "Task"
         ],
-        "summary": "Add new value",
-        "description": "Add new value to dict01 user in project type",
-        "operationId": "addUserInProjectType",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddDictValue"
-              }
+        "summary": "Change task status",
+        "description": "Change task status",
+        "operationId": "changeTaskStatus",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "status",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DictType"
+                  "$ref": "#/components/schemas/SuccessMessageDto"
                 }
               }
             }
@@ -536,7 +869,59 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
+                  "$ref": "#/components/schemas/ServerErrorDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/task/project/{projectId}": {
+      "post": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Create new task",
+        "description": "Create new task",
+        "operationId": "addTaskByProjectId",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddTaskDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessMessageDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerErrorDto"
                 }
               }
             }
@@ -545,57 +930,22 @@
       },
       "get": {
         "tags": [
-          "User In Project Type"
+          "Task"
         ],
-        "summary": "Get user in project type page",
-        "description": "Get dict01 user in project type page",
-        "operationId": "getUserInProjectTypePage",
+        "summary": "Get task page by project id",
+        "description": "Get task page by project id",
+        "operationId": "getTaskPageByProjectId",
         "parameters": [
           {
             "in": "query",
-            "name": "dictValueFilteredQuery",
+            "name": "taskFilteredQuery",
             "schema": {
-              "$ref": "#/components/schemas/DictValueFilteredQuery"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PageDictValue"
-                }
-              }
+              "$ref": "#/components/schemas/TaskFilteredQuery"
             }
           },
-          "400": {
-            "description": "Invalid data",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/user-in-project-type/:id": {
-      "get": {
-        "tags": [
-          "User In Project Type"
-        ],
-        "summary": "Get user in project type by id",
-        "description": "Get dict01 user in project type by id",
-        "operationId": "getUserInProjectTypeById",
-        "parameters": [
           {
             "in": "path",
-            "name": "id",
-            "required": true,
+            "name": "projectId",
             "schema": {
               "type": "string"
             }
@@ -607,7 +957,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DictType"
+                  "$ref": "#/components/schemas/PageTaskBasicDto"
                 }
               }
             }
@@ -617,57 +967,7 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "User In Project Type"
-        ],
-        "summary": "Edit dict value",
-        "description": "Edit dict value in dict01 user in project type",
-        "operationId": "editUserInProjectType",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditDictValue"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DictType"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid data",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
+                  "$ref": "#/components/schemas/ServerErrorDto"
                 }
               }
             }
@@ -675,73 +975,41 @@
         }
       }
     },
-    "/user-in-project-type/:code": {
-      "get": {
-        "tags": [
-          "User In Project Type"
-        ],
-        "summary": "Get user in project type by code",
-        "description": "Get dict01 user in project type by code",
-        "operationId": "getUserInProjectTypeByCode",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "code",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DictType"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid data",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/project-type": {
+    "/work-log/task/{taskId}": {
       "post": {
         "tags": [
-          "Project Type"
+          "Work log"
         ],
-        "summary": "Add new value",
-        "description": "Add new value to dict02 project type",
-        "operationId": "addProjectType",
+        "summary": "Create new work log",
+        "description": "Create new work log",
+        "operationId": "addWorkLogByTaskId",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "taskId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AddDictValue"
+                "$ref": "#/components/schemas/AddWorkLogDto"
               }
             }
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DictType"
+                  "$ref": "#/components/schemas/SuccessMessageDto"
                 }
               }
             }
@@ -751,7 +1019,7 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
+                  "$ref": "#/components/schemas/ServerErrorDto"
                 }
               }
             }
@@ -760,56 +1028,15 @@
       },
       "get": {
         "tags": [
-          "Project Type"
+          "Work log"
         ],
-        "summary": "Get project types page",
-        "description": "Get dict02 project type page",
-        "operationId": "getProjectTypePage",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "dictValueFilteredQuery",
-            "schema": {
-              "$ref": "#/components/schemas/DictValueFilteredQuery"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PageDictValue"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid data",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/project-type/:id": {
-      "get": {
-        "tags": [
-          "Project Type"
-        ],
-        "summary": "Get project type by id",
-        "description": "Get dict02 project type by id",
-        "operationId": "getProjectTypeById",
+        "summary": "Get work log list by task id",
+        "description": "Get work log list by task id",
+        "operationId": "getWorkLogListByTaskId",
         "parameters": [
           {
             "in": "path",
-            "name": "id",
+            "name": "taskId",
             "required": true,
             "schema": {
               "type": "string"
@@ -822,7 +1049,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DictType"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkLogDto"
+                  }
                 }
               }
             }
@@ -832,20 +1062,22 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
+                  "$ref": "#/components/schemas/ServerErrorDto"
                 }
               }
             }
           }
         }
-      },
+      }
+    },
+    "/work-log/{id}": {
       "put": {
         "tags": [
-          "Project Type"
+          "Work log"
         ],
-        "summary": "Edit dict value",
-        "description": "Edit dict value in dict02 project type",
-        "operationId": "editProjectType",
+        "summary": "Edit certain work log",
+        "description": "Edit certain work log",
+        "operationId": "editWorkLog",
         "parameters": [
           {
             "in": "path",
@@ -856,23 +1088,13 @@
             }
           }
         ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditDictValue"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DictType"
+                  "$ref": "#/components/schemas/SuccessMessageDto"
                 }
               }
             }
@@ -882,145 +1104,20 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/project-type/:code": {
-      "get": {
-        "tags": [
-          "Project Type"
-        ],
-        "summary": "Get project type by code",
-        "description": "Get dict02 project type by code",
-        "operationId": "getProjectTypeByCode",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "code",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DictType"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid data",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/task-type": {
-      "post": {
-        "tags": [
-          "Task Type"
-        ],
-        "summary": "Add new value",
-        "description": "Add new value to dict03 task type",
-        "operationId": "addTaskType",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddDictValue"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DictType"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid data",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
+                  "$ref": "#/components/schemas/ServerErrorDto"
                 }
               }
             }
           }
         }
       },
-      "get": {
+      "delete": {
         "tags": [
-          "Task Type"
+          "Work log"
         ],
-        "summary": "Get task type page",
-        "description": "Get dict03 task type page",
-        "operationId": "getTaskTypePage",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "dictValueFilteredQuery",
-            "schema": {
-              "$ref": "#/components/schemas/DictValueFilteredQuery"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PageDictValue"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid data",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/task-type/:id": {
-      "get": {
-        "tags": [
-          "Task Type"
-        ],
-        "summary": "Get task type by id",
-        "description": "Get dict03 task type by id",
-        "operationId": "getTaskTypeById",
+        "summary": "Delete certain work log",
+        "description": "Delete certain work log",
+        "operationId": "deleteWorkLog",
         "parameters": [
           {
             "in": "path",
@@ -1037,7 +1134,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DictType"
+                  "$ref": "#/components/schemas/SuccessMessageDto"
                 }
               }
             }
@@ -1047,529 +1144,7 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Task Type"
-        ],
-        "summary": "Edit dict value",
-        "description": "Edit dict value in dict03 task type",
-        "operationId": "editTaskType",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditDictValue"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DictType"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid data",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/task-type/:code": {
-      "get": {
-        "tags": [
-          "Task Type"
-        ],
-        "summary": "Get task type by code",
-        "description": "Get dict03 task type by code",
-        "operationId": "getTaskTypeByCode",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "code",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DictType"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid data",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/task-status": {
-      "post": {
-        "tags": [
-          "Task Status"
-        ],
-        "summary": "Add new value",
-        "description": "Add new value to dict04 task status",
-        "operationId": "addTaskStatus",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddDictValue"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DictType"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid data",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Task Status"
-        ],
-        "summary": "Get task status page",
-        "description": "Get dict04 task status page",
-        "operationId": "getTaskStatusPage",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "dictValueFilteredQuery",
-            "schema": {
-              "$ref": "#/components/schemas/DictValueFilteredQuery"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PageDictValue"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid data",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/task-status/:id": {
-      "get": {
-        "tags": [
-          "Task Status"
-        ],
-        "summary": "Get task status by id",
-        "description": "Get dict04 task status by id",
-        "operationId": "getTaskStatusById",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DictType"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid data",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Task Status"
-        ],
-        "summary": "Edit dict value",
-        "description": "Edit dict value in dict04 task status",
-        "operationId": "editTaskStatus",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditDictValue"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DictType"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid data",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/task-status/:code": {
-      "get": {
-        "tags": [
-          "Task Status"
-        ],
-        "summary": "Get task status by code",
-        "description": "Get dict04 task status by code",
-        "operationId": "getTaskStatusByCode",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "code",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DictType"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid data",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/project-management-type": {
-      "post": {
-        "tags": [
-          "Project Management Type"
-        ],
-        "summary": "Add new value",
-        "description": "Add new value to dict05 project management type",
-        "operationId": "addProjectManagementType",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddDictValue"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DictType"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid data",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Project Management Type"
-        ],
-        "summary": "Get project management type page",
-        "description": "Get dict05 project management type page",
-        "operationId": "getProjectManagementTypePage",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "dictValueFilteredQuery",
-            "schema": {
-              "$ref": "#/components/schemas/DictValueFilteredQuery"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PageDictValue"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid data",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/project-management-type/:id": {
-      "get": {
-        "tags": [
-          "Project Management Type"
-        ],
-        "summary": "Get project management type by id",
-        "description": "Get dict05 project management type by id",
-        "operationId": "getProjectManagementTypeById",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DictType"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid data",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "User In Project Type"
-        ],
-        "summary": "Edit dict value",
-        "description": "Edit dict value in dict05 project management type",
-        "operationId": "editProjectManagementType",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditDictValue"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DictType"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid data",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/project-management-type/:code": {
-      "get": {
-        "tags": [
-          "Project Management Type"
-        ],
-        "summary": "Get project management type by code",
-        "description": "Get dict05 project management type by code",
-        "operationId": "getProjectManagementTypeByCode",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "code",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DictType"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid data",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorCode"
+                  "$ref": "#/components/schemas/ServerErrorDto"
                 }
               }
             }
@@ -1580,210 +1155,457 @@
   },
   "components": {
     "schemas": {
-      "UserDto": {
+      "RegisterDto": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string"
-          },
           "firstName": {
-            "type": "string",
-            "example": "firstName"
+            "type": "string"
           },
           "lastName": {
             "type": "string",
-            "example": "lastName"
+            "example": "firstName"
           },
           "email": {
             "type": "string",
-            "example": "email"
-          },
-          "age": {
-            "type": "number",
-            "example": 15
-          },
-          "username": {
-            "type": "string",
-            "example": "username"
+            "example": "lastName"
           },
           "password": {
             "type": "string",
-            "example": "password"
+            "example": "email"
           }
         }
       },
       "LoginDto": {
         "type": "object",
         "properties": {
-          "username": {
-            "type": "string",
-            "example": "username"
-          },
-          "password": {
-            "type": "string",
-            "example": "password"
-          }
-        }
-      },
-      "TaskDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "importanceLevel": {
-            "$ref": "#/components/schemas/ImportanceLevel"
-          },
-          "createdAt": {
-            "type": "string"
-          },
-          "expirationDate": {
-            "type": "string"
-          },
-          "completed": {
-            "type": "boolean"
-          }
-        }
-      },
-      "TaskFilteredQuery": {
-        "type": "object",
-        "properties": {
-          "size": {
-            "type": "number"
-          },
-          "page": {
-            "type": "number"
-          },
-          "sort": {
-            "type": "array",
-            "items": {
-              "oneOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "$ref": "#/components/schemas/SortDirection"
-                }
-              ]
-            }
-          },
-          "id": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "importanceLevel": {
-            "$ref": "#/components/schemas/ImportanceLevel"
-          },
-          "createdAt": {
-            "type": "string"
-          },
-          "expirationDate": {
-            "type": "string"
-          },
-          "completed": {
-            "type": "boolean"
-          }
-        }
-      },
-      "UserFilteredQuery": {
-        "type": "object",
-        "properties": {
-          "size": {
-            "type": "number"
-          },
-          "page": {
-            "type": "number"
-          },
-          "sort": {
-            "type": "array",
-            "items": {
-              "oneOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "$ref": "#/components/schemas/SortDirection"
-                }
-              ]
-            }
-          },
-          "id": {
-            "type": "string"
-          },
-          "firstName": {
-            "type": "string",
-            "example": "firstName"
-          },
-          "lastName": {
-            "type": "string",
-            "example": "lastName"
-          },
           "email": {
             "type": "string",
             "example": "email"
           },
-          "age": {
-            "type": "string",
-            "example": "age"
-          },
-          "username": {
-            "type": "string",
-            "example": "username"
-          },
           "password": {
             "type": "string",
             "example": "password"
           }
         }
       },
-      "PageUserDto": {
+      "ProjectDto": {
         "type": "object",
         "properties": {
-          "totalElements": {
-            "type": "number"
+          "id": {
+            "type": "string"
           },
-          "totalPages": {
-            "type": "number"
+          "name": {
+            "type": "string"
           },
-          "numberOfElements": {
-            "type": "number"
+          "key": {
+            "type": "string"
           },
-          "content": {
+          "type": {
+            "$ref": "#/components/schemas/ProjectTypes"
+          },
+          "leader": {
+            "type": "object",
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UserInProjectBasicDto"
+              }
+            ]
+          },
+          "users": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/UserDto"
+              "$ref": "#/components/schemas/UserInProjectBasicDto"
+            }
+          },
+          "projectManagementType": {
+            "$ref": "#/components/schemas/ProjectManagementType"
+          }
+        }
+      },
+      "ProjectBasicDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ProjectTypes"
+          },
+          "projectManagementType": {
+            "$ref": "#/components/schemas/ProjectManagementType"
+          }
+        }
+      },
+      "AddProjectDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ProjectTypes"
+          },
+          "projectManagementType": {
+            "$ref": "#/components/schemas/ProjectManagementType"
+          }
+        }
+      },
+      "EditProjectDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ProjectTypes"
+          },
+          "projectManagementType": {
+            "$ref": "#/components/schemas/ProjectManagementType"
+          }
+        }
+      },
+      "EditProjectLeaderDto": {
+        "type": "object",
+        "properties": {
+          "leaderId": {
+            "type": "string"
+          }
+        }
+      },
+      "TaskBasicDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/TaskType"
+          },
+          "status": {
+            "$ref": "#/components/schemas/TaskStatus"
+          },
+          "assignedUser": {
+            "type": "object",
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UserInProjectMinimumDto"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string"
+          }
+        }
+      },
+      "TaskDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/TaskBasicDto"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "childrenTasks": {
+                "type": "array",
+                "nullable": true,
+                "items": {
+                  "$ref": "#/components/schemas/TaskBasicDto"
+                }
+              },
+              "parentTask": {
+                "type": "object",
+                "nullable": true,
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TaskBasicDto"
+                  }
+                ]
+              },
+              "workLogs": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/WorkLogDto"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "AddTaskDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/TaskType"
+          },
+          "status": {
+            "$ref": "#/components/schemas/TaskStatus"
+          },
+          "assignedUser": {
+            "type": "object",
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UserInProjectBasicDto"
+              }
+            ]
+          },
+          "parentTask": {
+            "type": "object",
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TaskBasicDto"
+              }
+            ]
+          }
+        }
+      },
+      "EditTaskDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/TaskType"
+          },
+          "status": {
+            "$ref": "#/components/schemas/TaskStatus"
+          },
+          "assignedUser": {
+            "type": "object",
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UserInProjectMinimumDto"
+              }
+            ]
+          },
+          "parentTask": {
+            "type": "object",
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TaskBasicDto"
+              }
+            ]
+          },
+          "childrenTasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TaskBasicDto"
             }
           }
         }
       },
-      "PageTaskDto": {
+      "UserBasicDto": {
         "type": "object",
         "properties": {
-          "totalElements": {
-            "type": "number"
+          "id": {
+            "type": "string"
           },
-          "totalPages": {
-            "type": "number"
+          "firstName": {
+            "type": "string"
           },
-          "numberOfElements": {
-            "type": "number"
+          "lastName": {
+            "type": "string",
+            "example": "firstName"
           },
-          "content": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TaskDto"
+          "email": {
+            "type": "string",
+            "example": "lastName"
+          }
+        }
+      },
+      "UserDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UserBasicDto"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "projects": {
+                "type": "array",
+                "items": [
+                  {
+                    "$ref": "#/components/schemas/ProjectBasicDto"
+                  }
+                ]
+              }
             }
+          }
+        ]
+      },
+      "EditUserDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UserDto"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "password": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "AddUserInProjectDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "EditUserInProjectDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "EditUserInProjectMemberTypeDto": {
+        "type": "object",
+        "properties": {
+          "memberType": {
+            "$ref": "#/components/schemas/UserInProjectType"
+          }
+        }
+      },
+      "UserInProjectMinimumDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "UserInProjectBasicDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UserBasicDto"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "isLeader": {
+                "type": "boolean"
+              },
+              "memberType": {
+                "$ref": "#/components/schemas/UserInProjectType"
+              }
+            }
+          }
+        ]
+      },
+      "UserInProjectDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UserInProjectBasicDto"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "tasks": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TaskBasicDto"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "WorkLogDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string"
+          }
+        }
+      },
+      "AddWorkLogDto": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string"
+          }
+        }
+      },
+      "EditWorkLogDto": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string"
           }
         }
       },
@@ -1796,73 +1618,27 @@
           }
         }
       },
-      "ErrorCode": {
-        "type": "string",
-        "enum": [
-          "NO PRIVATE KEY",
-          "UNABLE TO GENERATE TOKEN",
-          "CAN NOT FIND USER",
-          "PASSWORDS DO NOT MATCH",
-          "PASSWORD IS REQUIRED",
-          "PASSWORD SHOULD HAVE MINIMUM TEN CHARACTERS,AT LEAST ONE SMALL CHARACTER, ONE BIG CHARACTER, ONE NUMBER, ONE SPECIAL CHARACTER",
-          "EMAIL IS REQUIRED",
-          "THIS EMAIL IS ALREADY IN USE",
-          "FIRST NAME IS REQUIRED",
-          "LAST NAME IS REQUIRED",
-          "NO VALID ID INCLUDED",
-          "TITLE IS REQUIRED",
-          "TITLE MUST BE MINIMUM FIVE CHARACTERS",
-          "DICT VALUES CAN NOT BE DUPLICATED",
-          "DICT VALUE DOES NOT EXIST"
-        ]
-      },
-      "ImportanceLevel": {
-        "type": "string",
-        "enum": [
-          "LOW",
-          "MEDIUM",
-          "HIGH",
-          "VERY_HIGH"
-        ]
-      },
-      "SortDirection": {
-        "type": "string",
-        "enum": [
-          "ASC",
-          "DESC"
-        ]
-      },
-      "DictType": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
+      "TaskFilteredQuery": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FilteredQuery"
           },
-          "code": {
-            "type": "string"
+          {
+            "$ref": "#/components/schemas/TaskBasicDto"
+          }
+        ]
+      },
+      "UserInProjectFilteredQuery": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FilteredQuery"
           },
-          "value": {
-            "type": "string"
+          {
+            "$ref": "#/components/schemas/UserInProjectBasicDto"
           }
-        }
+        ]
       },
-      "AddDictValue": {
-        "type": "object",
-        "properties": {
-          "value": {
-            "type": "string"
-          }
-        }
-      },
-      "EditDictValue": {
-        "type": "object",
-        "properties": {
-          "value": {
-            "type": "string"
-          }
-        }
-      },
-      "DictValueFilteredQuery": {
+      "FilteredQuery": {
         "type": "object",
         "properties": {
           "size": {
@@ -1883,19 +1659,50 @@
                 }
               ]
             }
-          },
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "value": {
-            "type": "string"
           }
         }
       },
-      "PageDictValue": {
+      "PageTaskBasicDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Page"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "content": {
+                "type": "array",
+                "items": [
+                  {
+                    "$ref": "#/components/schemas/TaskBasicDto"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "PageUserInProjectDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Page"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "content": {
+                "type": "array",
+                "items": [
+                  {
+                    "$ref": "#/components/schemas/UserInProjectBasicDto"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "Page": {
         "type": "object",
         "properties": {
           "totalElements": {
@@ -1906,14 +1713,118 @@
           },
           "numberOfElements": {
             "type": "number"
-          },
-          "content": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DictType"
-            }
           }
         }
+      },
+      "SuccessMessageDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "ServerErrorDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "$ref": "#/components/schemas/ErrorCode"
+          }
+        }
+      },
+      "ErrorCode": {
+        "type": "string",
+        "enum": [
+          "No private key",
+          "Unable to generate token",
+          "Token expired",
+          "Token wrong token",
+          "Passwords do not match",
+          "Password is required",
+          "Password should have minimum ten characters,at least one small character, one big character, one number, one special character",
+          "Email is required",
+          "This email is already in use",
+          "First name is required",
+          "Last name is required",
+          "Can not find user",
+          "No valid id included",
+          "Title is required",
+          "Title must be minimum five characters",
+          "Task type is required",
+          "Type epic can not have parent task",
+          "Task must exist",
+          "This task can not have children",
+          "Task status must exist",
+          "Key is required",
+          "Key must be max ten characters",
+          "Name is required",
+          "Project type is required",
+          "Project management type is required",
+          "User in project type is required",
+          "New leader must exist",
+          "Project must exist",
+          "You must provide minimum one value to change",
+          "Project id is required",
+          "Project leader id is required",
+          "Project does not exist",
+          "User is not member of this project",
+          "Internal server error",
+          "Path not found",
+          "Unauthorized",
+          "Forbidden"
+        ]
+      },
+      "SortDirection": {
+        "type": "string",
+        "enum": [
+          "ASC",
+          "DESC"
+        ]
+      },
+      "ProjectTypes": {
+        "type": "string",
+        "enum": [
+          "SOFTWARE"
+        ]
+      },
+      "ProjectManagementType": {
+        "type": "string",
+        "enum": [
+          "KANBAN",
+          "SCRUM"
+        ]
+      },
+      "TaskType": {
+        "type": "string",
+        "enum": [
+          "EPIC",
+          "STORY",
+          "TASK",
+          "BUG",
+          "SUB_TASK",
+          "SUB_BUG"
+        ]
+      },
+      "TaskStatus": {
+        "type": "string",
+        "enum": [
+          "TO_DO",
+          "IN_PROGRESS",
+          "CODE_REVIEW",
+          "READY_FOR_TEST",
+          "IN_TEST",
+          "DONE",
+          "WONT_DO",
+          "BLOCKED"
+        ]
+      },
+      "UserInProjectType": {
+        "type": "string",
+        "enum": [
+          "ADMINISTRATOR",
+          "MEMBER",
+          "OBSERVER"
+        ]
       }
     }
   }

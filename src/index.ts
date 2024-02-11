@@ -1,67 +1,54 @@
 import * as express from "express";
+import { Request, Response } from "express";
 import * as bodyParser from "body-parser";
 import { AppDataSource } from "./data-source";
-import { serveFiles, setup } from "swagger-ui-express";
-import { load } from "js-yaml";
-import { readFileSync } from "fs";
 import * as cookieParser from "cookie-parser";
 import * as cors from "cors";
-import { Routes } from "./api/routes";
+import { rootRoutes } from "./api/routes";
+import * as dotenv from "dotenv";
+import { UnknownErrorMiddleware } from "./middlewares/error.middleware";
+import { HttpCode } from "./types/http.types";
+import { ErrorCode } from "./types/error.types";
+import { ServerErrorDto } from "./dto/error.dto";
 
-const PORT: number = 4500;
+dotenv.config();
+const { PORT } = process.env;
 
-AppDataSource.initialize()
-  .then(async () => {
+const App = async () => {
+  // create express app
+  const app = express();
+  // middlewares
+  app.use(bodyParser.json());
+  app.use(cookieParser());
+  app.use(
+    cors({
+      origin: "http://localhost:3000",
+      credentials: true,
+    }),
+  );
+  try {
+    await AppDataSource.initialize();
     // await AppDataSource.synchronize(true);
-
-    // create express app
-    const app = express();
-    app.use(bodyParser.json());
-    app.use(cookieParser());
-    app.use(
-      cors({
-        origin: "http://localhost:3000",
-        credentials: true,
-      }),
-    );
-
-    const doc = {
-      info: {
-        title: "My API",
-        description: "Description",
-      },
-      host: "localhost:4000",
-    };
-
-    const spec = readFileSync("./src/swagger.json", {
-      encoding: "utf8",
-      flag: "r",
-    });
-    const swaggerDocument = load(spec);
-
-    const options = {
-      swaggerOptions: {
-        url: "/api-docs/swagger.json",
-      },
-    };
-
-    app.get("/", (req, res) => {
-      res.redirect("/api-docs");
-    });
-    app.get("/api-docs/swagger.json", (req, res) => res.json(swaggerDocument));
-    app.use("/api-docs", serveFiles(null, options), setup(null, options));
+    // unknown error handling
+    app.use(UnknownErrorMiddleware);
 
     // register express routes from defined application routes
-    Routes(app);
-
-    // setup express app here
-    // ...
-
-    // start express server
-    app.listen(PORT);
-
-    // insert new users for test
+    app.use("", rootRoutes);
+    // Not found path error
+    app.get("*", (req: Request, res: Response<ServerErrorDto>) => {
+      res.status(HttpCode.NOT_FOUND).json({ message: ErrorCode.SERVER_PNF });
+    });
 
     console.log(`Express server has started on port ${PORT}.`);
-  })
-  .catch((error) => console.log(error));
+  } catch (e) {
+    app.get("*", (req: Request, res: Response<ServerErrorDto>) => {
+      res
+        .status(HttpCode.INTERNAL_SERVER_ERROR)
+        .json({ message: ErrorCode.SERVER_ISE });
+    });
+  }
+
+  app.listen(PORT);
+};
+
+App();

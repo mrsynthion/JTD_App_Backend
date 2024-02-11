@@ -2,14 +2,13 @@ import {
   Column,
   Entity,
   JoinColumn,
-  ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Dict02_ProjectTypes } from "./dictionaries/Dict02_ProjectTypes";
 import { UserInProject } from "./UserInProject";
-import { Dict05_ProjectManagementTypes } from "./dictionaries/Dict05_ProjectManagementTypes";
+import { ProjectManagementType, ProjectTypes } from "../../types/project.types";
+import { Task } from "./Task";
 
 @Entity({ name: "Projects" })
 export class Project {
@@ -22,18 +21,19 @@ export class Project {
   @Column({ nullable: false })
   key: string;
 
-  @ManyToOne(() => Dict02_ProjectTypes, { nullable: false })
-  @JoinColumn()
-  type: Dict02_ProjectTypes;
+  @Column({ nullable: false })
+  type: ProjectTypes;
 
   @OneToOne(() => UserInProject)
   @JoinColumn()
-  leader: UserInProject;
+  leaderInProject: UserInProject | null;
 
   @OneToMany(() => UserInProject, (userInProject) => userInProject.project)
-  users: UserInProject[];
+  usersInProject: UserInProject[];
 
-  @ManyToOne(() => Dict05_ProjectManagementTypes, { nullable: false })
-  @JoinColumn()
-  projectManagementType: Dict05_ProjectManagementTypes;
+  @Column({ nullable: false })
+  projectManagementType: ProjectManagementType;
+
+  @OneToMany(() => Task, (task) => task.project)
+  tasks: Task[];
 }

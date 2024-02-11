@@ -16,8 +16,8 @@ export class User {
   email: string;
 
   @Column({ nullable: false })
-  password: string;
+  password?: string;
 
   @OneToMany(() => UserInProject, (userInProject) => userInProject.user)
-  projects: UserInProject[];
+  userInProjects: UserInProject[];
 }

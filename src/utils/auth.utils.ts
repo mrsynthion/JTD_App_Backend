@@ -1,9 +1,9 @@
-import { ErrorCode } from "../global-types/error.types";
-import { RegisterDto } from "../global-types/auth.types";
+import { ErrorCode } from "../types/error.types";
+import { RegisterDto } from "../dto/auth.dto";
 import { compare } from "bcrypt";
 
 function validatePassword(password: string): void {
-  if (!password) throw new Error(ErrorCode.SUPIR);
+  if (!password) throw new Error(ErrorCode.AUTH_PIR);
 }
 
 function validateNewPassword(password: string): void {
@@ -21,19 +21,19 @@ function validateNewPassword(password: string): void {
     isMinOneNumber &&
     isMinOneSymbol;
 
-  if (!isPasswordCorrect) throw new Error(ErrorCode.SUPSHMTCALOSCOBCONOSC);
+  if (!isPasswordCorrect) throw new Error(ErrorCode.AUTH_PSHMTCALOSCOBCONOSC);
 }
 
 function validateEmail(email: string): void {
-  if (!email) throw new Error(ErrorCode.SUEIR);
+  if (!email) throw new Error(ErrorCode.AUTH_EIR);
 }
 
 function validateFirstName(firstName: string): void {
-  if (!firstName) throw new Error(ErrorCode.SUFNIR);
+  if (!firstName) throw new Error(ErrorCode.AUTH_FNIR);
 }
 
 function validateLastName(lastName: string): void {
-  if (!lastName) throw new Error(ErrorCode.SULNIR);
+  if (!lastName) throw new Error(ErrorCode.AUTH_LNIR);
 }
 
 function validateSignUpData({
@@ -53,7 +53,7 @@ async function comparePasswords(
   databasePassword: string,
 ): Promise<void> {
   const result = await compare(password, databasePassword);
-  if (result !== true) throw new Error(ErrorCode.APDNM);
+  if (result !== true) throw new Error(ErrorCode.AUTH_PDNM);
 }
 
 export {

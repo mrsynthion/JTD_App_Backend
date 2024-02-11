@@ -1,67 +1,135 @@
-import { AddProjectDto } from "../global-types/projects.types";
-import { ErrorCode } from "../global-types/error.types";
+import { ProjectManagementType, ProjectTypes } from "../types/project.types";
+import { ErrorCode } from "../types/error.types";
 import { Repository } from "typeorm";
-import { Dict02_ProjectTypes } from "../api/entity/dictionaries/Dict02_ProjectTypes";
 import { AppDataSource } from "../data-source";
-import { Dict05_ProjectManagementTypes } from "../api/entity/dictionaries/Dict05_ProjectManagementTypes";
-import { ProjectTypeDto } from "../global-types/dictionaries/Dict02_ProjectTypes.types";
-import { ProjectManagementTypeDto } from "../global-types/dictionaries/Dict05_ProjectManagementTypes.types";
-import { Dict01_UserInProjectTypes } from "../api/entity/dictionaries/Dict01_UserInProjectTypes";
-import { UserInProjectTypeDto } from "../global-types/dictionaries/Dict01_UserTypes.types";
+import { UserInProject } from "../api/entity/UserInProject";
+import { Project } from "../api/entity/Project";
+import { UserInProjectType } from "../types/user.types";
+import {
+  AddProjectDto,
+  EditProjectDto,
+  ProjectBasicDto,
+} from "../dto/project.dto";
+import { UserInProjectBasicDto } from "../dto/user-in-project.dto";
 
-const dict01_UserInProjectTypes: Repository<Dict01_UserInProjectTypes> =
-  AppDataSource.getRepository(Dict01_UserInProjectTypes);
+const userInProjectRepository: Repository<UserInProject> =
+  AppDataSource.getRepository(UserInProject);
 
-const dict02_ProjectTypesRepository: Repository<Dict02_ProjectTypes> =
-  AppDataSource.getRepository(Dict02_ProjectTypes);
+const projectRepository: Repository<Project> =
+  AppDataSource.getRepository(Project);
 
-const dict05_ProjectManagementTypesRepository: Repository<Dict05_ProjectManagementTypes> =
-  AppDataSource.getRepository(Dict05_ProjectManagementTypes);
-
-function validateProjectKey(key: string): void {
-  if (!key) throw new Error(ErrorCode.PKIR);
-  if (key?.length > 10) throw new Error(ErrorCode.PKMBMTC);
+function validateAddProjectKey(key: string | undefined): void {
+  if (!key) throw new Error(ErrorCode.PROJECT_KIR);
+  if (key?.length > 10) throw new Error(ErrorCode.PROJECT_KMBMTC);
 }
 
-function validateProjectName(name: string): void {
-  if (!name) throw new Error(ErrorCode.PNIR);
+function validateAddProjectName(name: string | undefined): void {
+  if (!name) throw new Error(ErrorCode.PROJECT_NIR);
 }
 
-async function validateProjectType(type: ProjectTypeDto): Promise<void> {
-  if (!type?.id) throw new Error(ErrorCode.PTIR);
-  const isTypeExist: boolean = await dict02_ProjectTypesRepository.exist({
-    where: { id: type.id },
-  });
-  if (!isTypeExist) throw new Error(ErrorCode.PTME);
+function validateAddProjectType(type: ProjectTypes | undefined): void {
+  const isValidType: boolean = !!Object.values(ProjectTypes).find(
+    (projectType) => projectType === type,
+  );
+  if (!isValidType) {
+    throw new Error(ErrorCode.PROJECT_TIR);
+  }
 }
 
-async function validateProjectManagementType(
-  managementType: ProjectManagementTypeDto,
-): Promise<void> {
-  if (!managementType?.id) throw new Error(ErrorCode.PMTIR);
-  const isManagementTypeExist: boolean =
-    await dict05_ProjectManagementTypesRepository.exist({
-      where: { id: managementType.id },
-    });
-  if (!isManagementTypeExist) throw new Error(ErrorCode.PMTME);
+function validateAddProjectManagementType(
+  type: ProjectManagementType | undefined,
+): void {
+  const isValidProjectManagementType: boolean = !!Object.values(
+    ProjectManagementType,
+  ).find((projectManagementType) => projectManagementType === type);
+  if (!isValidProjectManagementType) {
+    throw new Error(ErrorCode.PROJECT_MTIR);
+  }
 }
 
-async function validateProjectUserInProjectType(
-  userInProjectType: UserInProjectTypeDto,
-): Promise<void> {
-  if (!userInProjectType?.id) throw new Error(ErrorCode.PUIPTIR);
-  const isManagementTypeExist: boolean = await dict01_UserInProjectTypes.exist({
-    where: { id: userInProjectType.id },
-  });
-  if (!isManagementTypeExist) throw new Error(ErrorCode.PUIPTME);
+function validateAddProjectUserInProjectType(
+  type: UserInProjectType | undefined,
+): void {
+  const isValidUserInProjectType: boolean = !!Object.values(
+    UserInProjectType,
+  ).find((userInProjectType) => userInProjectType === type);
+  if (!isValidUserInProjectType) {
+    throw new Error(ErrorCode.PROJECT_UIPTIR);
+  }
 }
 
 export async function validateAddProjectData(
   addProject: AddProjectDto,
 ): Promise<void> {
-  validateProjectKey(addProject.key);
-  validateProjectName(addProject.name);
-  await validateProjectType(addProject.type);
-  await validateProjectManagementType(addProject.projectManagementType);
-  await validateProjectUserInProjectType(addProject.userInProjectType);
+  validateAddProjectKey(addProject.key);
+  validateAddProjectName(addProject.name);
+  validateAddProjectType(addProject.type);
+  validateAddProjectManagementType(addProject.projectManagementType);
+}
+
+function validateEditProjectKey(key: string | undefined): boolean {
+  if (!key) return false;
+  if (key?.length > 10) throw new Error(ErrorCode.PROJECT_KMBMTC);
+  return true;
+}
+
+function validateEditProjectName(name: string | undefined): boolean {
+  return !!name;
+}
+
+async function validateEditProjectLeader(
+  leader: UserInProjectBasicDto | null | undefined,
+): Promise<boolean> {
+  if (!leader?.id) return false;
+  const isLeaderExist: boolean = await userInProjectRepository.exist({
+    where: {
+      user: {
+        id: leader.id,
+      },
+    },
+  });
+  if (!isLeaderExist) throw new Error(ErrorCode.PROJECT_NLME);
+  return true;
+}
+
+async function validateIfProjectExistById(
+  id: string | undefined,
+): Promise<boolean> {
+  try {
+    const isProjectExist: boolean = await projectRepository.exist({
+      where: { id },
+    });
+    if (!isProjectExist) throw new Error(ErrorCode.PROJECT_PDSE);
+    return true;
+  } catch (e) {
+    throw new Error(ErrorCode.PROJECT_PME);
+  }
+}
+
+export async function validateEditProjectData(
+  editProject: EditProjectDto,
+  id: string | undefined,
+): Promise<Set<keyof EditProjectDto>> {
+  const set: Set<keyof EditProjectDto> = new Set();
+  await validateIfProjectExistById(id);
+  if (validateEditProjectKey(editProject.key)) set.add("key");
+  if (validateEditProjectName(editProject.name)) set.add("name");
+  if (!!editProject.type) set.add("type");
+  if (!!editProject.projectManagementType) {
+    set.add("projectManagementType");
+  }
+  if (!set.size) throw new Error(ErrorCode.PROJECT_YMPMOVTC);
+  return set;
+}
+
+export function mapProjectToProjectMinimumDto(
+  project: Project,
+): ProjectBasicDto {
+  return {
+    id: project.id,
+    name: project.name,
+    key: project.key,
+    type: project.type,
+    projectManagementType: project.projectManagementType,
+  };
 }

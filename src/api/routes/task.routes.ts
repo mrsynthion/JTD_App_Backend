@@ -1,57 +1,76 @@
 import * as express from "express";
-import { Request, Response } from "express";
 import { AppDataSource } from "../../data-source";
 import { Task } from "../entity/Task";
-import { TaskControllerFunctions } from "../controller/task.controller";
-import { Filters } from "../../global-types/pagination.types";
-import {
-  getDataFromTokenByKey,
-  verifyToken,
-} from "../../utils/token-managements.utils";
-import { sendError } from "../../utils/error.utils";
+import { TaskController } from "../controller/task.controller";
+import { AuthorizationMiddleware } from "../../middlewares/authorization.middleware";
+import { UserInProjectType } from "../../types/user.types";
 
 const userRepository = AppDataSource.getRepository(Task);
 const router = express.Router();
 
-router.get("", async (req: Request, res, next) => {
-  const token: string = req.cookies["token"];
-  try {
-    verifyToken(token);
-    const userId: string = getDataFromTokenByKey(token, "id");
-    const filters = req.query as unknown as Filters<Task>;
-    await TaskControllerFunctions.getTaskPage(userId, filters, res);
-  } catch ({ message }) {
-    sendError(400, message, res);
-  }
-});
-
-router.post(
-  "",
-  async (req: Request<Task>, res: Response<Task>): Promise<void> => {
-    const token: string = req.cookies["token"];
-    try {
-      verifyToken(token);
-      const userId: string = getDataFromTokenByKey(token, "id");
-      const task: Task = req.body;
-      await TaskControllerFunctions.addTask(userId, task, res);
-    } catch ({ message }) {
-      sendError(400, message, res);
-    }
-  },
+router.get(
+  "/:id",
+  AuthorizationMiddleware(
+    UserInProjectType.OBSERVER,
+    UserInProjectType.MEMBER,
+    UserInProjectType.ADMINISTRATOR,
+  ),
+  TaskController.getCertainTask,
 );
-
-router.get("/:id", async (req, res, next) => {
-  const id = req.params["id"] as string;
-  await TaskControllerFunctions.getCertainTask(id, res);
-});
 
 router.put(
   "/:id",
-  async (req: Request<Task>, res: Response<Task>): Promise<void> => {
-    const task: Task = req.body;
-    const id: string = req.params["id"] as string;
-    await TaskControllerFunctions.editCertainTask(id, task, res);
-  },
+  AuthorizationMiddleware(
+    UserInProjectType.MEMBER,
+    UserInProjectType.ADMINISTRATOR,
+  ),
+  TaskController.editCertainTask,
 );
 
-export default router;
+router.patch(
+  "/:id",
+  AuthorizationMiddleware(
+    UserInProjectType.MEMBER,
+    UserInProjectType.ADMINISTRATOR,
+  ),
+  TaskController.changeTaskAssignedUser,
+);
+
+router.delete(
+  "/:id",
+  AuthorizationMiddleware(
+    UserInProjectType.MEMBER,
+    UserInProjectType.ADMINISTRATOR,
+  ),
+  TaskController.deleteCertainTask,
+);
+
+router.patch(
+  "/:id/status/:status",
+  AuthorizationMiddleware(
+    UserInProjectType.MEMBER,
+    UserInProjectType.ADMINISTRATOR,
+  ),
+  TaskController.changeTaskStatus,
+);
+
+router.post(
+  "/project/:projectId",
+  AuthorizationMiddleware(
+    UserInProjectType.MEMBER,
+    UserInProjectType.ADMINISTRATOR,
+  ),
+  TaskController.addTaskByProjectId,
+);
+
+router.get(
+  "/project/:projectId",
+  AuthorizationMiddleware(
+    UserInProjectType.OBSERVER,
+    UserInProjectType.MEMBER,
+    UserInProjectType.ADMINISTRATOR,
+  ),
+  TaskController.getTaskPageByProjectId,
+);
+
+export { router as TaskRoutes };
