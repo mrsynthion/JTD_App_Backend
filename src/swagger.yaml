@@ -20,7 +20,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserDto'
+              $ref: '#/components/schemas/RegisterDto'
         required: true
       responses:
         '201':
@@ -714,71 +714,92 @@ components:
   schemas:
     RegisterDto:
       type: object
+      required: true
       properties:
         firstName:
           type: string
+          required: true
         lastName:
           type: string
           example: firstName
+          required: true
         email:
           type: string
           example: lastName
+          required: true
         password:
           type: string
           example: email
+          required: true
     LoginDto:
       type: object
+      required: true
       properties:
         email:
           type: string
           example: email
+          required: true
         password:
           type: string
           example: password
+          required: true
     ProjectDto:
       type: object
+      required: true
       properties:
         id:
           type: string
+          required: true
         name:
           type: string
+          required: true
         key:
           type: string
+          required: true
         type:
-          $ref: '#/components/schemas/ProjectTypes'
+          $ref: '#/components/schemas/ProjectType'
         leader:
           type: object
+          required: true
           nullable: true
           allOf:
             - $ref: '#/components/schemas/UserInProjectBasicDto'
         users:
           type: array
+          required: true
           items:
             $ref: '#/components/schemas/UserInProjectBasicDto'
         projectManagementType:
           $ref: '#/components/schemas/ProjectManagementType'
     ProjectBasicDto:
       type: object
+      required: true
       properties:
         id:
           type: string
+          required: true
         name:
           type: string
+          required: true
         key:
           type: string
+          required: true
         type:
-          $ref: '#/components/schemas/ProjectTypes'
+          $ref: '#/components/schemas/ProjectType'
         projectManagementType:
           $ref: '#/components/schemas/ProjectManagementType'
     AddProjectDto:
       type: object
+      required: true
       properties:
         name:
           type: string
+          required: true
         key:
           type: string
+          required: true
         type:
-          $ref: '#/components/schemas/ProjectTypes'
+          $ref: '#/components/schemas/ProjectType'
         projectManagementType:
           $ref: '#/components/schemas/ProjectManagementType'
     EditProjectDto:
@@ -789,7 +810,7 @@ components:
         key:
           type: string
         type:
-          $ref: '#/components/schemas/ProjectTypes'
+          $ref: '#/components/schemas/ProjectType'
         projectManagementType:
           $ref: '#/components/schemas/ProjectManagementType'
     EditProjectLeaderDto:
@@ -797,32 +818,41 @@ components:
       properties:
         leaderId:
           type: string
+          required: true
     TaskBasicDto:
       type: object
+      required: true
       properties:
         id:
           type: string
+          required: true
         title:
           type: string
+          required: true
         description:
           type: string
+          required: true
         label:
           type: string
+          required: true
         type:
           $ref: '#/components/schemas/TaskType'
         status:
           $ref: '#/components/schemas/TaskStatus'
         assignedUser:
           type: object
+          required: true
           nullable: true
           allOf:
             - $ref: '#/components/schemas/UserInProjectMinimumDto'
         createdAt:
           type: string
+          required: true
     TaskDto:
       allOf:
         - $ref: '#/components/schemas/TaskBasicDto'
         - type: object
+          required: true
           properties:
             childrenTasks:
               type: array
@@ -840,6 +870,7 @@ components:
                 $ref: '#/components/schemas/WorkLogDto'
     AddTaskDto:
       type: object
+      required: true
       properties:
         title:
           type: string
@@ -890,6 +921,7 @@ components:
             $ref: '#/components/schemas/TaskBasicDto'
     UserBasicDto:
       type: object
+      required: true
       properties:
         id:
           type: string
@@ -905,12 +937,15 @@ components:
       allOf:
         - $ref: '#/components/schemas/UserBasicDto'
         - type: object
+          required: true
           properties:
             projects:
               type: array
               items:
                 - $ref: '#/components/schemas/ProjectBasicDto'
     EditUserDto:
+      type: object
+      nullable: true
       allOf:
         - $ref: '#/components/schemas/UserDto'
         - type: object
@@ -919,6 +954,7 @@ components:
               type: string
     AddUserInProjectDto:
       type: object
+      required: true
       properties:
         email:
           type: string
@@ -934,6 +970,7 @@ components:
           $ref: '#/components/schemas/UserInProjectType'
     UserInProjectMinimumDto:
       type: object
+      required: true
       properties:
         id:
           type: string
@@ -943,6 +980,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/UserBasicDto'
         - type: object
+          required: true
           properties:
             name:
               type: string
@@ -954,6 +992,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/UserInProjectBasicDto'
         - type: object
+          required: true
           properties:
             tasks:
               type: array
@@ -961,6 +1000,7 @@ components:
                 $ref: '#/components/schemas/TaskBasicDto'
     WorkLogDto:
       type: object
+      required: true
       properties:
         id:
           type: string
@@ -971,6 +1011,7 @@ components:
         endDate:
           type: string
     AddWorkLogDto:
+      required: true
       type: object
       properties:
         description:
@@ -990,10 +1031,12 @@ components:
           type: string
     VerifyTokenDto:
       type: object
+      required: true
       properties:
-        isMyTokenValid:
+        isValidToken:
           type: boolean
           example: true
+          required: true
     TaskFilteredQuery:
       allOf:
         - $ref: '#/components/schemas/FilteredQuery'
@@ -1019,6 +1062,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/Page'
         - type: object
+          required: true
           properties:
             content:
               type: array
@@ -1028,6 +1072,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/Page'
         - type: object
+          required: true
           properties:
             content:
               type: array
@@ -1035,6 +1080,7 @@ components:
                 - $ref: '#/components/schemas/UserInProjectBasicDto'
     Page:
       type: object
+      required: true
       properties:
         totalElements:
           type: number
@@ -1044,11 +1090,13 @@ components:
           type: number
     SuccessMessageDto:
       type: object
+      required: true
       properties:
         message:
           type: string
     ServerErrorDto:
       type: object
+      required: true
       properties:
         message:
           $ref: '#/components/schemas/ErrorCode'
@@ -1097,7 +1145,7 @@ components:
       enum:
         - 'ASC'
         - 'DESC'
-    ProjectTypes:
+    ProjectType:
       type: string
       enum:
         - 'SOFTWARE'

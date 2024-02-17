@@ -10,6 +10,7 @@ import { UnknownErrorMiddleware } from "./middlewares/error.middleware";
 import { HttpCode } from "./types/http.types";
 import { ErrorCode } from "./types/error.types";
 import { ServerErrorDto } from "./dto/error.dto";
+import { LoggerMiddleware } from "./middlewares/logger.middleware";
 
 dotenv.config();
 const { PORT } = process.env;
@@ -29,6 +30,9 @@ const App = async () => {
   try {
     await AppDataSource.initialize();
     // await AppDataSource.synchronize(true);
+
+    //Logger
+    app.use(LoggerMiddleware);
     // unknown error handling
     app.use(UnknownErrorMiddleware);
 
