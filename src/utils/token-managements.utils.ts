@@ -15,7 +15,7 @@ export interface TokenPayload extends JwtPayload {
 
 const options: SignOptions = {
   mutatePayload: false,
-  expiresIn: "30m",
+  expiresIn: "1m",
 };
 
 export function generateToken(user: User | UserBasicDto): string {

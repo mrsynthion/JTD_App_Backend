@@ -106,6 +106,8 @@ export class AuthController {
       const token: string = getTokenFromRequest(req);
       const isValidToken: boolean = !!token && verifyToken(token);
       res.status(HttpCode.SUCCESS).json({ isValidToken });
-    } catch ({ message }) {}
+    } catch ({ message }) {
+      next(message);
+    }
   }
 }
