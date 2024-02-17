@@ -29,7 +29,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserDto"
+                "$ref": "#/components/schemas/RegisterDto"
               }
             }
           },
@@ -1157,54 +1157,67 @@
     "schemas": {
       "RegisterDto": {
         "type": "object",
+        "required": true,
         "properties": {
           "firstName": {
-            "type": "string"
+            "type": "string",
+            "required": true
           },
           "lastName": {
             "type": "string",
-            "example": "firstName"
+            "example": "firstName",
+            "required": true
           },
           "email": {
             "type": "string",
-            "example": "lastName"
+            "example": "lastName",
+            "required": true
           },
           "password": {
             "type": "string",
-            "example": "email"
+            "example": "email",
+            "required": true
           }
         }
       },
       "LoginDto": {
         "type": "object",
+        "required": true,
         "properties": {
           "email": {
             "type": "string",
-            "example": "email"
+            "example": "email",
+            "required": true
           },
           "password": {
             "type": "string",
-            "example": "password"
+            "example": "password",
+            "required": true
           }
         }
       },
       "ProjectDto": {
         "type": "object",
+        "required": true,
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "required": true
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "required": true
           },
           "key": {
-            "type": "string"
+            "type": "string",
+            "required": true
           },
           "type": {
-            "$ref": "#/components/schemas/ProjectTypes"
+            "$ref": "#/components/schemas/ProjectType"
           },
           "leader": {
             "type": "object",
+            "required": true,
             "nullable": true,
             "allOf": [
               {
@@ -1214,6 +1227,7 @@
           },
           "users": {
             "type": "array",
+            "required": true,
             "items": {
               "$ref": "#/components/schemas/UserInProjectBasicDto"
             }
@@ -1225,18 +1239,22 @@
       },
       "ProjectBasicDto": {
         "type": "object",
+        "required": true,
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "required": true
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "required": true
           },
           "key": {
-            "type": "string"
+            "type": "string",
+            "required": true
           },
           "type": {
-            "$ref": "#/components/schemas/ProjectTypes"
+            "$ref": "#/components/schemas/ProjectType"
           },
           "projectManagementType": {
             "$ref": "#/components/schemas/ProjectManagementType"
@@ -1245,15 +1263,18 @@
       },
       "AddProjectDto": {
         "type": "object",
+        "required": true,
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "required": true
           },
           "key": {
-            "type": "string"
+            "type": "string",
+            "required": true
           },
           "type": {
-            "$ref": "#/components/schemas/ProjectTypes"
+            "$ref": "#/components/schemas/ProjectType"
           },
           "projectManagementType": {
             "$ref": "#/components/schemas/ProjectManagementType"
@@ -1270,7 +1291,7 @@
             "type": "string"
           },
           "type": {
-            "$ref": "#/components/schemas/ProjectTypes"
+            "$ref": "#/components/schemas/ProjectType"
           },
           "projectManagementType": {
             "$ref": "#/components/schemas/ProjectManagementType"
@@ -1281,24 +1302,30 @@
         "type": "object",
         "properties": {
           "leaderId": {
-            "type": "string"
+            "type": "string",
+            "required": true
           }
         }
       },
       "TaskBasicDto": {
         "type": "object",
+        "required": true,
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "required": true
           },
           "title": {
-            "type": "string"
+            "type": "string",
+            "required": true
           },
           "description": {
-            "type": "string"
+            "type": "string",
+            "required": true
           },
           "label": {
-            "type": "string"
+            "type": "string",
+            "required": true
           },
           "type": {
             "$ref": "#/components/schemas/TaskType"
@@ -1308,6 +1335,7 @@
           },
           "assignedUser": {
             "type": "object",
+            "required": true,
             "nullable": true,
             "allOf": [
               {
@@ -1316,7 +1344,8 @@
             ]
           },
           "createdAt": {
-            "type": "string"
+            "type": "string",
+            "required": true
           }
         }
       },
@@ -1327,6 +1356,7 @@
           },
           {
             "type": "object",
+            "required": true,
             "properties": {
               "childrenTasks": {
                 "type": "array",
@@ -1356,6 +1386,7 @@
       },
       "AddTaskDto": {
         "type": "object",
+        "required": true,
         "properties": {
           "title": {
             "type": "string"
@@ -1438,6 +1469,7 @@
       },
       "UserBasicDto": {
         "type": "object",
+        "required": true,
         "properties": {
           "id": {
             "type": "string"
@@ -1462,6 +1494,7 @@
           },
           {
             "type": "object",
+            "required": true,
             "properties": {
               "projects": {
                 "type": "array",
@@ -1476,6 +1509,8 @@
         ]
       },
       "EditUserDto": {
+        "type": "object",
+        "nullable": true,
         "allOf": [
           {
             "$ref": "#/components/schemas/UserDto"
@@ -1492,6 +1527,7 @@
       },
       "AddUserInProjectDto": {
         "type": "object",
+        "required": true,
         "properties": {
           "email": {
             "type": "string"
@@ -1516,6 +1552,7 @@
       },
       "UserInProjectMinimumDto": {
         "type": "object",
+        "required": true,
         "properties": {
           "id": {
             "type": "string"
@@ -1532,6 +1569,7 @@
           },
           {
             "type": "object",
+            "required": true,
             "properties": {
               "name": {
                 "type": "string"
@@ -1553,6 +1591,7 @@
           },
           {
             "type": "object",
+            "required": true,
             "properties": {
               "tasks": {
                 "type": "array",
@@ -1566,6 +1605,7 @@
       },
       "WorkLogDto": {
         "type": "object",
+        "required": true,
         "properties": {
           "id": {
             "type": "string"
@@ -1582,6 +1622,7 @@
         }
       },
       "AddWorkLogDto": {
+        "required": true,
         "type": "object",
         "properties": {
           "description": {
@@ -1611,10 +1652,12 @@
       },
       "VerifyTokenDto": {
         "type": "object",
+        "required": true,
         "properties": {
-          "isMyTokenValid": {
+          "isValidToken": {
             "type": "boolean",
-            "example": true
+            "example": true,
+            "required": true
           }
         }
       },
@@ -1669,6 +1712,7 @@
           },
           {
             "type": "object",
+            "required": true,
             "properties": {
               "content": {
                 "type": "array",
@@ -1689,6 +1733,7 @@
           },
           {
             "type": "object",
+            "required": true,
             "properties": {
               "content": {
                 "type": "array",
@@ -1704,6 +1749,7 @@
       },
       "Page": {
         "type": "object",
+        "required": true,
         "properties": {
           "totalElements": {
             "type": "number"
@@ -1718,6 +1764,7 @@
       },
       "SuccessMessageDto": {
         "type": "object",
+        "required": true,
         "properties": {
           "message": {
             "type": "string"
@@ -1726,6 +1773,7 @@
       },
       "ServerErrorDto": {
         "type": "object",
+        "required": true,
         "properties": {
           "message": {
             "$ref": "#/components/schemas/ErrorCode"
@@ -1781,7 +1829,7 @@
           "DESC"
         ]
       },
-      "ProjectTypes": {
+      "ProjectType": {
         "type": "string",
         "enum": [
           "SOFTWARE"
