@@ -6,7 +6,6 @@ export const LoggerMiddleware = (
   res: Response,
   next: NextFunction,
 ) => {
-  console.log(req.cookies);
   console.log({
     url: req.baseUrl + req.url,
     params: req.params,
